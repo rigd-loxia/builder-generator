@@ -1,0 +1,964 @@
+[INFO] Scanning for projects...
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/eclipse/m2e/lifecycle-mapping/1.0.0/lifecycle-mapping-1.0.0.pom
+Downloading from tycho-staged: https://oss.sonatype.org/content/repositories/orgeclipsetycho-1068/org/eclipse/m2e/lifecycle-mapping/1.0.0/lifecycle-mapping-1.0.0.pom
+[WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency information available
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/eclipse/m2e/lifecycle-mapping/1.0.0/lifecycle-mapping-1.0.0.jar
+Downloading from tycho-staged: https://oss.sonatype.org/content/repositories/orgeclipsetycho-1068/org/eclipse/m2e/lifecycle-mapping/1.0.0/lifecycle-mapping-1.0.0.jar
+[WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved: Could not find artifact org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 in public_nx3 (https://nexus.rigd-loxia.nl/repository/public/)
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/io/fabric8/docker-maven-plugin/0.40.0/docker-maven-plugin-0.40.0.pom
+Progress (1): 4.1/21 kBProgress (1): 7.5/21 kBProgress (1): 12/21 kB Progress (1): 16/21 kBProgress (1): 20/21 kBProgress (1): 21 kB                      Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/io/fabric8/docker-maven-plugin/0.40.0/docker-maven-plugin-0.40.0.pom (21 kB at 174 kB/s)
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/io/fabric8/docker-maven-plugin/0.40.0/docker-maven-plugin-0.40.0.jar
+Progress (1): 4.1/711 kBProgress (1): 7.5/711 kBProgress (1): 12/711 kB Progress (1): 16/711 kBProgress (1): 20/711 kBProgress (1): 24/711 kBProgress (1): 28/711 kBProgress (1): 32/711 kBProgress (1): 36/711 kBProgress (1): 40/711 kBProgress (1): 44/711 kBProgress (1): 48/711 kBProgress (1): 52/711 kBProgress (1): 56/711 kBProgress (1): 60/711 kBProgress (1): 64/711 kBProgress (1): 68/711 kBProgress (1): 72/711 kBProgress (1): 74/711 kBProgress (1): 78/711 kBProgress (1): 82/711 kBProgress (1): 86/711 kBProgress (1): 90/711 kBProgress (1): 94/711 kBProgress (1): 98/711 kBProgress (1): 102/711 kBProgress (1): 106/711 kBProgress (1): 111/711 kBProgress (1): 115/711 kBProgress (1): 119/711 kBProgress (1): 123/711 kBProgress (1): 127/711 kBProgress (1): 131/711 kBProgress (1): 135/711 kBProgress (1): 139/711 kBProgress (1): 143/711 kBProgress (1): 147/711 kBProgress (1): 152/711 kBProgress (1): 156/711 kBProgress (1): 160/711 kBProgress (1): 164/711 kBProgress (1): 168/711 kBProgress (1): 172/711 kBProgress (1): 176/711 kBProgress (1): 180/711 kBProgress (1): 184/711 kBProgress (1): 188/711 kBProgress (1): 192/711 kBProgress (1): 196/711 kBProgress (1): 200/711 kBProgress (1): 204/711 kBProgress (1): 208/711 kBProgress (1): 212/711 kBProgress (1): 216/711 kBProgress (1): 220/711 kBProgress (1): 224/711 kBProgress (1): 228/711 kBProgress (1): 232/711 kBProgress (1): 236/711 kBProgress (1): 240/711 kBProgress (1): 244/711 kBProgress (1): 246/711 kBProgress (1): 250/711 kBProgress (1): 254/711 kBProgress (1): 258/711 kBProgress (1): 262/711 kBProgress (1): 266/711 kBProgress (1): 270/711 kBProgress (1): 274/711 kBProgress (1): 279/711 kBProgress (1): 283/711 kBProgress (1): 287/711 kBProgress (1): 291/711 kBProgress (1): 295/711 kBProgress (1): 299/711 kBProgress (1): 303/711 kBProgress (1): 307/711 kBProgress (1): 311/711 kBProgress (1): 315/711 kBProgress (1): 319/711 kBProgress (1): 324/711 kBProgress (1): 328/711 kBProgress (1): 332/711 kBProgress (1): 336/711 kBProgress (1): 340/711 kBProgress (1): 344/711 kBProgress (1): 348/711 kBProgress (1): 352/711 kBProgress (1): 356/711 kBProgress (1): 360/711 kBProgress (1): 364/711 kBProgress (1): 368/711 kBProgress (1): 372/711 kBProgress (1): 376/711 kBProgress (1): 380/711 kBProgress (1): 384/711 kBProgress (1): 388/711 kBProgress (1): 392/711 kBProgress (1): 396/711 kBProgress (1): 400/711 kBProgress (1): 404/711 kBProgress (1): 408/711 kBProgress (1): 410/711 kBProgress (1): 414/711 kBProgress (1): 418/711 kBProgress (1): 422/711 kBProgress (1): 426/711 kBProgress (1): 430/711 kBProgress (1): 434/711 kBProgress (1): 438/711 kBProgress (1): 442/711 kBProgress (1): 446/711 kBProgress (1): 451/711 kBProgress (1): 455/711 kBProgress (1): 459/711 kBProgress (1): 463/711 kBProgress (1): 467/711 kBProgress (1): 471/711 kBProgress (1): 475/711 kBProgress (1): 479/711 kBProgress (1): 483/711 kBProgress (1): 487/711 kBProgress (1): 492/711 kBProgress (1): 496/711 kBProgress (1): 500/711 kBProgress (1): 504/711 kBProgress (1): 508/711 kBProgress (1): 512/711 kBProgress (1): 516/711 kBProgress (1): 520/711 kBProgress (1): 524/711 kBProgress (1): 528/711 kBProgress (1): 532/711 kBProgress (1): 536/711 kBProgress (1): 540/711 kBProgress (1): 544/711 kBProgress (1): 548/711 kBProgress (1): 552/711 kBProgress (1): 556/711 kBProgress (1): 560/711 kBProgress (1): 564/711 kBProgress (1): 568/711 kBProgress (1): 572/711 kBProgress (1): 576/711 kBProgress (1): 580/711 kBProgress (1): 584/711 kBProgress (1): 588/711 kBProgress (1): 590/711 kBProgress (1): 594/711 kBProgress (1): 598/711 kBProgress (1): 602/711 kBProgress (1): 606/711 kBProgress (1): 610/711 kBProgress (1): 614/711 kBProgress (1): 618/711 kBProgress (1): 623/711 kBProgress (1): 627/711 kBProgress (1): 631/711 kBProgress (1): 635/711 kBProgress (1): 639/711 kBProgress (1): 643/711 kBProgress (1): 647/711 kBProgress (1): 651/711 kBProgress (1): 655/711 kBProgress (1): 659/711 kBProgress (1): 664/711 kBProgress (1): 668/711 kBProgress (1): 672/711 kBProgress (1): 676/711 kBProgress (1): 680/711 kBProgress (1): 684/711 kBProgress (1): 688/711 kBProgress (1): 692/711 kBProgress (1): 696/711 kBProgress (1): 700/711 kBProgress (1): 704/711 kBProgress (1): 708/711 kBProgress (1): 711 kB                        Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/io/fabric8/docker-maven-plugin/0.40.0/docker-maven-plugin-0.40.0.jar (711 kB at 3.4 MB/s)
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/owasp/dependency-check-maven/6.5.3/dependency-check-maven-6.5.3.pom
+Progress (1): 4.1/8.2 kBProgress (1): 7.6/8.2 kBProgress (1): 8.2 kB                        Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/owasp/dependency-check-maven/6.5.3/dependency-check-maven-6.5.3.pom (8.2 kB at 72 kB/s)
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/owasp/dependency-check-parent/6.5.3/dependency-check-parent-6.5.3.pom
+Progress (1): 4.1/60 kBProgress (1): 7.5/60 kBProgress (1): 12/60 kB Progress (1): 16/60 kBProgress (1): 20/60 kBProgress (1): 24/60 kBProgress (1): 28/60 kBProgress (1): 32/60 kBProgress (1): 36/60 kBProgress (1): 40/60 kBProgress (1): 44/60 kBProgress (1): 48/60 kBProgress (1): 52/60 kBProgress (1): 56/60 kBProgress (1): 60/60 kBProgress (1): 60 kB                      Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/owasp/dependency-check-parent/6.5.3/dependency-check-parent-6.5.3.pom (60 kB at 479 kB/s)
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/owasp/dependency-check-maven/6.5.3/dependency-check-maven-6.5.3.jar
+Progress (1): 4.1/101 kBProgress (1): 7.5/101 kBProgress (1): 12/101 kB Progress (1): 16/101 kBProgress (1): 20/101 kBProgress (1): 24/101 kBProgress (1): 28/101 kBProgress (1): 32/101 kBProgress (1): 36/101 kBProgress (1): 40/101 kBProgress (1): 44/101 kBProgress (1): 48/101 kBProgress (1): 52/101 kBProgress (1): 56/101 kBProgress (1): 60/101 kBProgress (1): 64/101 kBProgress (1): 68/101 kBProgress (1): 72/101 kBProgress (1): 74/101 kBProgress (1): 78/101 kBProgress (1): 82/101 kBProgress (1): 86/101 kBProgress (1): 90/101 kBProgress (1): 94/101 kBProgress (1): 98/101 kBProgress (1): 101 kB                       Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/owasp/dependency-check-maven/6.5.3/dependency-check-maven-6.5.3.jar (101 kB at 1.1 MB/s)
+Downloading from tycho-staged: https://oss.sonatype.org/content/repositories/orgeclipsetycho-1068/org/apache/maven/plugins/maven-metadata.xml
+Downloading from tycho-staged: https://oss.sonatype.org/content/repositories/orgeclipsetycho-1068/org/codehaus/mojo/maven-metadata.xml
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/apache/maven/plugins/maven-metadata.xml
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/codehaus/mojo/maven-metadata.xml
+Progress (1): 4.1/15 kBProgress (1): 7.6/15 kBProgress (2): 7.6/15 kB | 4.1/21 kBProgress (2): 7.6/15 kB | 7.6/21 kBProgress (2): 12/15 kB | 7.6/21 kB Progress (2): 15 kB | 7.6/21 kB   Progress (2): 15 kB | 12/21 kB Progress (2): 15 kB | 16/21 kBProgress (2): 15 kB | 20/21 kBProgress (2): 15 kB | 21 kB                              Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/apache/maven/plugins/maven-metadata.xml (15 kB at 5.7 kB/s)
+Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/codehaus/mojo/maven-metadata.xml (21 kB at 8.0 kB/s)
+Downloading from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/apache/maven/plugins/maven-help-plugin/maven-metadata.xml
+Downloading from tycho-staged: https://oss.sonatype.org/content/repositories/orgeclipsetycho-1068/org/apache/maven/plugins/maven-help-plugin/maven-metadata.xml
+Progress (1): 882 B                   Downloaded from public_nx3: https://nexus.rigd-loxia.nl/repository/public/org/apache/maven/plugins/maven-help-plugin/maven-metadata.xml (882 B at 253 B/s)
+[INFO] 
+[INFO] ---------------< nl.loxia.builder.generator:annotations >---------------
+[INFO] Building annotations 0.0.7-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency information available
+[WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved: org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 was not found in https://nexus.rigd-loxia.nl/repository/public/ during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of public_nx3 has elapsed or updates are forced
+[INFO] 
+[INFO] --- maven-help-plugin:3.4.0:effective-pom (default-cli) @ annotations ---
+[INFO] 
+Effective POMs, after inheritance, interpolation, and profiles are applied:
+
+<?xml version="1.0" encoding="Cp1252"?>
+<!-- ====================================================================== -->
+<!--                                                                        -->
+<!-- Generated by Maven Help Plugin                                         -->
+<!-- See: https://maven.apache.org/plugins/maven-help-plugin/               -->
+<!--                                                                        -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!--                                                                        -->
+<!-- Effective POM for project                                              -->
+<!-- 'nl.loxia.builder.generator:annotations:jar:0.0.7-SNAPSHOT'            -->
+<!--                                                                        -->
+<!-- ====================================================================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>nl.loxia</groupId>
+    <artifactId>loxia-java11-parent</artifactId>
+    <version>3.5.2</version>
+    <relativePath />
+  </parent>
+  <groupId>nl.loxia.builder.generator</groupId>
+  <artifactId>annotations</artifactId>
+  <version>0.0.7-SNAPSHOT</version>
+  <name>annotations</name>
+  <description>Buildconfiguratie voor alle RIGD-LOXIA Java 11 Maven projecten</description>
+  <organization>
+    <name>Loxia</name>
+  </organization>
+  <properties>
+    <BUILD_NUMBER>0</BUILD_NUMBER>
+    <GIT_BRANCH>origin/feature/NO_BRANCH</GIT_BRANCH>
+    <argLine>--illegal-access=warn</argLine>
+    <careeditor.home>${session.executionRootDirectory}/mstation</careeditor.home>
+    <extra-surefire-args />
+    <jre>C:\dev\tools\java\zulu17.36.17-ca-jdk17.0.4.1-win_x64\/jre</jre>
+    <loxia.mdl-tools.mdlRoot>c:/program files (x86)/bentley/MicroStation V8i (SELECTseries)/mdl</loxia.mdl-tools.mdlRoot>
+    <loxia.mdl-tools.microstationRoot>c:/program files (x86)/bentley/MicroStation V8i (SELECTseries)/MicroStation</loxia.mdl-tools.microstationRoot>
+    <loxia.mdl-tools.visualStudioRoot>c:/program files (x86)/microsoft visual studio 10.0</loxia.mdl-tools.visualStudioRoot>
+    <loxia.mdl-tools.windowsSdkRoot>c:/program files (x86)/microsoft sdks/windows/v7.0A</loxia.mdl-tools.windowsSdkRoot>
+    <maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <modernizer.failOnViolations>false</modernizer.failOnViolations>
+    <modernizer.javaVersion>1.11</modernizer.javaVersion>
+    <osgi-version-qualifier>202307181132</osgi-version-qualifier>
+    <owasp.failBuildOnCVSS>8</owasp.failBuildOnCVSS>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <sonar.host.url>http://localhost:9000</sonar.host.url>
+    <sonar.jdbc.driver>com.mysql.jdbc.Driver</sonar.jdbc.driver>
+    <sonar.jdbc.password>sonar</sonar.jdbc.password>
+    <sonar.jdbc.url>jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+    <sonar.jdbc.username>sonar</sonar.jdbc.username>
+    <sonar.surefire.reportsPath>target/surefire-reports</sonar.surefire.reportsPath>
+  </properties>
+  <repositories>
+    <repository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>central</id>
+      <url>http://central</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>centralplugins</id>
+      <url>http://central</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>tycho-staged</id>
+      <url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-1068</url>
+    </pluginRepository>
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <build>
+    <sourceDirectory>C:\github\builder-generator\annotations\src\main\java</sourceDirectory>
+    <scriptSourceDirectory>C:\github\builder-generator\annotations\src\main\scripts</scriptSourceDirectory>
+    <testSourceDirectory>C:\github\builder-generator\annotations\src\test\java</testSourceDirectory>
+    <outputDirectory>C:\github\builder-generator\annotations\target\classes</outputDirectory>
+    <testOutputDirectory>C:\github\builder-generator\annotations\target\test-classes</testOutputDirectory>
+    <resources>
+      <resource>
+        <directory>C:\github\builder-generator\annotations\src\main\resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>C:\github\builder-generator\annotations\src\test\resources</directory>
+      </testResource>
+    </testResources>
+    <directory>C:\github\builder-generator\annotations\target</directory>
+    <finalName>annotations-0.0.7-SNAPSHOT</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.2.1</version>
+          <configuration>
+            <archive>
+              <manifestEntries>
+                <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                <Bundle-Name>annotations</Bundle-Name>
+                <Bundle-SymbolicName>annotations.source</Bundle-SymbolicName>
+                <Bundle-Vendor>Loxia</Bundle-Vendor>
+                <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
+                <Eclipse-SourceBundle>annotations;version="${parsedVersion.osgiVersion}";roots:="."</Eclipse-SourceBundle>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.0.0-M6</version>
+          <configuration>
+            <useModulePath>false</useModulePath>
+            <systemProperties>
+              <property>
+                <name>careeditorhome</name>
+                <value>${session.executionRootDirectory}/mstation</value>
+              </property>
+            </systemProperties>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>3.0.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>extra-enforcer-rules</artifactId>
+              <version>1.5.1</version>
+              <scope>compile</scope>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>1.13.0</version>
+          <configuration>
+            <connectionType>connection</connectionType>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.1.2</version>
+          <configuration>
+            <enableRulesSummary>false</enableRulesSummary>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <version>2.10</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.12.0</version>
+        </plugin>
+        <plugin>
+          <groupId>external.atlassian.jgitflow</groupId>
+          <artifactId>jgitflow-maven-plugin</artifactId>
+          <version>1.0-m5.1</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <pushReleases>true</pushReleases>
+            <arguments>-Dmaven.javadoc.skip=true</arguments>
+            <username>${git.user}</username>
+            <password>${git.password}</password>
+            <useReleaseProfile>false</useReleaseProfile>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>properties-maven-plugin</artifactId>
+          <version>1.1.0</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>set-system-properties</goal>
+              </goals>
+              <configuration>
+                <properties>
+                  <property>
+                    <name>test.profile</name>
+                    <value>EXTENDED</value>
+                  </property>
+                </properties>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>3.3.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.reporting</groupId>
+              <artifactId>maven-reporting-impl</artifactId>
+              <version>3.1.0</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>org.apache.struts</groupId>
+                  <artifactId>struts-core</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.3.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.enunciate</groupId>
+          <artifactId>maven-enunciate-plugin</artifactId>
+          <version>1.31</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.10.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M6</version>
+          <configuration>
+            <systemPropertyVariables>
+              <careeditorhome>${session.executionRootDirectory}/mstation</careeditorhome>
+            </systemPropertyVariables>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.eirslett</groupId>
+          <artifactId>frontend-maven-plugin</artifactId>
+          <version>1.12.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>1.2.7</version>
+        </plugin>
+        <plugin>
+          <groupId>net.ltgt.gwt.maven</groupId>
+          <artifactId>gwt-maven-plugin</artifactId>
+          <version>1.0.1</version>
+          <extensions>true</extensions>
+          <configuration>
+            <failOnError>true</failOnError>
+            <jvmArgs>-Xmx1g</jvmArgs>
+            <includes>
+              <include>**/*Test.java</include>
+              <include>**/*Tests.java</include>
+              <include>**/*TestCase.java</include>
+            </includes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.2.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addClasspath>true</addClasspath>
+              </manifest>
+            </archive>
+            <excludes>
+              <exclude>*.keep</exclude>
+              <exclude>*.bak</exclude>
+              <exclude>*.contrib</exclude>
+            </excludes>
+            <skipIfEmpty>true</skipIfEmpty>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jvnet.jaxb2.maven2</groupId>
+          <artifactId>maven-jaxb2-plugin</artifactId>
+          <version>0.15.1</version>
+          <configuration />
+        </plugin>
+        <plugin>
+          <groupId>com.evolvedbinary.maven.jvnet</groupId>
+          <artifactId>jaxb30-maven-plugin</artifactId>
+          <version>0.15.0</version>
+        </plugin>
+        <plugin>
+          <groupId>com.evolvedbinary.maven.jvnet</groupId>
+          <artifactId>jaxb2-maven-plugin</artifactId>
+          <version>0.15.0</version>
+        </plugin>
+        <plugin>
+          <groupId>com.evolvedbinary.maven.jvnet</groupId>
+          <artifactId>jaxb22-maven-plugin</artifactId>
+          <version>0.15.0</version>
+          <configuration />
+        </plugin>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.2.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.8</version>
+        </plugin>
+        <plugin>
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
+          <version>4.9.10</version>
+          <configuration>
+            <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>
+            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+            <generateGitPropertiesFilename>C:\github\builder-generator\annotations\target\classes/git.properties</generateGitPropertiesFilename>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.eclipse.m2e</groupId>
+          <artifactId>lifecycle-mapping</artifactId>
+          <version>1.0.0</version>
+          <configuration>
+            <lifecycleMappingMetadata>
+              <pluginExecutions>
+                <pluginExecution>
+                  <pluginExecutionFilter>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <versionRange>[1.0.0,)</versionRange>
+                    <goals>
+                      <goal>manifest</goal>
+                    </goals>
+                  </pluginExecutionFilter>
+                  <action>
+                    <ignore />
+                  </action>
+                </pluginExecution>
+              </pluginExecutions>
+            </lifecycleMappingMetadata>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.google.code.maven-replacer-plugin</groupId>
+          <artifactId>replacer</artifactId>
+          <version>1.5.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>buildnumber-maven-plugin</artifactId>
+          <version>1.4</version>
+          <configuration>
+            <doCheck>false</doCheck>
+            <doUpdate>false</doUpdate>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.11.0</version>
+          <configuration>
+            <generateBackupPoms>false</generateBackupPoms>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>io.gatling</groupId>
+          <artifactId>gatling-maven-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>5.1.6</version>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <_nouses>true</_nouses>
+              <_snapshot>202307181132</_snapshot>
+              <Bundle-SymbolicName>${bundle-symbolicname}</Bundle-SymbolicName>
+            </instructions>
+            <niceManifest>true</niceManifest>
+            <archive>
+              <manifestEntries>
+                <Git-Commit>${GIT_COMMIT}</Git-Commit>
+              </manifestEntries>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.assertj</groupId>
+          <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+          <version>2.2.0.Loxia1</version>
+          <executions>
+            <execution>
+              <id>generate-assertions</id>
+              <goals>
+                <goal>generate-assertions</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.40.0</version>
+          <extensions>true</extensions>
+        </plugin>
+        <plugin>
+          <groupId>org.owasp</groupId>
+          <artifactId>dependency-check-maven</artifactId>
+          <version>6.5.3</version>
+          <configuration>
+            <skipProvidedScope>true</skipProvidedScope>
+            <nodeAuditSkipDevDependencies>true</nodeAuditSkipDevDependencies>
+            <nodePackageSkipDevDependencies>true</nodePackageSkipDevDependencies>
+            <skipRuntimeScope>false</skipRuntimeScope>
+            <failBuildOnCVSS>8</failBuildOnCVSS>
+            <cveUrlModified>http://loxia03.nl.hr.group/nvd.nist.gov.mirror/nvdcve-1.1-modified.json.gz</cveUrlModified>
+            <cveUrlBase>http://loxia03.nl.hr.group/nvd.nist.gov.mirror/nvdcve-1.1-%d.json.gz</cveUrlBase>
+            <failOnError>false</failOnError>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>io.swagger.codegen.v3</groupId>
+          <artifactId>swagger-codegen-maven-plugin</artifactId>
+          <version>3.0.34</version>
+        </plugin>
+        <plugin>
+          <groupId>com.amashchenko.maven.plugin</groupId>
+          <artifactId>gitflow-maven-plugin</artifactId>
+          <version>1.15.0-Loxia</version>
+          <configuration>
+            <verbose>true</verbose>
+            <useSnapshotInHotfix>true</useSnapshotInHotfix>
+            <versionsForceUpdate>true</versionsForceUpdate>
+            <commitDevelopmentVersionAtStart>true</commitDevelopmentVersionAtStart>
+            <gitFlowConfig>
+              <productionBranch>${productionBranch}</productionBranch>
+              <developmentBranch>${developmentBranch}</developmentBranch>
+            </gitFlowConfig>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.revapi</groupId>
+          <artifactId>revapi-maven-plugin</artifactId>
+          <version>0.14.6</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.revapi</groupId>
+              <artifactId>revapi-java</artifactId>
+              <version>0.26.1</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.maven.reporting</groupId>
+              <artifactId>maven-reporting-impl</artifactId>
+              <version>3.1.0</version>
+              <exclusions>
+                <exclusion>
+                  <groupId>org.apache.struts</groupId>
+                  <artifactId>struts-core</artifactId>
+                </exclusion>
+              </exclusions>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <analysisConfiguration>
+              <revapi.filter>
+                <elements>
+                  <include>
+                    <item>nl\.loxia\..*</item>
+                  </include>
+                </elements>
+                <archives>
+                  <include>
+                    <item>nl\.loxia*</item>
+                  </include>
+                </archives>
+              </revapi.filter>
+              <revapi.differences>
+                <differences>
+                  <item>
+                    <code>java.method.added</code>
+                    <ignore>true</ignore>
+                  </item>
+                </differences>
+              </revapi.differences>
+              <revapi.semver.ignore>
+                <enabled>true</enabled>
+                <versionIncreaseAllows>
+                  <major>breaking</major>
+                  <minor>nonBreaking</minor>
+                  <patch>equivalent</patch>
+                </versionIncreaseAllows>
+                <passThroughDifferences>
+                  <item>java.class.nonPublicPartOfAPI</item>
+                </passThroughDifferences>
+              </revapi.semver.ignore>
+            </analysisConfiguration>
+            <singleVersionForAllModules>true</singleVersionForAllModules>
+            <outputNonIdentifyingDifferenceInfo>false</outputNonIdentifyingDifferenceInfo>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.gaul</groupId>
+          <artifactId>modernizer-maven-plugin</artifactId>
+          <version>2.4.0</version>
+        </plugin>
+        <plugin>
+          <groupId>biz.lermitage.oga</groupId>
+          <artifactId>oga-maven-plugin</artifactId>
+          <version>1.7.0</version>
+          <configuration>
+            <failOnError>false</failOnError>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>set-osgi-version</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>parse-version</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>enforce-loxia-rules</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules combine.children="append">
+                <bannedPlugins>
+                  <excludes>
+                    <exclude>org.apache.maven.plugins:maven-deploy-plugin</exclude>
+                    <exclude>org.apache.maven.plugins:maven-install-plugin</exclude>
+                  </excludes>
+                  <includes>
+                    <include>org.apache.maven.plugins:maven-deploy-plugin:2.8.2</include>
+                    <include>org.apache.maven.plugins:maven-install-plugin:2.5.2</include>
+                  </includes>
+                  <message>Only use one version of the deploy and install
+                                        plugins, otherwise the deployAtEnd and installAtEnd will not
+                                        work.</message>
+                </bannedPlugins>
+                <requireMavenVersion>
+                  <version>3.6.0</version>
+                </requireMavenVersion>
+                <enforceBytecodeVersion>
+                  <maxJdkVersion>11</maxJdkVersion>
+                </enforceBytecodeVersion>
+              </rules>
+            </configuration>
+          </execution>
+          <execution>
+            <id>enforce-loxia-osgi-rules</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules combine.children="append">
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>org.apache.poi</exclude>
+                  </excludes>
+                  <includes>
+                    <include>*:*:*:*:runtime</include>
+                  </includes>
+                  <message>Gebruik
+                                                org.apache.servicemix.bundles:org.apache.servicemix.bundles.poi
+                                                aangezien dat wel een OSGi-enablede versie is.</message>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>extra-enforcer-rules</artifactId>
+            <version>1.5.1</version>
+            <scope>compile</scope>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifestEntries>
+                  <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                  <Bundle-Name>annotations</Bundle-Name>
+                  <Bundle-SymbolicName>annotations.source</Bundle-SymbolicName>
+                  <Bundle-Vendor>Loxia</Bundle-Vendor>
+                  <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
+                  <Eclipse-SourceBundle>annotations;version="${parsedVersion.osgiVersion}";roots:="."</Eclipse-SourceBundle>
+                </manifestEntries>
+              </archive>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+              <Bundle-Name>annotations</Bundle-Name>
+              <Bundle-SymbolicName>annotations.source</Bundle-SymbolicName>
+              <Bundle-Vendor>Loxia</Bundle-Vendor>
+              <Bundle-Version>${parsedVersion.osgiVersion}</Bundle-Version>
+              <Eclipse-SourceBundle>annotations;version="${parsedVersion.osgiVersion}";roots:="."</Eclipse-SourceBundle>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.gaul</groupId>
+        <artifactId>modernizer-maven-plugin</artifactId>
+        <version>2.4.0</version>
+        <executions>
+          <execution>
+            <id>modernizer</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>modernizer</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>biz.lermitage.oga</groupId>
+        <artifactId>oga-maven-plugin</artifactId>
+        <version>1.7.0</version>
+        <executions>
+          <execution>
+            <id>new-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <failOnError>false</failOnError>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>default-clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>default-testResources</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testResources</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>resources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
+        <executions>
+          <execution>
+            <id>default-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <archive>
+                <manifest>
+                  <addClasspath>true</addClasspath>
+                </manifest>
+              </archive>
+              <excludes>
+                <exclude>*.keep</exclude>
+                <exclude>*.bak</exclude>
+                <exclude>*.contrib</exclude>
+              </excludes>
+              <skipIfEmpty>true</skipIfEmpty>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+            </manifest>
+          </archive>
+          <excludes>
+            <exclude>*.keep</exclude>
+            <exclude>*.bak</exclude>
+            <exclude>*.contrib</exclude>
+          </excludes>
+          <skipIfEmpty>true</skipIfEmpty>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-testCompile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M6</version>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <systemPropertyVariables>
+                <careeditorhome>${session.executionRootDirectory}/mstation</careeditorhome>
+              </systemPropertyVariables>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <systemPropertyVariables>
+            <careeditorhome>${session.executionRootDirectory}/mstation</careeditorhome>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.5.2</version>
+        <executions>
+          <execution>
+            <id>default-install</id>
+            <phase>install</phase>
+            <goals>
+              <goal>install</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+        <executions>
+          <execution>
+            <id>default-deploy</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.12.0</version>
+        <executions>
+          <execution>
+            <id>default-site</id>
+            <phase>site</phase>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>C:\github\builder-generator\annotations\target\site</outputDirectory>
+              <reportPlugins>
+                <reportPlugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-project-info-reports-plugin</artifactId>
+                </reportPlugin>
+              </reportPlugins>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-deploy</id>
+            <phase>site-deploy</phase>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>C:\github\builder-generator\annotations\target\site</outputDirectory>
+              <reportPlugins>
+                <reportPlugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-project-info-reports-plugin</artifactId>
+                </reportPlugin>
+              </reportPlugins>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>C:\github\builder-generator\annotations\target\site</outputDirectory>
+          <reportPlugins>
+            <reportPlugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+            </reportPlugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <reporting>
+    <outputDirectory>C:\github\builder-generator\annotations\target\site</outputDirectory>
+  </reporting>
+</project>
+
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.721 s
+[INFO] Finished at: 2023-07-18T13:32:46+02:00
+[INFO] ------------------------------------------------------------------------
