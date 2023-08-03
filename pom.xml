@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.loxia.builder.generator</groupId>
 	<artifactId>aggregator</artifactId>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<packaging>pom</packaging>
 
 	<name>Loxia builder generator aggregator</name>
