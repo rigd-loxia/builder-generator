@@ -4,17 +4,45 @@
 	<artifactId>aggregator</artifactId>
 	<version>0.0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>builder generator aggregator</name>
+
+	<name>Loxia builder generator aggregator</name>
+	<description>The root/aggregator pom for the Loxia builder generator</description>
+	<url>https://github.com/rigd-loxia/builder-generator</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Ben Zegveld</name>
+			<email>ben.zegveld@rigd-loxia.nl</email>
+			<organization>RIGD-Loxia</organization>
+			<organizationUrl>http://www.rigd-loxia.nl</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/rigd-loxia/builder-generator.git</connection>
+		<developerConnection>scm:git:ssh://github.com:rigd-loxia/builder-generator.git</developerConnection>
+		<url>http://github.com/rigd-loxia/builder-generator/tree/main</url>
+	</scm>
+
 	<modules>
 		<module>annotations</module>
 		<module>generator</module>
 	</modules>
+
 	<properties>
 		<maven.compiler.release>11</maven.compiler.release>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 	<distributionManagement>
 		<snapshotRepository>
 			<id>sonatype-nexus-snapshots</id>

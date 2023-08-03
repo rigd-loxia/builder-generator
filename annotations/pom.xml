@@ -2,7 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>annotations</artifactId>
 	<packaging>jar</packaging>
-	<name>annotations</name>
+
+	<name>Loxia builder generator annotations</name>
+	<description>The Loxia builder generator annotations. These are used to configure which classes are in need of a builder.</description>
 
 	<parent>
 		<groupId>nl.loxia.builder.generator</groupId>

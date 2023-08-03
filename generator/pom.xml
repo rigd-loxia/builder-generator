@@ -4,7 +4,9 @@
 	<artifactId>builderGenerator</artifactId>
 	<version>0.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>builderGenerator</name>
+
+	<name>Loxia builder generator</name>
+	<description>The Loxia builder generator. This is the annotation processor which generates the builder classes.</description>
 
 	<parent>
 		<groupId>nl.loxia.builder.generator</groupId>
@@ -95,6 +97,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -113,7 +116,10 @@
 					<execution>
 						<id>default-testCompile</id>
 						<configuration>
-							<compilerArguments><AtestCompiling/><Xlint:unchecked/></compilerArguments>
+							<compilerArgs>
+								<!-- testCompiling is used to skip the generation of builder classes for which the processor should generate a compilation error. -->
+								<arg>-AtestCompiling</arg>
+							</compilerArgs>
 						</configuration>
 					</execution>
 					<execution>
