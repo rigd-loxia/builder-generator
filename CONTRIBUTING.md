@@ -19,7 +19,7 @@ Examples:
 ```text
 PR: #2 Add builder inheritence
 Branch: 2-add-builder-inheritence
-Commit: [2] add builder inheritence
+Commit: [2] add buildergit inheritence
 ```
 
 ## Installation
@@ -27,11 +27,8 @@ Commit: [2] add builder inheritence
 To get started with Builder-Generator locally, follow these steps
 
 1. Fork the repo
-
 2. Clone your fork
-
 3. Navigate to the project directory
-
 4. Build with mvn
 
    ```sh
