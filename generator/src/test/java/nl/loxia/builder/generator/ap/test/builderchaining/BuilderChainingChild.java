@@ -7,9 +7,13 @@ import nl.loxia.builder.generator.annotations.Builder;
 
 @Builder
 public class BuilderChainingChild {
-    private final List<String> values = new ArrayList<>();
+    private List<String> values = new ArrayList<>();
 
     public List<String> getValues() {
         return values;
+    }
+
+    public void setValues(List<String> values) {
+        this.values = values;
     }
 }
