@@ -170,7 +170,7 @@ public class BuilderGenerator {
                 isAbstract(typeElement));
         for (TypeElement currentElement : getTypeElementHierarchy(typeElement)) {
             for (Element enclosedEle : currentElement.getEnclosedElements()) {
-                if (enclosedEle.getKind() == ElementKind.METHOD && isGetter(enclosedEle)) {
+                if (enclosedEle.getKind() == ElementKind.METHOD && isSetter(enclosedEle)) {
                     builderData.addMember(createMember(typeElement, currentElement, enclosedEle));
                 }
                 else if (enclosedEle.getKind() == ElementKind.CLASS && currentElement == typeElement) {
@@ -247,7 +247,7 @@ public class BuilderGenerator {
     private boolean notPresentAsFieldIn(TypeMirror type, TypeElement typeElement) {
         for (TypeElement currentElement : getTypeElementHierarchy(typeElement)) {
             for (Element enclosedEle : currentElement.getEnclosedElements()) {
-                if (enclosedEle.getKind() == ElementKind.METHOD && isGetter(enclosedEle)) {
+                if (enclosedEle.getKind() == ElementKind.METHOD && isSetter(enclosedEle)) {
                     TypeMirror propertyType = getPropertyType(enclosedEle);
                     if (isList(propertyType) && type.equals(typeUtils.getSubType(propertyType))) {
                         return false;
@@ -327,18 +327,19 @@ public class BuilderGenerator {
     }
 
     private String getPropertyName(Element fieldOrMethod) {
-        int index = isGetter(fieldOrMethod.getSimpleName()) ? 3 : 2;
+        int index = isSetter(fieldOrMethod.getSimpleName()) ? 3 : 2;
         return String.valueOf(fieldOrMethod.getSimpleName().charAt(index)).toLowerCase()
             + fieldOrMethod.getSimpleName().subSequence(index + 1, fieldOrMethod.getSimpleName().length()).toString();
     }
 
     private TypeMirror getPropertyType(Element fieldOrMethod) {
-        return ((ExecutableElement) fieldOrMethod).getReturnType();
+        return ((ExecutableElement) fieldOrMethod).getParameters().get(0).asType();
+//        return ((ExecutableElement) fieldOrMethod).getReturnType();
     }
 
-    private boolean isGetter(Element fieldOrMethod) {
+    private boolean isSetter(Element fieldOrMethod) {
         Name methodName = fieldOrMethod.getSimpleName();
-        return isGetter(methodName) || isBooleanGetter(methodName);
+        return isSetter(methodName) && ((ExecutableElement) fieldOrMethod).getParameters().size() == 1;
     }
 
     private boolean isBooleanGetter(Name methodName) {
@@ -347,8 +348,8 @@ public class BuilderGenerator {
             && methodName.charAt(2) >= 'A' && methodName.charAt(2) <= 'Z';
     }
 
-    private boolean isGetter(Name methodName) {
-        return methodName.charAt(0) == 'g'
+    private boolean isSetter(Name methodName) {
+        return methodName.charAt(0) == 's'
             && methodName.charAt(1) == 'e'
             && methodName.charAt(2) == 't'
             && methodName.charAt(3) >= 'A' && methodName.charAt(3) <= 'Z';
