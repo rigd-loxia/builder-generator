@@ -85,7 +85,7 @@ private Car createCar() {
 ```
 
 ## Release Notes
-### Upcoming release
+### 0.1.0
 * Fixed SeeAlso ordering, first childs then parents instead of first parents then childs.
 * copyOf method now supports the SeeAlso referencing.
 * copyOf method now does an in-depth copy.
