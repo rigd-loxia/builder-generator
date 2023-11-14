@@ -178,6 +178,16 @@ public class BuilderGenerator {
                 }
             }
         }
+        Optional<? extends Element> constructor = typeElement.getEnclosedElements()
+            .stream()
+            .filter(ele -> ele.getKind() == ElementKind.CONSTRUCTOR)
+            .min((o1, o2) -> ((ExecutableElement) o1).getParameters().size() - ((ExecutableElement) o2).getParameters().size());
+        if (constructor.isPresent()) {
+            for (VariableElement parameter : ((ExecutableElement) constructor.get()).getParameters()) {
+                builderData
+                    .addMember(createMember(typeElement, typeElement, parameter));
+            }
+        }
         return builderData;
     }
 
@@ -187,6 +197,7 @@ public class BuilderGenerator {
             .type(propertyType)
             .outerType(typeUtils.getSurroundingClass(propertyType))
             .name(getPropertyName(enclosedEle))
+            .hasGetter(getterMethodExist(typeElement, enclosedEle))
             .inherited(currentElement != typeElement && hasBuilderAnnotation(currentElement));
         if (isList(propertyType)) {
             TypeMirror subType = typeUtils.getSubType(propertyType);
@@ -201,6 +212,17 @@ public class BuilderGenerator {
                 .hasBuilder(typeHasBuilderAnnotation(propertyType));
         }
         return memberBuilder.build();
+    }
+
+    private boolean getterMethodExist(TypeElement typeElement, Element enclosedEle) {
+        return typeElement.getEnclosedElements().stream()
+            .anyMatch(element -> element.getSimpleName().toString()
+                .equals(determineGetterMethodName(enclosedEle)));
+    }
+
+    private String determineGetterMethodName(Element enclosedEle) {
+        String propertyName = getPropertyName(enclosedEle);
+        return "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
     }
 
     private boolean isAbstract(Element element) {
@@ -327,25 +349,23 @@ public class BuilderGenerator {
     }
 
     private String getPropertyName(Element fieldOrMethod) {
-        int index = isSetter(fieldOrMethod.getSimpleName()) ? 3 : 2;
+        int index = isSetter(fieldOrMethod.getSimpleName()) ? 3 : 0;
         return String.valueOf(fieldOrMethod.getSimpleName().charAt(index)).toLowerCase()
             + fieldOrMethod.getSimpleName().subSequence(index + 1, fieldOrMethod.getSimpleName().length()).toString();
     }
 
     private TypeMirror getPropertyType(Element fieldOrMethod) {
-        return ((ExecutableElement) fieldOrMethod).getParameters().get(0).asType();
-//        return ((ExecutableElement) fieldOrMethod).getReturnType();
+        if (fieldOrMethod instanceof ExecutableElement) {
+            return ((ExecutableElement) fieldOrMethod).getParameters().get(0).asType();
+        }
+        else {
+            return ((VariableElement) fieldOrMethod).asType();
+        }
     }
 
     private boolean isSetter(Element fieldOrMethod) {
         Name methodName = fieldOrMethod.getSimpleName();
         return isSetter(methodName) && ((ExecutableElement) fieldOrMethod).getParameters().size() == 1;
-    }
-
-    private boolean isBooleanGetter(Name methodName) {
-        return methodName.charAt(0) == 'i'
-            && methodName.charAt(1) == 's'
-            && methodName.charAt(2) >= 'A' && methodName.charAt(2) <= 'Z';
     }
 
     private boolean isSetter(Name methodName) {

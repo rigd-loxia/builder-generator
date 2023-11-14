@@ -45,7 +45,11 @@ class TypeUtils {
      * @return true if the type refers to an abstract class
      */
     boolean isAbstract(TypeMirror type) {
-        return isAbstract(types.asElement(type));
+        return isAbstract(asElement(type));
+    }
+
+    Element asElement(TypeMirror type) {
+        return types.asElement(type);
     }
 
     private boolean isAbstract(Element element) {
@@ -60,7 +64,7 @@ class TypeUtils {
      * @throws NullPointerException - if the type is not one with a corresponding element
      */
     List<? extends AnnotationMirror> getAnnotationMirrors(TypeMirror type) {
-        return types.asElement(type).getAnnotationMirrors();
+        return asElement(type).getAnnotationMirrors();
     }
 
     /**
@@ -71,7 +75,7 @@ class TypeUtils {
      * @throws NullPointerException - if the type is not one with a corresponding element
      */
     String getName(TypeMirror type) {
-        return types.asElement(type).getSimpleName().toString();
+        return asElement(type).getSimpleName().toString();
     }
 
     /**
@@ -82,8 +86,8 @@ class TypeUtils {
      *         an innerclass.
      */
     boolean isContainedInClass(TypeMirror type) {
-        return types.asElement(type) != null
-            && types.asElement(type).getEnclosingElement().getKind() == ElementKind.CLASS;
+        return asElement(type) != null
+            && asElement(type).getEnclosingElement().getKind() == ElementKind.CLASS;
     }
 
     /**
@@ -93,7 +97,7 @@ class TypeUtils {
      * @return the surrounding type, which is an OuterClass if {@link #isContainedInClass(TypeMirror)} returns true.
      */
     TypeMirror getSurroundingClass(TypeMirror type) {
-        return isContainedInClass(type) ? types.asElement(type).getEnclosingElement().asType() : null;
+        return isContainedInClass(type) ? asElement(type).getEnclosingElement().asType() : null;
     }
 
     /**
@@ -104,7 +108,7 @@ class TypeUtils {
      * @return true if the annotation is present on the type
      */
     boolean hasAnnotation(TypeMirror type, Class<? extends Annotation> annotation) {
-        return types.asElement(type) != null && types.asElement(type).getAnnotation(annotation) != null;
+        return asElement(type) != null && asElement(type).getAnnotation(annotation) != null;
     }
 
     /**
@@ -127,6 +131,6 @@ class TypeUtils {
      * @throws NullPointerException - if the type is not one with a corresponding element
      */
     String getQualifiedName(TypeMirror typeMirror) {
-        return ((TypeElement) types.asElement(typeMirror)).getQualifiedName().toString();
+        return ((TypeElement) asElement(typeMirror)).getQualifiedName().toString();
     }
 }
