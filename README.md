@@ -84,8 +84,34 @@ private Car createCar() {
 }
 ```
 
+## Installation using maven
+### Adding the dependency on the annotations
+```
+<dependency>
+    <groupId>nl.loxia.builder.generator</groupId>
+    <artifactId>annotations</artifactId>
+    <version>${buildergenerator.version}</version>
+</dependency>
+```
+### Configuring APT for generating classes
+```
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <annotationProcessorPath>
+                            <groupId>nl.loxia.builder.generator</groupId>
+                            <artifactId>builderGenerator</artifactId>
+                            <version>${buildergenerator.version}</version>
+                        </annotationProcessorPath>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+```
+
 ## Release Notes
-### Upcoming release
+### 0.1.0
 * Fixed SeeAlso ordering, first childs then parents instead of first parents then childs.
 * copyOf method now supports the SeeAlso referencing.
 * copyOf method now does an in-depth copy.
