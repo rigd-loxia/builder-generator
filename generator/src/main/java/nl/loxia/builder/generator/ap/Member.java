@@ -21,6 +21,7 @@ public class Member {
     private final List<Alias> aliases;
     private final boolean isAbstract;
     private final boolean hasGetter;
+    private final String subBuilderClassName;
 
     private Member(Member.Builder builder) {
         type = builder.type;
@@ -31,6 +32,7 @@ public class Member {
         name = builder.name;
         inherited = builder.inherited;
         outerType = builder.outerType;
+        subBuilderClassName = builder.subBuilderClassName;
         aliases = Collections.unmodifiableList(builder.aliases);
     }
 
@@ -116,6 +118,10 @@ public class Member {
         return outerType;
     }
 
+    public String getSubBuilderClassName() {
+        return subBuilderClassName;
+    }
+
     /**
      * For chaining you sometimes need to know that a certain field is implemented in different ways. If there is a `SeeAlso`
      * annotation present then this will return true.
@@ -168,6 +174,7 @@ public class Member {
         private boolean inherited;
         private TypeMirror outerType;
         private boolean isAbstract;
+        private String subBuilderClassName;
         private List<Alias> aliases = Collections.emptyList();
 
         private Builder() {
@@ -259,6 +266,15 @@ public class Member {
          */
         public Builder type(TypeMirror type) {
             this.type = type;
+            return this;
+        }
+
+        /**
+         * Configure the member's subBuilderClassName.
+         * @param determineSubBuilderClassName
+         */
+        public Builder subBuilderClassName(String determineSubBuilderClassName) {
+            this.subBuilderClassName = determineSubBuilderClassName;
             return this;
         }
 

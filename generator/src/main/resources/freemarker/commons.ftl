@@ -37,8 +37,3 @@
 </@compress>
 </#macro>
 
-<#macro subBuilderType classType sourceClassName builderClassName>
-    <@compress single_line=true>
-        ${builderClassName}.${classType?remove_beginning(sourceClassName+".")}Builder
-    </@compress>
-</#macro>
