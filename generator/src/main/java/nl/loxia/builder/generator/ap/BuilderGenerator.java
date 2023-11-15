@@ -29,6 +29,8 @@ import javax.tools.JavaFileObject;
 
 import freemarker.template.TemplateException;
 import nl.loxia.builder.generator.annotations.Builder;
+import nl.loxia.builder.generator.annotations.DefaultBoolean;
+import nl.loxia.builder.generator.ap.EnvironmentConfiguration.VariableValue;
 
 /**
  * The core of the builder generator framework.
@@ -37,6 +39,7 @@ import nl.loxia.builder.generator.annotations.Builder;
  */
 public class BuilderGenerator {
 
+    private static final boolean COPY_OF_DEFAULT_VALUE = true;
     private static final String BUILDER_SUFFIX = "Builder";
 
     private final class GenerationException extends RuntimeException {
@@ -124,15 +127,19 @@ public class BuilderGenerator {
     private final Messager messager;
     private final TypeElement typeElement;
     private final TypeUtils typeUtils;
+    private final EnvironmentConfiguration environmentConfiguration;
 
     /**
      * the constructor.
      *
+     * @param environmentConfiguration
      * @param types - Utility class for working with Types.
      * @param messager - Feedback endpoint for communication errors/warnings to the java compiler
      * @param typeElement - The current element for which a builder needs to be generated.
      */
-    public BuilderGenerator(Types types, Messager messager, TypeElement typeElement) {
+    public BuilderGenerator(EnvironmentConfiguration environmentConfiguration, Types types, Messager messager,
+            TypeElement typeElement) {
+        this.environmentConfiguration = environmentConfiguration;
         typeUtils = new TypeUtils(types);
         this.messager = messager;
         this.typeElement = typeElement;
@@ -167,10 +174,13 @@ public class BuilderGenerator {
             new BuilderData(getPackageName(typeElement), typeElement.asType(),
                 typeElement.getSimpleName() + BUILDER_SUFFIX,
                 getExtendedBuilderName(typeElement), isExtendedAbstract(typeElement), getConstructorArguments(typeElement),
-                isAbstract(typeElement));
+                isAbstract(typeElement), isCopyOfEnabled(typeElement));
         for (TypeElement currentElement : getTypeElementHierarchy(typeElement)) {
             for (Element enclosedEle : currentElement.getEnclosedElements()) {
                 if (enclosedEle.getKind() == ElementKind.METHOD && isSetter(enclosedEle)) {
+                    builderData.addMember(createMember(typeElement, currentElement, enclosedEle));
+                }
+                else if (enclosedEle.getKind() == ElementKind.METHOD && isListGetter(enclosedEle)) {
                     builderData.addMember(createMember(typeElement, currentElement, enclosedEle));
                 }
                 else if (enclosedEle.getKind() == ElementKind.CLASS && currentElement == typeElement) {
@@ -189,6 +199,17 @@ public class BuilderGenerator {
             }
         }
         return builderData;
+    }
+
+    private boolean isCopyOfEnabled(TypeElement typeElement) {
+        DefaultBoolean copyOf = typeElement.getAnnotation(Builder.class).copyOf();
+        if (copyOf == DefaultBoolean.DEFAULT) {
+            if (environmentConfiguration.getCopyOfMethodGeneration() == VariableValue.UNSET) {
+                return COPY_OF_DEFAULT_VALUE;
+            }
+            return environmentConfiguration.getCopyOfMethodGeneration() == VariableValue.TRUE;
+        }
+        return copyOf == DefaultBoolean.TRUE;
     }
 
     private Member createMember(TypeElement typeElement, TypeElement currentElement, Element enclosedEle) {
@@ -349,12 +370,15 @@ public class BuilderGenerator {
     }
 
     private String getPropertyName(Element fieldOrMethod) {
-        int index = isSetter(fieldOrMethod.getSimpleName()) ? 3 : 0;
+        int index = isSetter(fieldOrMethod.getSimpleName()) || isListGetter(fieldOrMethod) ? 3 : 0;
         return String.valueOf(fieldOrMethod.getSimpleName().charAt(index)).toLowerCase()
             + fieldOrMethod.getSimpleName().subSequence(index + 1, fieldOrMethod.getSimpleName().length()).toString();
     }
 
     private TypeMirror getPropertyType(Element fieldOrMethod) {
+        if (isListGetter(fieldOrMethod)) {
+            return ((ExecutableElement) fieldOrMethod).getReturnType();
+        }
         if (fieldOrMethod instanceof ExecutableElement) {
             return ((ExecutableElement) fieldOrMethod).getParameters().get(0).asType();
         }
@@ -370,6 +394,23 @@ public class BuilderGenerator {
 
     private boolean isSetter(Name methodName) {
         return methodName.charAt(0) == 's'
+            && methodName.charAt(1) == 'e'
+            && methodName.charAt(2) == 't'
+            && methodName.charAt(3) >= 'A' && methodName.charAt(3) <= 'Z';
+    }
+
+    private boolean isListGetter(Element enclosedEle) {
+        return isGetter(enclosedEle)
+            && isList(((ExecutableElement) enclosedEle).getReturnType());
+    }
+
+    private boolean isGetter(Element fieldOrMethod) {
+        Name methodName = fieldOrMethod.getSimpleName();
+        return isGetter(methodName) && ((ExecutableElement) fieldOrMethod).getParameters().isEmpty();
+    }
+
+    private boolean isGetter(Name methodName) {
+        return methodName.charAt(0) == 'g'
             && methodName.charAt(1) == 'e'
             && methodName.charAt(2) == 't'
             && methodName.charAt(3) >= 'A' && methodName.charAt(3) <= 'Z';

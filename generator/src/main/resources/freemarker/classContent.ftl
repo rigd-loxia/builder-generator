@@ -32,7 +32,9 @@
 	</#list>
     <@generateBuildMethod cls indent/>
     <@generateEndMethod cls indent/>
-    <@generateCopyOfMethod cls indent/>
+    <#if cls.isCopyOfGenerationEnabled()>
+    	<@generateCopyOfMethod cls indent/>
+    </#if>
     <@generateInnerClassBuilder cls indent/>
 </#macro>
 
