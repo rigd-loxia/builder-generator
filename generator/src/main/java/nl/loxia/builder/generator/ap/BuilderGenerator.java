@@ -167,7 +167,7 @@ public class BuilderGenerator {
             new BuilderData(getPackageName(typeElement), typeElement.asType(),
                 typeElement.getSimpleName() + BUILDER_SUFFIX,
                 getExtendedBuilderName(typeElement), isExtendedAbstract(typeElement), getConstructorArguments(typeElement),
-                isAbstract(typeElement));
+                isAbstract(typeElement), isCopyOfEnabled(typeElement));
         for (TypeElement currentElement : getTypeElementHierarchy(typeElement)) {
             for (Element enclosedEle : currentElement.getEnclosedElements()) {
                 if (enclosedEle.getKind() == ElementKind.METHOD && isSetter(enclosedEle)) {
@@ -189,6 +189,10 @@ public class BuilderGenerator {
             }
         }
         return builderData;
+    }
+
+    private boolean isCopyOfEnabled(TypeElement typeElement) {
+        return typeElement.getAnnotation(Builder.class).copyOf();
     }
 
     private Member createMember(TypeElement typeElement, TypeElement currentElement, Element enclosedEle) {

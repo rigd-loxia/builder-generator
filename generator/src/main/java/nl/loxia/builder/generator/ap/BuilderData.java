@@ -26,10 +26,12 @@ public class BuilderData {
         new TreeSet<>((o1, o2) -> o1.getBuilderClassName().compareTo(o2.getBuilderClassName()));
     private final boolean isAbstract;
     private final boolean extendedBuilderIsAbstract;
+    private final boolean isCopyOfGenerationEnabled;
 
     BuilderData(String packageName, TypeMirror sourceClassName, String builderClassName,
             String extendedBuilderName,
-            boolean extendedBuilderIsAbstract, List<String> constructorMembers, boolean isAbstract) {
+            boolean extendedBuilderIsAbstract, List<String> constructorMembers, boolean isAbstract,
+            boolean isCopyOfGenerationEnabled) {
         this.packageName = packageName;
         this.sourceClassName = sourceClassName;
         this.builderClassName = builderClassName;
@@ -37,6 +39,7 @@ public class BuilderData {
         this.extendedBuilderIsAbstract = extendedBuilderIsAbstract;
         this.constructorMembers = constructorMembers;
         this.isAbstract = isAbstract;
+        this.isCopyOfGenerationEnabled = isCopyOfGenerationEnabled;
     }
 
     /**
@@ -114,6 +117,13 @@ public class BuilderData {
     }
 
     /**
+     * @return true if the copy of method should be generated
+     */
+    public boolean isCopyOfGenerationEnabled() {
+        return isCopyOfGenerationEnabled;
+    }
+
+    /**
      * Retrieves the list of fields that will be instantiated through the constructor of the class.
      *
      * @return the list of constructor members
@@ -173,6 +183,9 @@ public class BuilderData {
      * @return false if not all constructor arguments are represented as members.
      */
     public boolean isValide() {
+        if (!isCopyOfGenerationEnabled) {
+            return true;
+        }
         return constructorMembers.stream()
             .allMatch(name -> getMembers().stream().anyMatch(member -> member.getName().equals(name) && member.hasGetter()));
     }
