@@ -1,7 +1,6 @@
 package nl.loxia.builder.generator.ap.test.seealso;
 
 import nl.loxia.builder.generator.annotations.Builder;
-import nl.loxia.builder.generator.ap.test.seealso.SeeAlsoAnnotated;
 
 @Builder
 public class DuplicateField extends SeeAlsoAnnotated {

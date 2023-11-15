@@ -20,12 +20,14 @@ public class Member {
     private final TypeMirror outerType;
     private final List<Alias> aliases;
     private final boolean isAbstract;
+    private final boolean hasGetter;
 
     private Member(Member.Builder builder) {
         type = builder.type;
         isAbstract = builder.isAbstract;
         subType = builder.subType;
         hasBuilder = builder.hasBuilder;
+        hasGetter = builder.hasGetter;
         name = builder.name;
         inherited = builder.inherited;
         outerType = builder.outerType;
@@ -84,6 +86,15 @@ public class Member {
      */
     public boolean hasBuilder() {
         return hasBuilder;
+    }
+
+    /**
+     * This can be used to determine whether a copy constructor is possible or not.
+     *
+     * @return true if a getter method is available
+     */
+    public boolean hasGetter() {
+        return hasGetter;
     }
 
     /**
@@ -153,6 +164,7 @@ public class Member {
         private String name;
         private TypeMirror subType;
         private boolean hasBuilder;
+        private boolean hasGetter;
         private boolean inherited;
         private TypeMirror outerType;
         private boolean isAbstract;
@@ -181,6 +193,17 @@ public class Member {
          */
         public Builder hasBuilder(boolean hasBuilder) {
             this.hasBuilder = hasBuilder;
+            return this;
+        }
+
+        /**
+         * Configure if the member type is defined in the constructor
+         *
+         * @param hasGetter defines if the member is a constructor field.
+         * @return itself for chaining
+         */
+        public Builder hasGetter(boolean hasGetter) {
+            this.hasGetter = hasGetter;
             return this;
         }
 

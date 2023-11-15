@@ -174,6 +174,6 @@ public class BuilderData {
      */
     public boolean isValide() {
         return constructorMembers.stream()
-            .allMatch(name -> getMembers().stream().anyMatch(member -> member.getName().equals(name)));
+            .allMatch(name -> getMembers().stream().anyMatch(member -> member.getName().equals(name) && member.hasGetter()));
     }
 }
