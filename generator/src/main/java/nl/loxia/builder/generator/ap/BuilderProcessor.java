@@ -25,15 +25,17 @@ import nl.loxia.builder.generator.annotations.Builder;
  * @author Ben Zegveld
  */
 @SupportedAnnotationTypes("nl.loxia.builder.generator.annotations.Builder")
-@SupportedOptions("testCompiling")
+@SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration" })
 public class BuilderProcessor extends AbstractProcessor {
     private FreeMarkerWriter freeMarkerWriter;
     private boolean testCompiling;
+    private EnvironmentConfiguration environmentConfiguration;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         freeMarkerWriter = new FreeMarkerWriter();
         testCompiling = processingEnv.getOptions().containsKey("testCompiling");
+        environmentConfiguration = new EnvironmentConfiguration(processingEnv);
         super.init(processingEnv);
     }
 
@@ -46,8 +48,8 @@ public class BuilderProcessor extends AbstractProcessor {
                 if (testCompiling && typeElement.getSimpleName().toString().startsWith("Erroneous")) {
                     continue;
                 }
-                new BuilderGenerator(processingEnv.getTypeUtils(), processingEnv.getMessager(), typeElement)
-                    .generate(processingEnv.getFiler(), freeMarkerWriter);
+                new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(), processingEnv.getMessager(),
+                    typeElement).generate(processingEnv.getFiler(), freeMarkerWriter);
             }
         }
         return false;
