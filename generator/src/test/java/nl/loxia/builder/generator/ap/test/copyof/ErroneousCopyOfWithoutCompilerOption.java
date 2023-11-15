@@ -1,15 +1,13 @@
 package nl.loxia.builder.generator.ap.test.copyof;
 
-import static nl.loxia.builder.generator.annotations.DefaultBoolean.FALSE;
-
 import nl.loxia.builder.generator.annotations.Builder;
 
-@Builder(copyOf = FALSE)
-public class CopyOfDisabled {
+@Builder
+public class ErroneousCopyOfWithoutCompilerOption {
 
     private final String myField;
 
-    CopyOfDisabled(String somethingElse) {
+    ErroneousCopyOfWithoutCompilerOption(String somethingElse) {
         myField = somethingElse;
     }
 

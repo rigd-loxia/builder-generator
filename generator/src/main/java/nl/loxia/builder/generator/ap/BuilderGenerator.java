@@ -28,7 +28,9 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
 import freemarker.template.TemplateException;
+import nl.loxia.builder.generator.annotations.DefaultBoolean;
 import nl.loxia.builder.generator.annotations.Builder;
+import nl.loxia.builder.generator.ap.EnvironmentConfiguration.VariableValue;
 
 /**
  * The core of the builder generator framework.
@@ -37,6 +39,7 @@ import nl.loxia.builder.generator.annotations.Builder;
  */
 public class BuilderGenerator {
 
+    private static final boolean COPY_OF_DEFAULT_VALUE = true;
     private static final String BUILDER_SUFFIX = "Builder";
 
     private final class GenerationException extends RuntimeException {
@@ -124,15 +127,19 @@ public class BuilderGenerator {
     private final Messager messager;
     private final TypeElement typeElement;
     private final TypeUtils typeUtils;
+    private final EnvironmentConfiguration environmentConfiguration;
 
     /**
      * the constructor.
      *
+     * @param environmentConfiguration
      * @param types - Utility class for working with Types.
      * @param messager - Feedback endpoint for communication errors/warnings to the java compiler
      * @param typeElement - The current element for which a builder needs to be generated.
      */
-    public BuilderGenerator(Types types, Messager messager, TypeElement typeElement) {
+    public BuilderGenerator(EnvironmentConfiguration environmentConfiguration, Types types, Messager messager,
+            TypeElement typeElement) {
+        this.environmentConfiguration = environmentConfiguration;
         typeUtils = new TypeUtils(types);
         this.messager = messager;
         this.typeElement = typeElement;
@@ -192,7 +199,14 @@ public class BuilderGenerator {
     }
 
     private boolean isCopyOfEnabled(TypeElement typeElement) {
-        return typeElement.getAnnotation(Builder.class).copyOf();
+        DefaultBoolean copyOf = typeElement.getAnnotation(Builder.class).copyOf();
+        if (copyOf == DefaultBoolean.DEFAULT) {
+            if (environmentConfiguration.getCopyOfMethodGeneration() == VariableValue.UNSET) {
+                return COPY_OF_DEFAULT_VALUE;
+            }
+            return environmentConfiguration.getCopyOfMethodGeneration() == VariableValue.TRUE;
+        }
+        return copyOf == DefaultBoolean.TRUE;
     }
 
     private Member createMember(TypeElement typeElement, TypeElement currentElement, Element enclosedEle) {

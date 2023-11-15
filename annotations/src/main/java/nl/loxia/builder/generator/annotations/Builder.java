@@ -21,8 +21,9 @@ public @interface Builder {
      * By disabling the copy of method, builders can be generated for classes where the constructor arguments and setters do not
      * have their own getter methods.
      *
-     * @return whether or not the copy of methods should be generated. (default true)
+     * @return whether or not the copy of methods should be generated. The default is true unless overridden using compiler
+     *         arguments.
      */
-    boolean copyOf() default true;
+    DefaultBoolean copyOf() default DefaultBoolean.DEFAULT;
 
 }
