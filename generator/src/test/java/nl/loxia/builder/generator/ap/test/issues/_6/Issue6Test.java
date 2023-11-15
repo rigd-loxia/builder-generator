@@ -14,11 +14,11 @@ import org.mapstruct.ap.testutil.compilation.annotation.ExpectedCompilationOutco
  */
 public class Issue6Test {
     @ProcessorTest
-    @WithClasses(Issue6.class)
+    @WithClasses(ErroneousIssue6.class)
     @ExpectedCompilationOutcome(value = CompilationResult.FAILED,
             diagnostics = {
                 @Diagnostic(
-                        type = Issue6.class,
+                        type = ErroneousIssue6.class,
                         line = 6,
                         message = "Cannot generate builder.",
                         kind = Kind.ERROR)
