@@ -127,8 +127,8 @@ ${spc}}
 <#macro generateCollectionAddBuilder cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
-${spc}public <@com.type member.subType packageName/>Builder<? extends ${cls.builderClassName}<PARENT>> add${member.name?cap_first}() {
-${spc}    <@com.type member.subType packageName/>Builder<${cls.builderClassName}<PARENT>> child = new <@com.type member.subType packageName/>Builder<>(this);
+${spc}public <@com.subBuilderType member.subType sourceClassName builderClassName/><? extends ${cls.builderClassName}<PARENT>> add${member.name?cap_first}() {
+${spc}    <@com.subBuilderType member.subType sourceClassName builderClassName/><${cls.builderClassName}<PARENT>> child = new <@com.subBuilderType member.subType sourceClassName builderClassName/><>(this);
 ${spc}    ${member.name}Builders.add(child);
 ${spc}    return child;
 ${spc}}
@@ -158,7 +158,7 @@ ${spc}    result.set${member.name?cap_first}(<@buildMember member indent/>);
         <#list cls.collectionMembers as member>
 ${spc}    result.get${member.name?cap_first}().addAll(${member.name});
             <#if member.hasBuilder()>
-${spc}    for (<@com.type member.subType packageName/>Builder<?> ${member.name}Builder : ${member.name}Builders) {
+${spc}    for (<@com.subBuilderType member.subType sourceClassName builderClassName/><?> ${member.name}Builder : ${member.name}Builders) {
 ${spc}        result.get${member.name?cap_first}().add(${member.name}Builder.build());
 ${spc}    }
             </#if>
