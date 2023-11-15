@@ -28,8 +28,8 @@ import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
 
 import freemarker.template.TemplateException;
-import nl.loxia.builder.generator.annotations.DefaultBoolean;
 import nl.loxia.builder.generator.annotations.Builder;
+import nl.loxia.builder.generator.annotations.DefaultBoolean;
 import nl.loxia.builder.generator.ap.EnvironmentConfiguration.VariableValue;
 
 /**
@@ -178,6 +178,9 @@ public class BuilderGenerator {
         for (TypeElement currentElement : getTypeElementHierarchy(typeElement)) {
             for (Element enclosedEle : currentElement.getEnclosedElements()) {
                 if (enclosedEle.getKind() == ElementKind.METHOD && isSetter(enclosedEle)) {
+                    builderData.addMember(createMember(typeElement, currentElement, enclosedEle));
+                }
+                else if (enclosedEle.getKind() == ElementKind.METHOD && isListGetter(enclosedEle)) {
                     builderData.addMember(createMember(typeElement, currentElement, enclosedEle));
                 }
                 else if (enclosedEle.getKind() == ElementKind.CLASS && currentElement == typeElement) {
@@ -367,12 +370,15 @@ public class BuilderGenerator {
     }
 
     private String getPropertyName(Element fieldOrMethod) {
-        int index = isSetter(fieldOrMethod.getSimpleName()) ? 3 : 0;
+        int index = isSetter(fieldOrMethod.getSimpleName()) || isListGetter(fieldOrMethod) ? 3 : 0;
         return String.valueOf(fieldOrMethod.getSimpleName().charAt(index)).toLowerCase()
             + fieldOrMethod.getSimpleName().subSequence(index + 1, fieldOrMethod.getSimpleName().length()).toString();
     }
 
     private TypeMirror getPropertyType(Element fieldOrMethod) {
+        if (isListGetter(fieldOrMethod)) {
+            return ((ExecutableElement) fieldOrMethod).getReturnType();
+        }
         if (fieldOrMethod instanceof ExecutableElement) {
             return ((ExecutableElement) fieldOrMethod).getParameters().get(0).asType();
         }
@@ -388,6 +394,23 @@ public class BuilderGenerator {
 
     private boolean isSetter(Name methodName) {
         return methodName.charAt(0) == 's'
+            && methodName.charAt(1) == 'e'
+            && methodName.charAt(2) == 't'
+            && methodName.charAt(3) >= 'A' && methodName.charAt(3) <= 'Z';
+    }
+
+    private boolean isListGetter(Element enclosedEle) {
+        return isGetter(enclosedEle)
+            && isList(((ExecutableElement) enclosedEle).getReturnType());
+    }
+
+    private boolean isGetter(Element fieldOrMethod) {
+        Name methodName = fieldOrMethod.getSimpleName();
+        return isGetter(methodName) && ((ExecutableElement) fieldOrMethod).getParameters().isEmpty();
+    }
+
+    private boolean isGetter(Name methodName) {
+        return methodName.charAt(0) == 'g'
             && methodName.charAt(1) == 'e'
             && methodName.charAt(2) == 't'
             && methodName.charAt(3) >= 'A' && methodName.charAt(3) <= 'Z';
