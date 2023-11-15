@@ -28,8 +28,7 @@ public class BuilderData {
     private final boolean extendedBuilderIsAbstract;
     private final boolean isCopyOfGenerationEnabled;
 
-    BuilderData(String packageName, TypeMirror sourceClassName, String builderClassName,
-            String extendedBuilderName,
+    BuilderData(String packageName, TypeMirror sourceClassName, String builderClassName, String extendedBuilderName,
             boolean extendedBuilderIsAbstract, List<String> constructorMembers, boolean isAbstract,
             boolean isCopyOfGenerationEnabled) {
         this.packageName = packageName;
@@ -180,7 +179,7 @@ public class BuilderData {
     /**
      * Checks if the builder can generate a valid class.
      *
-     * @return false if not all constructor arguments are represented as members.
+     * @return false if not all members are available through a getter method.
      */
     public boolean isValide() {
         if (!isCopyOfGenerationEnabled) {
