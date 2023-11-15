@@ -24,6 +24,7 @@ The following are by default generated
 * fluent api met `with` prefix.
 * builder chaining
 * builder inheritence
+* builder copyOf method
 
 There are currently no support for options, although with PR's being merged this will change.
 
@@ -38,6 +39,23 @@ example for the annotation:
 public @interface SeeAlso {
     Class<?>[] value() default {};
 }
+```
+
+### CopyOf method configuration
+It is possible to configure whether or not a copyOf method is generated through the use of compiler arguments or `@Builder` annotation property.
+If the `@Builder` annotation property is defined then this value is used, otherwise the compiler argument is used.
+If neither are present then the copyOf method will be generated.
+
+example for disabling the copyOf method:
+```java
+@Builder(copyOf = BOOLEAN.FALSE)
+```
+or through compiler arguments:
+```
+	<compilerArgs>
+		<!-- testCompiling is used to skip the generation of builder classes for which the processor should generate a compilation error. -->
+		<arg>-nl.loxia.BuilderGenerator.copyOfMethodGeneration=false</arg>
+	</compilerArgs>
 ```
 
 ## Usage example
@@ -110,7 +128,14 @@ private Car createCar() {
             </plugin>
 ```
 
+## Overview compiler arguments
+|| Compiler argument || default value || behaviour ||
+|nl.loxia.BuilderGenerator.copyOfMethodGeneration|true|determines whether or not copyOf methods should be generated|
+
 ## Release Notes
+### 0.2.0 (upcoming release)
+* copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field.
+
 ### 0.1.0
 * Fixed SeeAlso ordering, first childs then parents instead of first parents then childs.
 * copyOf method now supports the SeeAlso referencing.
