@@ -225,7 +225,8 @@ public class BuilderGenerator {
             memberBuilder
                 .isAbstract(typeUtils.isAbstract(subType))
                 .subType(subType)
-                .hasBuilder(typeHasBuilderAnnotation(subType));
+                .hasBuilder(typeHasBuilderAnnotation(subType))
+                .subBuilderClassName(determineSubBuilderClassName(subType));
             addAliases(memberBuilder, subType, typeElement);
         }
         else {
@@ -248,6 +249,17 @@ public class BuilderGenerator {
 
     private boolean isAbstract(Element element) {
         return element != null && element.getModifiers().contains(Modifier.ABSTRACT);
+    }
+
+    private String determineSubBuilderClassName(TypeMirror subType) {
+        String initialBuilder = subType.toString() + BUILDER_SUFFIX;
+        Element currentElement = typeUtils.asElement(subType);
+        while (currentElement.getEnclosingElement().getKind() == ElementKind.CLASS) {
+            currentElement = currentElement.getEnclosingElement();
+            String outerclass = currentElement.asType().toString();
+            initialBuilder = initialBuilder.replace(outerclass, outerclass + BUILDER_SUFFIX);
+        }
+        return initialBuilder;
     }
 
     private void addAliases(Member.Builder memberBuilder, TypeMirror subType, TypeElement typeElement) {

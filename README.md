@@ -135,6 +135,7 @@ private Car createCar() {
 ## Release Notes
 ### 0.2.0 (upcoming release)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field.
+* support InnerClassBuilder when InnerClass is in a List
 
 ### 0.1.0
 * Fixed SeeAlso ordering, first childs then parents instead of first parents then childs.
