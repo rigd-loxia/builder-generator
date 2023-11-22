@@ -14,9 +14,53 @@ public @interface SeeAlso {
 }
 ```
 
-## Usage
-Below you see a structure where the see also annotation would come into play:
+## Example
+Below you see a structure where the see also annotation would come into play.
 
 ```java
+@SeeAlso( { Cat.class, Dog.class } )
+@Builder
+class Animal {
+	String food;
+	/** constructors/getters/setters left out **/
+}
 
+@Builder
+class Cat extends Animal {
+	String tailColor;
+	/** constructors/getters/setters left out **/
+}
+
+@Builder
+class Dog extends Animal {
+	String furColor;
+	/** constructors/getters/setters left out **/
+}
+```
+
+Taking the following class:
+
+```java
+@Builder
+class Person {
+	List<Animal> pets = new ArrayList<>();
+	/** constructors/getters/setters left out **/
+}
+```
+We will get the following methods for adding pets:
+```java
+class PersonBuilder {
+...
+	CatBuilder addCat() { ... }
+	DogBuilder addDog() { ... }
+	AnimalBuilder addPets() { ... }
+...
+}
+```
+This would allow you to fill up the pets using code like this:
+```
+personBuilder
+	.addDog().withFood(...).withFurColor(...).end()
+	.addCat().withFood(...).withTailColor(...).end()
+	.addPets().withFood(...).end()
 ```
