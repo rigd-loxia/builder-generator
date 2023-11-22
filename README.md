@@ -28,35 +28,7 @@ The following are by default generated
 
 There are currently no support for options, although with PR's being merged this will change.
 
-### SeeAlso annotation
-If a class or interface is annotated with `@SeeAlso(class, class, ...)` then any non-abstract class mentioned here will be available for chaining from the builder.
-It does not matter where the SeeAlso annotation is defined, only the annotation name is checked.
-
-example for the annotation:
-```java
-@Retention(RUNTIME)
-@Target(TYPE)
-public @interface SeeAlso {
-    Class<?>[] value() default {};
-}
-```
-
-### CopyOf method configuration
-It is possible to configure whether or not a copyOf method is generated through the use of compiler arguments or `@Builder` annotation property.
-If the `@Builder` annotation property is defined then this value is used, otherwise the compiler argument is used.
-If neither are present then the copyOf method will be generated.
-
-example for disabling the copyOf method:
-```java
-@Builder(copyOf = BOOLEAN.FALSE)
-```
-or through compiler arguments:
-```
-	<compilerArgs>
-		<!-- testCompiling is used to skip the generation of builder classes for which the processor should generate a compilation error. -->
-		<arg>-nl.loxia.BuilderGenerator.copyOfMethodGeneration=false</arg>
-	</compilerArgs>
-```
+[See the Reference Guide for all supported features.](./documentation/index.md)
 
 ## Usage example
 Take for example the following structure of classes:
