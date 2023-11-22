@@ -48,6 +48,9 @@ class TypeUtils {
         return isAbstract(asElement(type));
     }
 
+    /**
+     * Redirects to {@link Types#asElement(TypeMirror)}
+     */
     Element asElement(TypeMirror type) {
         return types.asElement(type);
     }
@@ -82,8 +85,7 @@ class TypeUtils {
      * checks if the element enclosing this type is a class.
      *
      * @param type - the type for which the check is wanted.
-     * @return true if this class is an innerclass. It will also return false when it cannot determine whether or not the type is in
-     *         an innerclass.
+     * @return true if this class is an innerclass.
      */
     boolean isContainedInClass(TypeMirror type) {
         return asElement(type) != null
@@ -91,10 +93,10 @@ class TypeUtils {
     }
 
     /**
-     * retrieves the type enclosing this type. The OuterClass if {@link #isContainedInClass(TypeMirror)} returns true.
+     * retrieves the type enclosing this type if {@link #isContainedInClass(TypeMirror)} returns true, otherwise {@code null}.
      *
      * @param type - the type for which the surrounding type is wanted.
-     * @return the surrounding type, which is an OuterClass if {@link #isContainedInClass(TypeMirror)} returns true.
+     * @return the surrounding type, if {@link #isContainedInClass(TypeMirror)} returns true, otherwise {@code null}.
      */
     TypeMirror getSurroundingClass(TypeMirror type) {
         return isContainedInClass(type) ? asElement(type).getEnclosingElement().asType() : null;
@@ -117,9 +119,9 @@ class TypeUtils {
      * @param typeEle - the type element of which the hierachical parent is wanted.
      * @return the hierarchical parent of this typeElement or null if absent.
      */
-    TypeElement getParentElement(TypeElement typeEle) {
+    Type getParentType(Type typeEle) {
         return typeEle.getSuperclass().getKind() != TypeKind.NONE
-            ? (TypeElement) types.asElement(typeEle.getSuperclass())
+            ? new Type((TypeElement) types.asElement(typeEle.getSuperclass()))
             : null;
     }
 
@@ -132,5 +134,10 @@ class TypeUtils {
      */
     String getQualifiedName(TypeMirror typeMirror) {
         return ((TypeElement) asElement(typeMirror)).getQualifiedName().toString();
+    }
+
+    boolean isList(TypeMirror typeMirror) {
+        return typeMirror.getKind() == TypeKind.DECLARED
+            && getQualifiedName(typeMirror).equals("java.util.List");
     }
 }

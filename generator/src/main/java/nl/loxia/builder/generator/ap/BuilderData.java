@@ -26,11 +26,11 @@ public class BuilderData {
         new TreeSet<>((o1, o2) -> o1.getBuilderClassName().compareTo(o2.getBuilderClassName()));
     private final boolean isAbstract;
     private final boolean extendedBuilderIsAbstract;
-    private final boolean isCopyOfGenerationEnabled;
+    private final BuilderConfiguration builderConfiguration;
 
     BuilderData(String packageName, TypeMirror sourceClassName, String builderClassName, String extendedBuilderName,
             boolean extendedBuilderIsAbstract, List<String> constructorMembers, boolean isAbstract,
-            boolean isCopyOfGenerationEnabled) {
+            BuilderConfiguration builderConfiguration) {
         this.packageName = packageName;
         this.sourceClassName = sourceClassName;
         this.builderClassName = builderClassName;
@@ -38,7 +38,7 @@ public class BuilderData {
         this.extendedBuilderIsAbstract = extendedBuilderIsAbstract;
         this.constructorMembers = constructorMembers;
         this.isAbstract = isAbstract;
-        this.isCopyOfGenerationEnabled = isCopyOfGenerationEnabled;
+        this.builderConfiguration = builderConfiguration;
     }
 
     /**
@@ -119,7 +119,7 @@ public class BuilderData {
      * @return true if the copy of method should be generated
      */
     public boolean isCopyOfGenerationEnabled() {
-        return isCopyOfGenerationEnabled;
+        return builderConfiguration.isCopyOfEnabled();
     }
 
     /**
@@ -179,10 +179,10 @@ public class BuilderData {
     /**
      * Checks if the builder can generate a valid class.
      *
-     * @return false if not all members are available through a getter method.
+     * @return false if copy of methods cannot be generated while the generation of them is enabled.
      */
     public boolean isValide() {
-        if (!isCopyOfGenerationEnabled) {
+        if (!isCopyOfGenerationEnabled()) {
             return true;
         }
         return constructorMembers.stream()
