@@ -104,6 +104,9 @@ private Car createCar() {
 || Compiler argument || default value || behaviour ||
 |nl.loxia.BuilderGenerator.copyOfMethodGeneration|true|determines whether or not copyOf methods should be generated|
 
+## Contributing
+if you want to contribute to the development of this module, then please see the documentation here: [Contribution documentation](Contribution.md)
+
 ## Release Notes
 ### 0.2.0 (upcoming release)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field.
