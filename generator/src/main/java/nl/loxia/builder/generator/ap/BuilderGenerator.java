@@ -104,10 +104,10 @@ public class BuilderGenerator {
     private void updateBuilderDataWithHierarchicalInformation(Type typeElement, BuilderData builderData) {
         for (Type currentElement : getTypeElementHierarchy(typeElement)) {
             for (TypeMember typeMember : currentElement.getEnclosedElements()) {
-                if (typeMember.isMethod() && typeMember.isSetter()) {
+                if (typeMember.isSetterMethod()) {
                     builderData.addMember(createMember(typeElement, currentElement, typeMember));
                 }
-                else if (typeMember.isMethod() && isListGetter(typeMember)) {
+                else if (isListGetterMethod(typeMember)) {
                     builderData.addMember(createMember(typeElement, currentElement, typeMember));
                 }
                 else if (typeMember.isClass() && currentElement == typeElement) {
@@ -198,7 +198,7 @@ public class BuilderGenerator {
     private boolean notPresentAsFieldIn(TypeMirror type, Type typeElement) {
         for (Type currentElement : getTypeElementHierarchy(typeElement)) {
             for (TypeMember enclosedEle : currentElement.getEnclosedElements()) {
-                if (enclosedEle.isMethod() && enclosedEle.isSetter()) {
+                if (enclosedEle.isMethod() && enclosedEle.isSetterMethod()) {
                     TypeMirror propertyType = enclosedEle.getPropertyType();
                     if (typeUtils.isList(propertyType) && type.equals(typeUtils.getSubType(propertyType))) {
                         return false;
@@ -246,8 +246,8 @@ public class BuilderGenerator {
         return typeUtils.getParentType(type);
     }
 
-    private boolean isListGetter(TypeMember enclosedEle) {
-        return enclosedEle.isGetter() && typeUtils.isList(enclosedEle.getReturnType());
+    private boolean isListGetterMethod(TypeMember enclosedEle) {
+        return enclosedEle.isGetterMethod() && typeUtils.isList(enclosedEle.getReturnType());
     }
 
     private String getClassName(String qualifiedName) {

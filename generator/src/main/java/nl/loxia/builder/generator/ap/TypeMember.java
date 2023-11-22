@@ -36,9 +36,9 @@ public class TypeMember {
         return element.getKind() == ElementKind.CONSTRUCTOR;
     }
 
-    public boolean isSetter() {
+    public boolean isSetterMethod() {
         Name methodName = element.getSimpleName();
-        return isSetter(methodName) && ((ExecutableElement) element).getParameters().size() == 1;
+        return isMethod() && isSetter(methodName) && ((ExecutableElement) element).getParameters().size() == 1;
     }
 
     private boolean isSetter(Name methodName) {
@@ -48,9 +48,9 @@ public class TypeMember {
             && methodName.charAt(3) >= 'A' && methodName.charAt(3) <= 'Z';
     }
 
-    public boolean isGetter() {
+    public boolean isGetterMethod() {
         Name methodName = element.getSimpleName();
-        return isGetter(methodName) && ((ExecutableElement) element).getParameters().isEmpty();
+        return isMethod() && isGetter(methodName) && ((ExecutableElement) element).getParameters().isEmpty();
     }
 
     private boolean isGetter(Name methodName) {
@@ -72,7 +72,7 @@ public class TypeMember {
     }
 
     public TypeMirror getPropertyType() {
-        if (isGetter()) {
+        if (isGetterMethod()) {
             return getReturnType();
         }
         if (element instanceof ExecutableElement) {
@@ -84,7 +84,7 @@ public class TypeMember {
     }
 
     public String getPropertyName() {
-        int index = isSetter() || isGetter() ? 3 : 0;
+        int index = isSetterMethod() || isGetterMethod() ? 3 : 0;
         return String.valueOf(getSimpleName().charAt(index)).toLowerCase() + getSimpleName().substring(index + 1);
     }
 
