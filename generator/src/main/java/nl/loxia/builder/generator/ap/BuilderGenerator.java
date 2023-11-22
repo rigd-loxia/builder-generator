@@ -16,7 +16,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
@@ -24,8 +23,6 @@ import javax.tools.JavaFileObject;
 
 import freemarker.template.TemplateException;
 import nl.loxia.builder.generator.annotations.Builder;
-import nl.loxia.builder.generator.annotations.DefaultBoolean;
-import nl.loxia.builder.generator.ap.EnvironmentConfiguration.VariableValue;
 
 /**
  * The core of the builder generator framework.
@@ -34,7 +31,6 @@ import nl.loxia.builder.generator.ap.EnvironmentConfiguration.VariableValue;
  */
 public class BuilderGenerator {
 
-    private static final boolean COPY_OF_DEFAULT_VALUE = true;
     private static final String BUILDER_SUFFIX = "Builder";
 
     private final Messager messager;
@@ -92,7 +88,7 @@ public class BuilderGenerator {
                 typeElement.getSimpleName() + BUILDER_SUFFIX,
                 getExtendedBuilderName(typeElement), isExtendedAbstract(typeElement),
                 typeElement.getSmallestConstructorArgumentNames(),
-                typeElement.isAbstract(), isCopyOfEnabled(typeElement));
+                typeElement.isAbstract(), new BuilderConfiguration(environmentConfiguration, typeElement));
 
         updateBuilderDataWithHierarchicalInformation(typeElement, builderData);
         updateBuilderDataWithConstructorInformation(typeElement, builderData);
@@ -121,17 +117,6 @@ public class BuilderGenerator {
         }
     }
 
-    private boolean isCopyOfEnabled(Type typeElement) {
-        DefaultBoolean copyOf = typeElement.getAnnotation(Builder.class).copyOf();
-        if (copyOf == DefaultBoolean.DEFAULT) {
-            if (environmentConfiguration.getCopyOfMethodGeneration() == VariableValue.UNSET) {
-                return COPY_OF_DEFAULT_VALUE;
-            }
-            return environmentConfiguration.getCopyOfMethodGeneration() == VariableValue.TRUE;
-        }
-        return copyOf == DefaultBoolean.TRUE;
-    }
-
     private Member createMember(Type typeElement, Type currentElement, TypeMember enclosedEle) {
         TypeMirror propertyType = enclosedEle.getPropertyType();
         Member.Builder memberBuilder = Member.builder()
@@ -140,7 +125,7 @@ public class BuilderGenerator {
             .name(enclosedEle.getPropertyName())
             .hasGetter(typeElement.hasGetterFor(enclosedEle))
             .inherited(currentElement != typeElement && currentElement.hasBuilderAnnotation());
-        if (isList(propertyType)) {
+        if (typeUtils.isList(propertyType)) {
             TypeMirror subType = typeUtils.getSubType(propertyType);
             memberBuilder
                 .isAbstract(typeUtils.isAbstract(subType))
@@ -168,40 +153,46 @@ public class BuilderGenerator {
     }
 
     private void addAliases(Member.Builder memberBuilder, TypeMirror subType, Type typeElement) {
-        List<TypeMirror> aliases = new ArrayList<>();
-        gatherAliases(aliases, subType);
+        List<TypeMirror> aliases = gatherAliases(subType);
         memberBuilder.setAliases(aliases.stream()
-            .filter(type -> notPresentAsFieldIn(type, typeElement))
+            .filter(type -> notPresentAsFieldIn(type, typeElement)) // in case an alias conflicts with a field name skip it.
             .map(this::toAlias)
             .collect(Collectors.toList()));
     }
 
-    private void gatherAliases(List<TypeMirror> aliases, TypeMirror subType) {
+    private Alias toAlias(TypeMirror mirror) {
+        return new Alias(mirror, typeUtils.getName(mirror));
+    }
+
+    private List<TypeMirror> gatherAliases(TypeMirror subType) {
+        List<TypeMirror> aliases = new ArrayList<>();
         for (AnnotationMirror mirror : typeUtils.getAnnotationMirrors(subType)) {
-            if (mirror.getAnnotationType().asElement().getSimpleName().toString().equals("SeeAlso")) {
+            if (AnnotationUtils.isSeeAlsoAnnotation(mirror)) {
                 for (Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : mirror.getElementValues()
                     .entrySet()) {
                     if (entry.getKey().getSimpleName().toString().equals("value")) {
-                        gatherReferencedAliases(aliases, entry);
+                        aliases.addAll(gatherReferencedAliases(entry));
                     }
                 }
             }
         }
+        return aliases;
     }
 
-    private void gatherReferencedAliases(List<TypeMirror> aliases,
-            Entry<? extends ExecutableElement, ? extends AnnotationValue> entry) {
+    private List<TypeMirror> gatherReferencedAliases(Entry<? extends ExecutableElement, ? extends AnnotationValue> entry) {
+        List<TypeMirror> aliases = new ArrayList<>();
         AnnotationValue value = entry.getValue();
         AnnotationClassReferenceVisitor referenceVisitor = new AnnotationClassReferenceVisitor();
         value.accept(referenceVisitor, null);
         for (TypeMirror typeMirror : referenceVisitor.mirrors) {
-            gatherAliases(aliases, typeMirror);
-            boolean isList = isList(typeMirror);
+            aliases.addAll(gatherAliases(typeMirror));
+            boolean isList = typeUtils.isList(typeMirror);
             if (!isList && !typeUtils.isAbstract(typeMirror)
                 || isList && !typeUtils.isAbstract(typeUtils.getSubType(typeMirror))) {
                 aliases.add(typeMirror);
             }
         }
+        return aliases;
     }
 
     private boolean notPresentAsFieldIn(TypeMirror type, Type typeElement) {
@@ -209,17 +200,13 @@ public class BuilderGenerator {
             for (TypeMember enclosedEle : currentElement.getEnclosedElements()) {
                 if (enclosedEle.isMethod() && enclosedEle.isSetter()) {
                     TypeMirror propertyType = enclosedEle.getPropertyType();
-                    if (isList(propertyType) && type.equals(typeUtils.getSubType(propertyType))) {
+                    if (typeUtils.isList(propertyType) && type.equals(typeUtils.getSubType(propertyType))) {
                         return false;
                     }
                 }
             }
         }
         return true;
-    }
-
-    private Alias toAlias(TypeMirror mirror) {
-        return new Alias(mirror, typeUtils.getName(mirror));
     }
 
     private boolean typeHasBuilderAnnotation(TypeMirror propertyType) {
@@ -259,13 +246,8 @@ public class BuilderGenerator {
         return typeUtils.getParentType(type);
     }
 
-    boolean isList(TypeMirror typeMirror) {
-        return typeMirror.getKind() == TypeKind.DECLARED
-            && typeUtils.getQualifiedName(typeMirror).equals("java.util.List");
-    }
-
     private boolean isListGetter(TypeMember enclosedEle) {
-        return enclosedEle.isGetter() && isList(enclosedEle.getReturnType());
+        return enclosedEle.isGetter() && typeUtils.isList(enclosedEle.getReturnType());
     }
 
     private String getClassName(String qualifiedName) {

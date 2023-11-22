@@ -135,4 +135,9 @@ class TypeUtils {
     String getQualifiedName(TypeMirror typeMirror) {
         return ((TypeElement) asElement(typeMirror)).getQualifiedName().toString();
     }
+
+    boolean isList(TypeMirror typeMirror) {
+        return typeMirror.getKind() == TypeKind.DECLARED
+            && getQualifiedName(typeMirror).equals("java.util.List");
+    }
 }
