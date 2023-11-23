@@ -81,7 +81,7 @@ ${spc}}
 <#macro generateWithMethod cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
-${spc}public ${cls.builderClassName}<PARENT> with${member.name?cap_first}(<@com.type member.type packageName/> ${member.name}) {
+${spc}public ${cls.builderClassName}<PARENT> ${member.methodName}(<@com.type member.type packageName/> ${member.name}) {
 ${spc}    this.${member.name} = ${member.name};
     	<#if member.hasBuilder() && !member.hasSubType()>
 ${spc}    ${member.name}Builder = null;
@@ -95,7 +95,7 @@ ${spc}}
 <#macro generateWithBuilderMethod cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
-${spc}public <@com.builderType member packageName sourceClassName/><? extends ${cls.builderClassName}<PARENT>> with${member.name?cap_first}() {
+${spc}public <@com.builderType member packageName sourceClassName/><? extends ${cls.builderClassName}<PARENT>> ${member.methodName}() {
 ${spc}    if (${member.name}Builder == null) {
 ${spc}        ${member.name}Builder = new <@com.builderType member packageName sourceClassName/><>(this);
 ${spc}        ${member.name} = null;

@@ -4,9 +4,12 @@ import static java.util.stream.Collectors.toList;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
@@ -83,6 +86,17 @@ public class Type {
         return getEnclosedElementsStream()
             .anyMatch(element -> element.getSimpleName()
                 .equals(typeMember.determineGetterMethodName()));
+    }
+
+    public Object getAnnotationValue(Class<? extends Annotation> annotationClass, String annotationMethod) {
+        for (AnnotationMirror mirror : typeElement.getAnnotationMirrors()) {
+            if (mirror.getAnnotationType().toString().equals(annotationClass.getName())) {
+                Map<String, Object> map = mirror.getElementValues().entrySet().stream()
+                    .collect(Collectors.toMap(k -> k.getKey().getSimpleName().toString(), k -> k.getValue().getValue()));
+                return map.get(annotationMethod);
+            }
+        }
+        return null;
     }
 
 }

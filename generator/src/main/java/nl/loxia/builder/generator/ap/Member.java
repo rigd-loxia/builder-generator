@@ -22,6 +22,7 @@ public class Member {
     private final boolean isAbstract;
     private final boolean hasGetter;
     private final String subBuilderClassName;
+    private final String methodName;
 
     private Member(Member.Builder builder) {
         type = builder.type;
@@ -34,6 +35,7 @@ public class Member {
         outerType = builder.outerType;
         subBuilderClassName = builder.subBuilderClassName;
         aliases = Collections.unmodifiableList(builder.aliases);
+        methodName = builder.methodName;
     }
 
     /**
@@ -43,6 +45,15 @@ public class Member {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * the method name to be used for generation.
+     *
+     * @return the method name to be used for generation.
+     */
+    public String getMethodName() {
+        return methodName;
     }
 
     /**
@@ -176,6 +187,7 @@ public class Member {
         private boolean isAbstract;
         private String subBuilderClassName;
         private List<Alias> aliases = Collections.emptyList();
+        private String methodName;
 
         private Builder() {
             // alleen via Member.builder() aan te maken.
@@ -271,10 +283,11 @@ public class Member {
 
         /**
          * Configure the member's subBuilderClassName.
+         *
          * @param determineSubBuilderClassName
          */
         public Builder subBuilderClassName(String determineSubBuilderClassName) {
-            this.subBuilderClassName = determineSubBuilderClassName;
+            subBuilderClassName = determineSubBuilderClassName;
             return this;
         }
 
@@ -286,6 +299,17 @@ public class Member {
          */
         public Builder setAliases(List<Alias> aliases) {
             this.aliases = aliases;
+            return this;
+        }
+
+        /**
+         * Configure the member's builder method name.
+         *
+         * @param methodName to be used in the generated builder.
+         * @return itself for chaining.
+         */
+        public Builder setBuilderMethod(String methodName) {
+            this.methodName = methodName;
             return this;
         }
 
