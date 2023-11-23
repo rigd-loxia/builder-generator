@@ -49,3 +49,8 @@ If you want to work on a new feature, follow these steps.
 6. Commit
 7. Push your branch to your fork
 8. Go into github UI and create a PR from your fork & branch.
+
+## Explanation of Structure
+
+The Type class is the equivalent of a java class, while the TypeMember class is the equivalent of a field, method, or class inside a java class.
+In case that a TypeMember is a class then the toType method can be used to handle the usage of it as a Type.
