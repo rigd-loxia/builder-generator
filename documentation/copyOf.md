@@ -12,6 +12,6 @@ or through compiler arguments:
 ```
 	<compilerArgs>
 		<!-- testCompiling is used to skip the generation of builder classes for which the processor should generate a compilation error. -->
-		<arg>-nl.loxia.BuilderGenerator.copyOfMethodGeneration=false</arg>
+		<arg>-Anl.loxia.BuilderGenerator.copyOfMethodGeneration=false</arg>
 	</compilerArgs>
 ```
