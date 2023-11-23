@@ -101,7 +101,8 @@ private Car createCar() {
 ```
 
 ## Overview compiler arguments
-|| Compiler argument                               || default value || behaviour                                                    ||
+| Compiler argument                                | default value  | behaviour                                                     |
+| :----------------------------------------------: | :------------: | :-----------------------------------------------------------: |
 | nl.loxia.BuilderGenerator.copyOfMethodGeneration |  true          | determines whether or not copyOf methods should be generated  |
 
 ## Contributing
@@ -109,10 +110,10 @@ if you want to contribute to the development of this module, then please see the
 
 ## Release Notes
 ### 0.2.0 (upcoming release)
-* copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. (#15)
-* support InnerClassBuilder when InnerClass is in a List (#16)
-* determine the properties using setters and constructor arguments (#7)
-* allow lists to be accessed using a getter and then add methods on the list (#18)
+* copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))
+* support InnerClassBuilder when InnerClass is in a List ([#16](https://github.com/rigd-loxia/builder-generator/issues/16))
+* determine the properties using setters and constructor arguments ([#7](https://github.com/rigd-loxia/builder-generator/issues/7))
+* allow lists to be accessed using a getter and then add methods on the list ([#18](https://github.com/rigd-loxia/builder-generator/issues/18))
 
 ### 0.1.0
 * Fixed SeeAlso ordering, first childs then parents instead of first parents then childs.
