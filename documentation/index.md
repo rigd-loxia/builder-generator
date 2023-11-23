@@ -6,3 +6,4 @@
 ## configuration options
 
 [Disabling the copy of behavior](copyOf.md)
+[Changing the method prefix](methodPrefix.md)
