@@ -28,35 +28,7 @@ The following are by default generated
 
 There are currently no support for options, although with PR's being merged this will change.
 
-### SeeAlso annotation
-If a class or interface is annotated with `@SeeAlso(class, class, ...)` then any non-abstract class mentioned here will be available for chaining from the builder.
-It does not matter where the SeeAlso annotation is defined, only the annotation name is checked.
-
-example for the annotation:
-```java
-@Retention(RUNTIME)
-@Target(TYPE)
-public @interface SeeAlso {
-    Class<?>[] value() default {};
-}
-```
-
-### CopyOf method configuration
-It is possible to configure whether or not a copyOf method is generated through the use of compiler arguments or `@Builder` annotation property.
-If the `@Builder` annotation property is defined then this value is used, otherwise the compiler argument is used.
-If neither are present then the copyOf method will be generated.
-
-example for disabling the copyOf method:
-```java
-@Builder(copyOf = BOOLEAN.FALSE)
-```
-or through compiler arguments:
-```
-	<compilerArgs>
-		<!-- testCompiling is used to skip the generation of builder classes for which the processor should generate a compilation error. -->
-		<arg>-nl.loxia.BuilderGenerator.copyOfMethodGeneration=false</arg>
-	</compilerArgs>
-```
+[See the Reference Guide for all supported features.](./documentation/index.md)
 
 ## Usage example
 Take for example the following structure of classes:
@@ -129,13 +101,19 @@ private Car createCar() {
 ```
 
 ## Overview compiler arguments
-|| Compiler argument || default value || behaviour ||
-|nl.loxia.BuilderGenerator.copyOfMethodGeneration|true|determines whether or not copyOf methods should be generated|
+| Compiler argument                                | default value  | behaviour                                                     |
+| :----------------------------------------------: | :------------: | :-----------------------------------------------------------: |
+| nl.loxia.BuilderGenerator.copyOfMethodGeneration |  true          | determines whether or not copyOf methods should be generated  |
+
+## Contributing
+if you want to contribute to the development of this module, then please see the documentation here: [Contribution documentation](CONTRIBUTING.md)
 
 ## Release Notes
 ### 0.2.0 (upcoming release)
-* copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field.
-* support InnerClassBuilder when InnerClass is in a List
+* copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))
+* support InnerClassBuilder when InnerClass is in a List ([#16](https://github.com/rigd-loxia/builder-generator/issues/16))
+* determine the properties using setters and constructor arguments ([#7](https://github.com/rigd-loxia/builder-generator/issues/7))
+* allow lists to be accessed using a getter and then add methods on the list ([#18](https://github.com/rigd-loxia/builder-generator/issues/18))
 
 ### 0.1.0
 * Fixed SeeAlso ordering, first childs then parents instead of first parents then childs.
