@@ -137,6 +137,7 @@ public class BuilderGenerator {
             memberBuilder
                 .isAbstract(typeUtils.isAbstract(subType))
                 .subType(subType)
+                .outerTypes(typeUtils.getSurroundingClasses(subType))
                 .hasBuilder(typeHasBuilderAnnotation(subType))
                 .subBuilderClassName(determineSubBuilderClassName(subType));
             addAliases(memberBuilder, subType, typeElement);
