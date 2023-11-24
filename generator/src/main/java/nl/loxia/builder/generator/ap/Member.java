@@ -17,7 +17,7 @@ public class Member {
     private final TypeMirror subType;
     private final boolean hasBuilder;
     private final boolean inherited;
-    private final TypeMirror outerType;
+    private final List<TypeMirror> outerTypes;
     private final List<Alias> aliases;
     private final boolean isAbstract;
     private final boolean hasGetter;
@@ -32,7 +32,7 @@ public class Member {
         hasGetter = builder.hasGetter;
         name = builder.name;
         inherited = builder.inherited;
-        outerType = builder.outerType;
+        outerTypes = builder.outerTypes;
         subBuilderClassName = builder.subBuilderClassName;
         aliases = Collections.unmodifiableList(builder.aliases);
         methodName = builder.methodName;
@@ -125,10 +125,13 @@ public class Member {
      *
      * @return the surrounding class name.
      */
-    public TypeMirror getOuterType() {
-        return outerType;
+    public List<TypeMirror> getOuterTypes() {
+        return outerTypes;
     }
 
+    /**
+     * @return the builder class name of the generic types item from the list.
+     */
     public String getSubBuilderClassName() {
         return subBuilderClassName;
     }
@@ -183,7 +186,7 @@ public class Member {
         private boolean hasBuilder;
         private boolean hasGetter;
         private boolean inherited;
-        private TypeMirror outerType;
+        private List<TypeMirror> outerTypes;
         private boolean isAbstract;
         private String subBuilderClassName;
         private List<Alias> aliases = Collections.emptyList();
@@ -251,11 +254,11 @@ public class Member {
         /**
          * Configure the member's type is located inside an inner class.
          *
-         * @param outerType defines the class that contains the member's type.
+         * @param outerTypes defines the class that contains the member's type.
          * @return itself for chaining.
          */
-        public Builder outerType(TypeMirror outerType) {
-            this.outerType = outerType;
+        public Builder outerTypes(List<TypeMirror> outerTypes) {
+            this.outerTypes = outerTypes;
             return this;
         }
 

@@ -14,4 +14,10 @@ public class Issue16Test {
 
     }
 
+    @ProcessorTest
+    @WithClasses(OuterClassWithTwoLayersOfInnerClasses.class)
+    void situationShouldNotResultInUnexpectedCompilationErrorAsWell() {
+
+    }
+
 }

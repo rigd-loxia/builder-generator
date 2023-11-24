@@ -1,6 +1,8 @@
 package nl.loxia.builder.generator.ap;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.lang.model.element.AnnotationMirror;
@@ -100,6 +102,24 @@ class TypeUtils {
      */
     TypeMirror getSurroundingClass(TypeMirror type) {
         return isContainedInClass(type) ? asElement(type).getEnclosingElement().asType() : null;
+    }
+
+    /**
+     * retrieves the type hierarchy enclosing this type. An empty collection is returned if {@link #isContainedInClass(TypeMirror)}
+     * is false.
+     *
+     * @param type - the type for which the type hierarchy is wanted.
+     * @return the type hierarchy.
+     */
+    List<TypeMirror> getSurroundingClasses(TypeMirror propertyType) {
+        List<TypeMirror> outerClasses = new ArrayList<>();
+        TypeMirror currentType = propertyType;
+        while (isContainedInClass(currentType)) {
+            currentType = asElement(currentType).getEnclosingElement().asType();
+            outerClasses.add(currentType);
+        }
+        Collections.reverse(outerClasses);
+        return outerClasses;
     }
 
     /**

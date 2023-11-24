@@ -126,7 +126,7 @@ public class BuilderGenerator {
         TypeMirror propertyType = enclosedEle.getPropertyType();
         Member.Builder memberBuilder = Member.builder()
             .type(propertyType)
-            .outerType(typeUtils.getSurroundingClass(propertyType))
+            .outerTypes(typeUtils.getSurroundingClasses(propertyType))
             .name(enclosedEle.getPropertyName())
             .setBuilderMethod(
                 determineBuilderMethod(enclosedEle, builderConfiguration.getMethodPrefix()))
