@@ -1,10 +1,8 @@
 package nl.loxia.builder.generator.ap.test.copyof;
 
-import static nl.loxia.builder.generator.annotations.DefaultBoolean.FALSE;
-
 import nl.loxia.builder.generator.annotations.Builder;
 
-@Builder(copyOf = FALSE)
+@Builder(copyOf = false)
 public class CopyOfDisabled {
 
     private final String myField;

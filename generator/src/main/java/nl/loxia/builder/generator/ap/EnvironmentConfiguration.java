@@ -1,29 +1,24 @@
 package nl.loxia.builder.generator.ap;
 
+import java.util.Optional;
+
 import javax.annotation.processing.ProcessingEnvironment;
 
 public class EnvironmentConfiguration {
-    private final VariableValue copyOfMethodGeneration;
-
-    public enum VariableValue {
-        UNSET,
-        TRUE,
-        FALSE;
-    }
+    private final boolean copyOfMethodGeneration;
+    private final Optional<String> methodPrefix;
 
     public EnvironmentConfiguration(ProcessingEnvironment processingEnv) {
-        copyOfMethodGeneration = determineChoice(processingEnv, "nl.loxia.BuilderGenerator.copyOfMethodGeneration");
+        copyOfMethodGeneration = !"false".equalsIgnoreCase(processingEnv.getOptions().get("nl.loxia.BuilderGenerator.copyOfMethodGeneration"));
+        methodPrefix = Optional.ofNullable(processingEnv.getOptions().get("nl.loxia.BuilderGenerator.methodPrefix"));
     }
 
-    public VariableValue getCopyOfMethodGeneration() {
+    public boolean getCopyOfMethodGeneration() {
         return copyOfMethodGeneration;
     }
 
-    private VariableValue determineChoice(ProcessingEnvironment processingEnv, String envVariable) {
-        if (!processingEnv.getOptions().containsKey(envVariable)) {
-            return VariableValue.UNSET;
-        }
-        return processingEnv.getOptions().get(envVariable).equalsIgnoreCase("false") ? VariableValue.FALSE : VariableValue.TRUE;
+    public Optional<String> getMethodPrefix() {
+        return methodPrefix;
     }
 
 }

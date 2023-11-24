@@ -25,7 +25,8 @@ import nl.loxia.builder.generator.annotations.Builder;
  * @author Ben Zegveld
  */
 @SupportedAnnotationTypes("nl.loxia.builder.generator.annotations.Builder")
-@SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration" })
+@SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration",
+    "nl.loxia.BuilderGenerator.methodPrefix" })
 public class BuilderProcessor extends AbstractProcessor {
     private FreeMarkerWriter freeMarkerWriter;
     private boolean testCompiling;

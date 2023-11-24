@@ -20,7 +20,8 @@ public class Issue6Test {
                 @Diagnostic(
                         type = ErroneousIssue6.class,
                         line = 6,
-                        message = "Cannot generate builder.",
+                        message = "Cannot generate builder. Not all fields have a getter, copyOf method cannot be generated. "
+                            + "Use `@Builder(copyOf=false)` to disable the copyOf method generation.",
                         kind = Kind.ERROR)
             })
     void situationShouldNotResultInUnexpectedCompilationError() {

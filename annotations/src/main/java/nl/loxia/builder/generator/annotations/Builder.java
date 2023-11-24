@@ -19,11 +19,25 @@ public @interface Builder {
 
     /**
      * By disabling the copy of method, builders can be generated for classes where the constructor arguments and setters do not
-     * have their own getter methods.
+     * have their own getter methods.<BR>
+     * <BR>
+     * Compiler arguments override the default value, manually set values override the compiler arguments. For example compiler
+     * argument set to false, manually overriding this to true will enable copyOf behavior again.
      *
      * @return whether or not the copy of methods should be generated. The default is true unless overridden using compiler
      *         arguments.
      */
-    DefaultBoolean copyOf() default DefaultBoolean.DEFAULT;
+    boolean copyOf() default true;
+
+    /**
+     * If you do not want a prefix, you can set this to an empty value. what would originally result in {@code withField(...)} will
+     * then become {@code field(...)}. <BR>
+     * <BR>
+     * Compiler arguments override the default value, manually set values override the compiler arguments. For example compiler
+     * argument set to 'set', manually overriding this to 'with' will result in the default behavior again.
+     *
+     * @return the method prefix to be used. If not set by the user then 'with' will be used.
+     */
+    String methodPrefix() default "with";
 
 }
