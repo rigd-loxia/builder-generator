@@ -64,7 +64,8 @@ public class BuilderGenerator {
         BuilderData builderData = createBuilderData(typeElement);
 
         if (!builderData.isValide()) {
-            messager.printMessage(ERROR, "Cannot generate builder.", typeElement.getTypeElement());
+            messager.printMessage(ERROR, String.format("Cannot generate builder. %s", builderData.getValidationError()),
+                typeElement.getTypeElement());
             return;
         }
 

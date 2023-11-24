@@ -4,9 +4,11 @@ It is possible to configure whether or not a copyOf method is generated through 
 If the `@Builder` annotation property is defined then this value is used, otherwise the compiler argument is used.
 If neither are present then the copyOf method will be generated.
 
+The copyOf method requires that for each property a matching getter is present. If there are no matching getters present then the builder cannot be generated.
+
 example for disabling the copyOf method:
 ```java
-@Builder(copyOf = BOOLEAN.FALSE)
+@Builder(copyOf = false)
 ```
 or through compiler arguments:
 ```

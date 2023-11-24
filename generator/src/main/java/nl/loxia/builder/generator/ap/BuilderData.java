@@ -185,7 +185,18 @@ public class BuilderData {
         if (!isCopyOfGenerationEnabled()) {
             return true;
         }
+        return isValidForCopyOfMethod();
+    }
+
+    private boolean isValidForCopyOfMethod() {
         return constructorMembers.stream()
             .allMatch(name -> getMembers().stream().anyMatch(member -> member.getName().equals(name) && member.hasGetter()));
+    }
+
+    public String getValidationError() {
+        if (!isValidForCopyOfMethod()) {
+            return "Not all fields have a getter, copyOf method cannot be generated. Use `@Builder(copyOf=false)` to disable the copyOf method generation.";
+        }
+        return "";
     }
 }
