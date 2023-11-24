@@ -129,6 +129,11 @@ public class Member {
         return outerType;
     }
 
+    /**
+     * Retrieves the builder class name of the subtype.
+     *
+     * @return the name that the builder would have for the subtype.
+     */
     public String getSubBuilderClassName() {
         return subBuilderClassName;
     }
@@ -282,12 +287,13 @@ public class Member {
         }
 
         /**
-         * Configure the member's subBuilderClassName.
+         * Configure the member's classname of the subtype.
          *
-         * @param determineSubBuilderClassName
+         * @param subBuilderClassName - the builder classname of the subtype.
+         * @return itself for chaining.
          */
-        public Builder subBuilderClassName(String determineSubBuilderClassName) {
-            subBuilderClassName = determineSubBuilderClassName;
+        public Builder subBuilderClassName(String subBuilderClassName) {
+            this.subBuilderClassName = subBuilderClassName;
             return this;
         }
 
