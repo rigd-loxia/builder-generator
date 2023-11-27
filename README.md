@@ -107,7 +107,7 @@ private Car createCar() {
 if you want to contribute to the development of this module, then please see the documentation here: [Contribution documentation](CONTRIBUTING.md)
 
 ## Release Notes
-### 0.2.0 (upcoming release)
+### 0.2.0 (27-11-2023)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))
 * support InnerClassBuilder when InnerClass is in a List ([#16](https://github.com/rigd-loxia/builder-generator/issues/16))
 * determine the properties using setters and constructor arguments ([#7](https://github.com/rigd-loxia/builder-generator/issues/7))
