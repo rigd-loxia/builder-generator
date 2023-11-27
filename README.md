@@ -26,8 +26,6 @@ The following are by default generated
 * builder inheritence
 * builder copyOf method
 
-There are currently no support for options, although with PR's being merged this will change.
-
 [See the Reference Guide for all supported features.](./documentation/index.md)
 
 ## Usage example
