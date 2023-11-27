@@ -214,7 +214,7 @@ public class BuilderGenerator {
     private boolean notPresentAsFieldIn(TypeMirror type, Type typeElement) {
         for (Type currentElement : getTypeElementHierarchy(typeElement)) {
             for (TypeMember enclosedEle : currentElement.getEnclosedElements()) {
-                if (enclosedEle.isMethod() && enclosedEle.isSetterMethod()) {
+                if (enclosedEle.isMethod() && (enclosedEle.isSetterMethod() || isListGetterMethod(enclosedEle))) {
                     TypeMirror propertyType = enclosedEle.getPropertyType();
                     if (typeUtils.isList(propertyType) && type.equals(typeUtils.getSubType(propertyType))) {
                         return false;

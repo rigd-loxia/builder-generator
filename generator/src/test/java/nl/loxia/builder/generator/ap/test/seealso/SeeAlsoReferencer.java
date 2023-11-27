@@ -13,21 +13,13 @@ public class SeeAlsoReferencer {
 
     List<SeeAlsoAnnotated> listFields = new ArrayList<>();
 
-    List<DuplicateField> duplicateFields = new ArrayList<>();
+    List<DuplicateField> duplicateField = new ArrayList<>();
 
     public List<SeeAlsoAnnotated> getListFields() {
         return listFields;
     }
 
-    public void setListFields(List<SeeAlsoAnnotated> listFields) {
-        this.listFields = listFields;
-    }
-
-    public List<DuplicateField> getDuplicateFields() {
-        return duplicateFields;
-    }
-
-    public void setDuplicateFields(List<DuplicateField> duplicateFields) {
-        this.duplicateFields = duplicateFields;
+    public List<DuplicateField> getDuplicateField() {
+        return duplicateField;
     }
 }
