@@ -130,6 +130,8 @@ public class Member {
     }
 
     /**
+     * Retrieves the builder class name of the subtype.
+     *
      * @return the builder class name of the generic types item from the list.
      */
     public String getSubBuilderClassName() {
@@ -285,12 +287,13 @@ public class Member {
         }
 
         /**
-         * Configure the member's subBuilderClassName.
+         * Configure the member's classname of the subtype.
          *
-         * @param determineSubBuilderClassName
+         * @param subBuilderClassName - the builder classname of the subtype.
+         * @return itself for chaining.
          */
-        public Builder subBuilderClassName(String determineSubBuilderClassName) {
-            subBuilderClassName = determineSubBuilderClassName;
+        public Builder subBuilderClassName(String subBuilderClassName) {
+            this.subBuilderClassName = subBuilderClassName;
             return this;
         }
 

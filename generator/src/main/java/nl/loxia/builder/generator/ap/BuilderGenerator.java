@@ -41,7 +41,7 @@ public class BuilderGenerator {
     /**
      * the constructor.
      *
-     * @param environmentConfiguration
+     * @param environmentConfiguration - contains the configuration supplied to the compiler
      * @param types - Utility class for working with Types.
      * @param messager - Feedback endpoint for communication errors/warnings to the java compiler
      * @param typeElement - The current element for which a builder needs to be generated.
@@ -63,7 +63,7 @@ public class BuilderGenerator {
     public void generate(Filer filer, FreeMarkerWriter freeMarkerWriter) {
         BuilderData builderData = createBuilderData(typeElement);
 
-        if (!builderData.isValide()) {
+        if (!builderData.isValid()) {
             messager.printMessage(ERROR, String.format("Cannot generate builder. %s", builderData.getValidationError()),
                 typeElement.getTypeElement());
             return;

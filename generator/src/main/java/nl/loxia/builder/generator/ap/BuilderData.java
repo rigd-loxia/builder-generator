@@ -181,7 +181,7 @@ public class BuilderData {
      *
      * @return false if copy of methods cannot be generated while the generation of them is enabled.
      */
-    public boolean isValide() {
+    public boolean isValid() {
         if (!isCopyOfGenerationEnabled()) {
             return true;
         }
@@ -193,6 +193,9 @@ public class BuilderData {
             .allMatch(name -> getMembers().stream().anyMatch(member -> member.getName().equals(name) && member.hasGetter()));
     }
 
+    /**
+     * @return the validation error tekst for the compilation error when {@link #isValid()} returns false.
+     */
     public String getValidationError() {
         if (!isValidForCopyOfMethod()) {
             return "Not all fields have a getter, copyOf method cannot be generated. Use `@Builder(copyOf=false)` to disable the copyOf method generation.";
