@@ -23,7 +23,7 @@ class SeeAlsoTest {
             .doesNotContain("addSeeAlsoAnnotated")
             .doesNotContain("withSeeAlsoAnnotated")
             .doesNotContain(
-                "    public DuplicateFieldBuilder<? extends SeeAlsoReferencerBuilder<PARENT>> addDuplicateFields() {"
+                "    public DuplicateFieldBuilder<? extends SeeAlsoReferencerBuilder<PARENT>> addDuplicateField() {"
                     + System.lineSeparator()
                     + "        DuplicateFieldBuilder<SeeAlsoReferencerBuilder<PARENT>> child = new DuplicateFieldBuilder<>(this);"
                     + System.lineSeparator()
@@ -35,11 +35,11 @@ class SeeAlsoTest {
                     + System.lineSeparator()
                     + "")
             .contains(
-                "    public DuplicateFieldBuilder<? extends SeeAlsoReferencerBuilder<PARENT>> addDuplicateFields() {"
+                "    public DuplicateFieldBuilder<? extends SeeAlsoReferencerBuilder<PARENT>> addDuplicateField() {"
                     + System.lineSeparator()
                     + "        DuplicateFieldBuilder<SeeAlsoReferencerBuilder<PARENT>> child = new DuplicateFieldBuilder<>(this);"
                     + System.lineSeparator()
-                    + "        duplicateFieldsBuilders.add(child);"
+                    + "        duplicateFieldBuilders.add(child);"
                     + System.lineSeparator()
                     + "        return child;"
                     + System.lineSeparator()
@@ -53,13 +53,13 @@ class SeeAlsoTest {
         DuplicateField.class })
     void copyOfCollectionsTest() {
         SeeAlsoReferencer referencer = new SeeAlsoReferencer();
-        referencer.duplicateFields.add(new DuplicateFieldBuilder<>().withDup("a").withVal("b").build());
+        referencer.duplicateField.add(new DuplicateFieldBuilder<>().withDup("a").withVal("b").build());
 
         SeeAlsoReferencer copy = SeeAlsoReferencerBuilder.copyOf(referencer).build();
 
-        assertThat(copy.getDuplicateFields().get(0).getDup()).isEqualTo(referencer.getDuplicateFields().get(0).getDup());
-        assertThat(copy.getDuplicateFields().get(0).getVal()).isEqualTo(referencer.getDuplicateFields().get(0).getVal());
-        assertThat(copy.getDuplicateFields().get(0)).isNotSameAs(referencer.getDuplicateFields().get(0));
+        assertThat(copy.getDuplicateField().get(0).getDup()).isEqualTo(referencer.getDuplicateField().get(0).getDup());
+        assertThat(copy.getDuplicateField().get(0).getVal()).isEqualTo(referencer.getDuplicateField().get(0).getVal());
+        assertThat(copy.getDuplicateField().get(0)).isNotSameAs(referencer.getDuplicateField().get(0));
     }
 
     @ProcessorTest
