@@ -197,9 +197,10 @@ ${spc}}
     </#if>
 </#macro>
 
-|<#macro generateCopyOfMethod cls indent>
+<#macro generateCopyOfMethod cls indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <#if !cls.isAbstract()>
+
 ${spc}public static ${cls.builderClassName}<Void> copyOf(<@com.type cls.sourceClassName packageName/> bron) {
 ${spc}    if (bron == null) {
 ${spc}        return null;
