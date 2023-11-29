@@ -183,8 +183,4 @@ class TypeUtils {
         return List.of();
     }
 
-    public Types getTypes() {
-        return types;
-    }
-
 }
