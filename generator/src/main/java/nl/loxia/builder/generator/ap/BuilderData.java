@@ -10,8 +10,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import javax.lang.model.type.TypeMirror;
-
 /**
  * The data used to generate a single builder.
  *
@@ -22,7 +20,7 @@ public class BuilderData {
     private final String packageName;
     private final String builderClassName;
     private final SortedSet<Member> members = new TreeSet<>((o1, o2) -> o1.getName().compareTo(o2.getName()));
-    private final TypeMirror sourceClassName;
+    private final GenerationType sourceClassName;
     private final List<String> constructorMembers = new ArrayList<>();
     private final String extendedBuilderName;
     private final SortedSet<BuilderData> innerClasses =
@@ -105,7 +103,7 @@ public class BuilderData {
      *
      * @return the typeMirror representing the class to be build.
      */
-    public TypeMirror getSourceClassName() {
+    public GenerationType getSourceClassName() {
         return sourceClassName;
     }
 
@@ -262,7 +260,7 @@ public class BuilderData {
         private boolean extendedBuilderIsAbstract;
         private String extendedBuilderName;
         private String builderClassName;
-        private TypeMirror sourceClassName;
+        private GenerationType sourceClassName;
         private String packageName;
 
         private BuilderDataBuilder() {
@@ -281,7 +279,7 @@ public class BuilderData {
          * @param sourceClassName - the builder annotated class
          * @return itself for builder chaining
          */
-        public BuilderDataBuilder setSourceClassName(TypeMirror sourceClassName) {
+        public BuilderDataBuilder setSourceClassName(GenerationType sourceClassName) {
             this.sourceClassName = sourceClassName;
             return this;
         }

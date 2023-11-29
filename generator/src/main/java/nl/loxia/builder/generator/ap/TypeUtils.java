@@ -183,4 +183,31 @@ class TypeUtils {
         return List.of();
     }
 
+    /**
+     * @param propertyType - the type to determine the package name of.
+     * @return the package name for this type.
+     */
+    public String getPackageName(TypeMirror propertyType) {
+        return getPackageName(types.asElement(propertyType));
+    }
+
+    /**
+     * @param element - the element to determine the package name of.
+     * @return the package name for this type.
+     */
+    public String getPackageName(Element element) {
+        Element currentElement = element;
+        while (currentElement != null && currentElement.getKind() != ElementKind.PACKAGE) {
+            currentElement = currentElement.getEnclosingElement();
+        }
+        if (currentElement == null) {
+            return "";
+        }
+        String packageName = currentElement.asType().toString();
+        if (packageName.equals("package")) {
+            packageName = currentElement.toString().replace("package ", "");
+        }
+        return packageName;
+    }
+
 }

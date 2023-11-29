@@ -5,7 +5,7 @@ package nl.loxia.builder.generator.ap.test.builderinheritence;
  */
 public class BuilderInnerClassBuilder<PARENT> {
     private BuilderInnerClass.InnerClass value;
-    private InnerClassBuilder<BuilderInnerClassBuilder<PARENT>> valueBuilder;
+    private BuilderInnerClassBuilder.InnerClassBuilder<BuilderInnerClassBuilder<PARENT>> valueBuilder;
 
     private PARENT parent;
 
@@ -22,9 +22,9 @@ public class BuilderInnerClassBuilder<PARENT> {
         return this;
     }
 
-    public InnerClassBuilder<? extends BuilderInnerClassBuilder<PARENT>> withValue() {
+    public BuilderInnerClassBuilder.InnerClassBuilder<? extends BuilderInnerClassBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
-            valueBuilder = new InnerClassBuilder<>(this);
+            valueBuilder = new BuilderInnerClassBuilder.InnerClassBuilder<>(this);
             value = null;
         }
         return valueBuilder;
@@ -45,7 +45,7 @@ public class BuilderInnerClassBuilder<PARENT> {
             return null;
         }
         BuilderInnerClassBuilder<Void> builder = new BuilderInnerClassBuilder<>();
-        builder.valueBuilder = InnerClassBuilder.copyOf(bron.getValue(), builder);
+        builder.valueBuilder = BuilderInnerClassBuilder.InnerClassBuilder.copyOf(bron.getValue(), builder);
         return builder;
     }
 
@@ -54,7 +54,7 @@ public class BuilderInnerClassBuilder<PARENT> {
             return null;
         }
         BuilderInnerClassBuilder<T> builder = new BuilderInnerClassBuilder<>(parentBuilder);
-        builder.valueBuilder = InnerClassBuilder.copyOf(bron.getValue(), builder);
+        builder.valueBuilder = BuilderInnerClassBuilder.InnerClassBuilder.copyOf(bron.getValue(), builder);
         return builder;
     }
 

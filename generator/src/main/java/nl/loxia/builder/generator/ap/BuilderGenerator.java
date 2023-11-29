@@ -1,5 +1,6 @@
 package nl.loxia.builder.generator.ap;
 
+import static java.util.stream.Collectors.toList;
 import static javax.tools.Diagnostic.Kind.ERROR;
 
 import java.io.IOException;
@@ -93,8 +94,8 @@ public class BuilderGenerator {
             .setBuilderConfiguration(builderConfiguration)
             .setExtendedBuilderIsAbstract(isExtendedAbstract(typeElement))
             .setExtendedBuilderName(getExtendedBuilderName(typeElement))
-            .setPackageName(typeElement.getPackageName())
-            .setSourceClassName(typeElement.getTypeElement().asType())
+            .setPackageName(typeUtils.getPackageName(typeElement.getTypeElement()))
+            .setSourceClassName(asGenerationType(typeElement.getTypeElement().asType()))
             .build();
 
         updateBuilderDataWithHierarchicalInformation(typeElement, builderData, builderConfiguration);
@@ -156,8 +157,8 @@ public class BuilderGenerator {
             TypeMember enclosedEle) {
         TypeMirror propertyType = enclosedEle.getPropertyType();
         Member.Builder memberBuilder = Member.builder()
-            .type(propertyType)
-            .outerTypes(typeUtils.getSurroundingClasses(propertyType))
+            .type(asGenerationType(propertyType))
+            .outerTypes(getSurroundingClassesForGeneration(propertyType))
             .name(enclosedEle.getPropertyName())
             .setBuilderMethod(
                 determineBuilderMethod(enclosedEle, builderConfiguration.getMethodPrefix()))
@@ -168,8 +169,8 @@ public class BuilderGenerator {
             TypeMirror subType = typeUtils.getSubType(propertyType);
             memberBuilder
                 .isAbstract(typeUtils.isAbstract(subType))
-                .subType(subType)
-                .outerTypes(typeUtils.getSurroundingClasses(subType))
+                .subType(asGenerationType(subType))
+                .outerTypes(getSurroundingClassesForGeneration(subType))
                 .hasBuilder(typeHasBuilderAnnotation(subType))
                 .subBuilderClassName(determineSubBuilderClassName(subType));
             addAliases(memberBuilder, subType, typeElement);
@@ -179,6 +180,14 @@ public class BuilderGenerator {
                 .hasBuilder(typeHasBuilderAnnotation(propertyType));
         }
         return memberBuilder.build();
+    }
+
+    private List<GenerationType> getSurroundingClassesForGeneration(TypeMirror propertyType) {
+        return typeUtils.getSurroundingClasses(propertyType).stream().map(this::asGenerationType).collect(toList());
+    }
+
+    private GenerationType asGenerationType(TypeMirror propertyType) {
+        return new GenerationType(propertyType, typeUtils.getPackageName(propertyType));
     }
 
     private boolean hasSetter(Type typeElement, TypeMember enclosedEle) {
@@ -209,7 +218,7 @@ public class BuilderGenerator {
             + enclosedEle.getPropertyName().substring(1);
     }
 
-    private String determineSubBuilderClassName(TypeMirror subType) {
+    private GenerationType determineSubBuilderClassName(TypeMirror subType) {
         String initialBuilder = subType.toString() + BUILDER_SUFFIX;
         Element currentElement = typeUtils.asElement(subType);
         while (currentElement.getEnclosingElement().getKind() == ElementKind.CLASS) {
@@ -217,7 +226,7 @@ public class BuilderGenerator {
             String outerclass = currentElement.asType().toString();
             initialBuilder = initialBuilder.replace(outerclass, outerclass + BUILDER_SUFFIX);
         }
-        return initialBuilder;
+        return new GenerationType(initialBuilder, typeUtils.getPackageName(currentElement));
     }
 
     private void addAliases(Member.Builder memberBuilder, TypeMirror subType, Type typeElement) {
@@ -229,7 +238,7 @@ public class BuilderGenerator {
     }
 
     private Alias toAlias(TypeMirror mirror) {
-        return new Alias(mirror, typeUtils.getName(mirror));
+        return new Alias(asGenerationType(mirror), typeUtils.getName(mirror));
     }
 
     private List<TypeMirror> gatherAliases(TypeMirror subType) {
