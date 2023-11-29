@@ -10,6 +10,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 
 /**
@@ -31,6 +32,13 @@ public class TypeMember {
      */
     public Type asType() {
         return new Type((TypeElement) element);
+    }
+
+    /**
+     * @return true if this element represents a field.
+     */
+    public boolean isField() {
+        return element.getKind() == ElementKind.FIELD;
     }
 
     /**
@@ -154,6 +162,25 @@ public class TypeMember {
     public String determineGetterMethodName() {
         String propertyName = getPropertyName();
         return "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+    }
+
+    /**
+     * return the expected set method based on the {@link #getPropertyName()} result.
+     *
+     * @return the setter method name that would match this element.
+     */
+    public String determineSetterMethodName() {
+        String propertyName = getPropertyName();
+        return "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+    }
+
+    /**
+     * This will return true if the designated class is a generated class that does not exist yet.
+     *
+     * @return true if the class referred to by this parameter does not exist.
+     */
+    public boolean isOfAnUnavailableType() {
+        return element.asType().getKind() == TypeKind.ERROR;
     }
 
 }

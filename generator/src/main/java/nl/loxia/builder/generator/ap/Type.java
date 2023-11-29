@@ -147,6 +147,16 @@ public class Type {
     }
 
     /**
+     * @param typeMember representing the field
+     * @return true if a getter method is available to retrieve the field.
+     */
+    public boolean hasSetterFor(TypeMember typeMember) {
+        return getEnclosedElementsStream()
+            .anyMatch(element -> element.getSimpleName()
+                .equals(typeMember.determineSetterMethodName()));
+    }
+
+    /**
      * @param annotationClass - the annotation class for which the needs to be looked up.
      * @param annotationMethod - the name of the method for which the value is wanted.
      * @return the value associated with the specified annotation and method of that annotation. returns null if not found or not

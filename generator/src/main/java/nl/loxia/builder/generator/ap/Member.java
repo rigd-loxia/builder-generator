@@ -21,6 +21,7 @@ public class Member {
     private final List<Alias> aliases;
     private final boolean isAbstract;
     private final boolean hasGetter;
+    private final boolean hasSetter;
     private final String subBuilderClassName;
     private final String methodName;
 
@@ -30,6 +31,7 @@ public class Member {
         subType = builder.subType;
         hasBuilder = builder.hasBuilder;
         hasGetter = builder.hasGetter;
+        hasSetter = builder.hasSetter;
         name = builder.name;
         inherited = builder.inherited;
         outerTypes = builder.outerTypes;
@@ -108,6 +110,15 @@ public class Member {
      */
     public boolean hasGetter() {
         return hasGetter;
+    }
+
+    /**
+     * This can be used to determine whether a set action is possible in the build method.
+     *
+     * @return true if a setter method is available
+     */
+    public boolean hasSetter() {
+        return hasSetter;
     }
 
     /**
@@ -193,6 +204,7 @@ public class Member {
         private String subBuilderClassName;
         private List<Alias> aliases = Collections.emptyList();
         private String methodName;
+        private boolean hasSetter;
 
         private Builder() {
             // alleen via Member.builder() aan te maken.
@@ -221,13 +233,24 @@ public class Member {
         }
 
         /**
-         * Configure if the member type is defined in the constructor
+         * Configure if the member type has a getter method
          *
-         * @param hasGetter defines if the member is a constructor field.
+         * @param hasGetter defines if the member has a getter method.
          * @return itself for chaining
          */
         public Builder hasGetter(boolean hasGetter) {
             this.hasGetter = hasGetter;
+            return this;
+        }
+
+        /**
+         * Configure if the member type has a setter method
+         *
+         * @param hasSetter defines if the member has a setter method.
+         * @return itself for chaining
+         */
+        public Builder hasSetter(boolean hasSetter) {
+            this.hasSetter = hasSetter;
             return this;
         }
 

@@ -1,5 +1,8 @@
 package nl.loxia.builder.generator.ap;
 
+import static java.util.stream.Collectors.toList;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -20,25 +23,23 @@ public class BuilderData {
     private final String builderClassName;
     private final SortedSet<Member> members = new TreeSet<>((o1, o2) -> o1.getName().compareTo(o2.getName()));
     private final TypeMirror sourceClassName;
-    private final List<String> constructorMembers;
+    private final List<String> constructorMembers = new ArrayList<>();
     private final String extendedBuilderName;
     private final SortedSet<BuilderData> innerClasses =
         new TreeSet<>((o1, o2) -> o1.getBuilderClassName().compareTo(o2.getBuilderClassName()));
     private final boolean isAbstract;
     private final boolean extendedBuilderIsAbstract;
     private final BuilderConfiguration builderConfiguration;
+    private boolean builderPassingConstructor;
 
-    BuilderData(String packageName, TypeMirror sourceClassName, String builderClassName, String extendedBuilderName,
-            boolean extendedBuilderIsAbstract, List<String> constructorMembers, boolean isAbstract,
-            BuilderConfiguration builderConfiguration) {
-        this.packageName = packageName;
-        this.sourceClassName = sourceClassName;
-        this.builderClassName = builderClassName;
-        this.extendedBuilderName = extendedBuilderName;
-        this.extendedBuilderIsAbstract = extendedBuilderIsAbstract;
-        this.constructorMembers = constructorMembers;
-        this.isAbstract = isAbstract;
-        this.builderConfiguration = builderConfiguration;
+    BuilderData(BuilderDataBuilder builder) {
+        packageName = builder.packageName;
+        sourceClassName = builder.sourceClassName;
+        builderClassName = builder.builderClassName;
+        extendedBuilderName = builder.extendedBuilderName;
+        extendedBuilderIsAbstract = builder.extendedBuilderIsAbstract;
+        isAbstract = builder.isAbstract;
+        builderConfiguration = builder.builderConfiguration;
     }
 
     /**
@@ -123,6 +124,29 @@ public class BuilderData {
     }
 
     /**
+     * @param builderPassingConstructor whether or not the constructor accepts the builder
+     */
+    public void setBuilderPassingConstructor(boolean builderPassingConstructor) {
+        this.builderPassingConstructor = builderPassingConstructor;
+    }
+
+    /**
+     * @return true if the only argument for the constructor is the builder itself.
+     */
+    public boolean isBuilderPassingConstructor() {
+        return builderPassingConstructor;
+    }
+
+    /**
+     * Used to determine which fields should be passed into the constructor
+     *
+     * @param propertyName the constructor argument name
+     */
+    public void addConstructorArgumentName(String propertyName) {
+        constructorMembers.add(propertyName);
+    }
+
+    /**
      * Retrieves the list of fields that will be instantiated through the constructor of the class.
      *
      * @return the list of constructor members
@@ -143,6 +167,7 @@ public class BuilderData {
         return members.stream()
             .filter(member -> !constructorMembers.contains(member.getName()))
             .filter(member -> !getCollectionMembers().contains(member))
+            .filter(Member::hasSetter)
             .collect(Collectors.toList());
     }
 
@@ -189,8 +214,24 @@ public class BuilderData {
     }
 
     private boolean isValidForCopyOfMethod() {
-        return constructorMembers.stream()
-            .allMatch(name -> getMembers().stream().anyMatch(member -> member.getName().equals(name) && member.hasGetter()));
+        return determineInvalidMembers().isEmpty();
+    }
+
+    private List<String> determineInvalidMembers() {
+        List<String> invalidMembers;
+        if (isBuilderPassingConstructor()) {
+            invalidMembers = members.stream()
+                .filter(member -> !constructorMembers.contains(member.getName()))
+                .filter(t -> !t.hasGetter())
+                .map(Member::getName)
+                .collect(toList());
+        }
+        else {
+            invalidMembers = constructorMembers.stream()
+                .filter(name -> getMembers().stream().noneMatch(member -> member.getName().equals(name) && member.hasGetter()))
+                .collect(toList());
+        }
+        return invalidMembers;
     }
 
     /**
@@ -198,8 +239,103 @@ public class BuilderData {
      */
     public String getValidationError() {
         if (!isValidForCopyOfMethod()) {
-            return "Not all fields have a getter, copyOf method cannot be generated. Use `@Builder(copyOf=false)` to disable the copyOf method generation.";
+            return String.format(
+                "The fields %s do not have a getter, copyOf method cannot be generated. Use `@Builder(copyOf=false)` to disable the copyOf method generation.",
+                determineInvalidMembers());
         }
         return "";
+    }
+
+    /**
+     * @return a new builder for creating a BuilderData object.
+     */
+    public static BuilderDataBuilder builder() {
+        return new BuilderDataBuilder();
+    }
+
+    /**
+     * The Builder class for creating the BuilderData object.
+     */
+    public static class BuilderDataBuilder {
+        private BuilderConfiguration builderConfiguration;
+        private boolean isAbstract;
+        private boolean extendedBuilderIsAbstract;
+        private String extendedBuilderName;
+        private String builderClassName;
+        private TypeMirror sourceClassName;
+        private String packageName;
+
+        private BuilderDataBuilder() {
+        }
+
+        /**
+         * @param packageName - the package name of this builder annotated class
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setPackageName(String packageName) {
+            this.packageName = packageName;
+            return this;
+        }
+
+        /**
+         * @param sourceClassName - the builder annotated class
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setSourceClassName(TypeMirror sourceClassName) {
+            this.sourceClassName = sourceClassName;
+            return this;
+        }
+
+        /**
+         * @param builderClassName - the resulting builder class name
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setBuilderClassName(String builderClassName) {
+            this.builderClassName = builderClassName;
+            return this;
+        }
+
+        /**
+         * @param builderConfiguration - the builderConfiguration containing generation settings
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setBuilderConfiguration(BuilderConfiguration builderConfiguration) {
+            this.builderConfiguration = builderConfiguration;
+            return this;
+        }
+
+        /**
+         * @param isAbstract - whether the source class is abstract or not.
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setAbstract(boolean isAbstract) {
+            this.isAbstract = isAbstract;
+            return this;
+        }
+
+        /**
+         * @param extendedBuilderIsAbstract - whether the source class extends a class that is abstract or not.
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setExtendedBuilderIsAbstract(boolean extendedBuilderIsAbstract) {
+            this.extendedBuilderIsAbstract = extendedBuilderIsAbstract;
+            return this;
+        }
+
+        /**
+         * @param extendedBuilderName - the name of the builder that this builder should extend if any.
+         * @return itself for builder chaining
+         */
+        public BuilderDataBuilder setExtendedBuilderName(String extendedBuilderName) {
+            this.extendedBuilderName = extendedBuilderName;
+            return this;
+        }
+
+        /**
+         * @return the BuilderData based on the builder
+         */
+        public BuilderData build() {
+            return new BuilderData(this);
+        }
     }
 }

@@ -1,20 +1,12 @@
 <#macro type classType packageName>
 <@compress single_line=true>
-    <#if classType?matches(packageName?replace(".","\\.")+"\\.[A-Z].*")>
-        ${classType?remove_beginning("java.lang.")?remove_beginning(packageName+".")}
-    <#else>
-        ${classType?remove_beginning("java.lang.")}
-    </#if>
+    ${classType?remove_beginning(packageName+".")?remove_beginning("java.lang.")?replace("<java.lang.", "<")?replace("<"+packageName+".", "<")}
 </@compress>
 </#macro>
 
 <#macro internalBuilderType classType packageName parent>
 <@compress single_line=true>
-    <#if classType?matches(packageName?replace(".","\\.")+"\\.[A-Z].*")>
-        ${classType?remove_beginning(parent+".")?remove_beginning("java.lang.")?remove_beginning(packageName+".")}
-    <#else>
-        ${classType?remove_beginning(parent+".")?remove_beginning("java.lang.")}
-    </#if>
+    ${classType?remove_beginning(parent+".")?remove_beginning(packageName+".")?remove_beginning("java.lang.")?replace("<java.lang.", "<")?replace("<"+packageName+".", "<")}
 </@compress>
 </#macro>
 
