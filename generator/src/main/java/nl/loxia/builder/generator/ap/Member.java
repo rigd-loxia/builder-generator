@@ -3,8 +3,6 @@ package nl.loxia.builder.generator.ap;
 import java.util.Collections;
 import java.util.List;
 
-import javax.lang.model.type.TypeMirror;
-
 /**
  * This data represents a field in a class.
  *
@@ -12,17 +10,17 @@ import javax.lang.model.type.TypeMirror;
  */
 public class Member {
 
-    private final TypeMirror type;
+    private final GenerationType type;
     private final String name;
-    private final TypeMirror subType;
+    private final GenerationType subType;
     private final boolean hasBuilder;
     private final boolean inherited;
-    private final List<TypeMirror> outerTypes;
+    private final List<GenerationType> outerTypes;
     private final List<Alias> aliases;
     private final boolean isAbstract;
     private final boolean hasGetter;
     private final boolean hasSetter;
-    private final String subBuilderClassName;
+    private final GenerationType subBuilderClassName;
     private final String methodName;
 
     private Member(Member.Builder builder) {
@@ -63,7 +61,7 @@ public class Member {
      *
      * @return the type of the field.
      */
-    public TypeMirror getType() {
+    public GenerationType getType() {
         return type;
     }
 
@@ -72,7 +70,7 @@ public class Member {
      *
      * @return the subType of this field if present, otherwise null.
      */
-    public TypeMirror getSubType() {
+    public GenerationType getSubType() {
         return subType;
     }
 
@@ -136,7 +134,7 @@ public class Member {
      *
      * @return the surrounding class name.
      */
-    public List<TypeMirror> getOuterTypes() {
+    public List<GenerationType> getOuterTypes() {
         return outerTypes;
     }
 
@@ -145,7 +143,7 @@ public class Member {
      *
      * @return the builder class name of the generic types item from the list.
      */
-    public String getSubBuilderClassName() {
+    public GenerationType getSubBuilderClassName() {
         return subBuilderClassName;
     }
 
@@ -193,15 +191,15 @@ public class Member {
      * @author zegveb
      */
     public static class Builder {
-        private TypeMirror type;
+        private GenerationType type;
         private String name;
-        private TypeMirror subType;
+        private GenerationType subType;
         private boolean hasBuilder;
         private boolean hasGetter;
         private boolean inherited;
-        private List<TypeMirror> outerTypes;
+        private List<GenerationType> outerTypes;
         private boolean isAbstract;
-        private String subBuilderClassName;
+        private GenerationType subBuilderClassName;
         private List<Alias> aliases = Collections.emptyList();
         private String methodName;
         private boolean hasSetter;
@@ -282,7 +280,7 @@ public class Member {
          * @param outerTypes defines the class that contains the member's type.
          * @return itself for chaining.
          */
-        public Builder outerTypes(List<TypeMirror> outerTypes) {
+        public Builder outerTypes(List<GenerationType> outerTypes) {
             this.outerTypes = outerTypes;
             return this;
         }
@@ -293,7 +291,7 @@ public class Member {
          * @param subType of the member.
          * @return itself for chaining.
          */
-        public Builder subType(TypeMirror subType) {
+        public Builder subType(GenerationType subType) {
             this.subType = subType;
             return this;
         }
@@ -304,7 +302,7 @@ public class Member {
          * @param type of the member.
          * @return itself for chaining.
          */
-        public Builder type(TypeMirror type) {
+        public Builder type(GenerationType type) {
             this.type = type;
             return this;
         }
@@ -315,7 +313,7 @@ public class Member {
          * @param subBuilderClassName - the builder classname of the subtype.
          * @return itself for chaining.
          */
-        public Builder subBuilderClassName(String subBuilderClassName) {
+        public Builder subBuilderClassName(GenerationType subBuilderClassName) {
             this.subBuilderClassName = subBuilderClassName;
             return this;
         }
