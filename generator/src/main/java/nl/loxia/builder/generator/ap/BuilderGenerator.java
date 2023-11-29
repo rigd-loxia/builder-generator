@@ -125,7 +125,7 @@ public class BuilderGenerator {
 
     private boolean isProbablyBuilderClass(Type typeElement, TypeMember parameter) {
         return determineClassName(parameter).equals(typeElement.getSimpleName() + BUILDER_SUFFIX)
-            || parameter.getElement().asType().getKind() == TypeKind.ERROR;
+            || parameter.isOfAnUnavailableType();
     }
 
     private String determineClassName(TypeMember parameter) {

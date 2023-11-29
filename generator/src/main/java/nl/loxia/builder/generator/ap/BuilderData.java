@@ -246,10 +246,16 @@ public class BuilderData {
         return "";
     }
 
+    /**
+     * @return a new builder for creating a BuilderData object.
+     */
     public static BuilderDataBuilder builder() {
         return new BuilderDataBuilder();
     }
 
+    /**
+     * The Builder class for creating the BuilderData object.
+     */
     public static class BuilderDataBuilder {
         private BuilderConfiguration builderConfiguration;
         private boolean isAbstract;
@@ -262,41 +268,72 @@ public class BuilderData {
         private BuilderDataBuilder() {
         }
 
+        /**
+         * @param packageName - the package name of this builder annotated class
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setPackageName(String packageName) {
             this.packageName = packageName;
             return this;
         }
 
+        /**
+         * @param sourceClassName - the builder annotated class
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setSourceClassName(TypeMirror sourceClassName) {
             this.sourceClassName = sourceClassName;
             return this;
         }
 
+        /**
+         * @param builderClassName - the resulting builder class name
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setBuilderClassName(String builderClassName) {
             this.builderClassName = builderClassName;
             return this;
         }
 
+        /**
+         * @param builderConfiguration - the builderConfiguration containing generation settings
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setBuilderConfiguration(BuilderConfiguration builderConfiguration) {
             this.builderConfiguration = builderConfiguration;
             return this;
         }
 
+        /**
+         * @param isAbstract - whether the source class is abstract or not.
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setAbstract(boolean isAbstract) {
             this.isAbstract = isAbstract;
             return this;
         }
 
+        /**
+         * @param extendedBuilderIsAbstract - whether the source class extends a class that is abstract or not.
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setExtendedBuilderIsAbstract(boolean extendedBuilderIsAbstract) {
             this.extendedBuilderIsAbstract = extendedBuilderIsAbstract;
             return this;
         }
 
+        /**
+         * @param extendedBuilderName - the name of the builder that this builder should extend if any.
+         * @return itself for builder chaining
+         */
         public BuilderDataBuilder setExtendedBuilderName(String extendedBuilderName) {
             this.extendedBuilderName = extendedBuilderName;
             return this;
         }
 
+        /**
+         * @return the BuilderData based on the builder
+         */
         public BuilderData build() {
             return new BuilderData(this);
         }
