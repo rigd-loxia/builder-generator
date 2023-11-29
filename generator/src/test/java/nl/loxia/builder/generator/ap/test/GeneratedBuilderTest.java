@@ -51,7 +51,7 @@ class GeneratedBuilderTest {
                 @Diagnostic(kind = Kind.ERROR,
                         line = 6l,
                         type = ErroneousBuilderWithConstructorFieldMismatch.class,
-                        message = "Cannot generate builder. Not all fields have a getter, copyOf method cannot be generated. "
+                        message = "Cannot generate builder. The fields [field2] do not have a getter, copyOf method cannot be generated. "
                             + "Use `@Builder(copyOf=false)` to disable the copyOf method generation.")
             })
     void errorJdk() {
@@ -65,7 +65,7 @@ class GeneratedBuilderTest {
                 @Diagnostic(kind = Kind.ERROR,
                         line = 6l,
                         type = ErroneousBuilderWithConstructorFieldMismatch.class,
-                        message = "Cannot generate builder. Not all fields have a getter, copyOf method cannot be generated. "
+                        message = "Cannot generate builder. The fields [field2] do not have a getter, copyOf method cannot be generated. "
                             + "Use `@Builder(copyOf=false)` to disable the copyOf method generation.")
             })
     void errorEclipse() {

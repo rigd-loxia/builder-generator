@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
@@ -156,8 +157,34 @@ class TypeUtils {
         return ((TypeElement) asElement(typeMirror)).getQualifiedName().toString();
     }
 
+    /**
+     * @param typeMirror - the type to check
+     * @return true if this represents an java.util.List
+     */
     boolean isList(TypeMirror typeMirror) {
         return typeMirror.getKind() == TypeKind.DECLARED
             && getQualifiedName(typeMirror).equals("java.util.List");
     }
+
+    /**
+     * If there are multiple constructors available it will search for the one with the least amount of arguments and return this
+     * one. If there are multiple constructors which are valid for this match, then one at random is returned.
+     *
+     * @return a list of parameters for the smallest constructor.
+     */
+    public List<TypeMember> getSmallestConstructorArguments(Type type) {
+        Optional<TypeMember> constructor = type.getEnclosedElements()
+            .stream()
+            .filter(TypeMember::isConstructor)
+            .min((o1, o2) -> o1.getParameters().size() - o2.getParameters().size());
+        if (constructor.isPresent()) {
+            return constructor.get().getParameters();
+        }
+        return List.of();
+    }
+
+    public Types getTypes() {
+        return types;
+    }
+
 }

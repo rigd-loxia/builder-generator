@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.BiPredicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.processing.Filer;
@@ -16,6 +17,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
@@ -85,12 +87,15 @@ public class BuilderGenerator {
      */
     private BuilderData createBuilderData(Type typeElement) {
         BuilderConfiguration builderConfiguration = new BuilderConfiguration(environmentConfiguration, typeElement);
-        BuilderData builderData =
-            new BuilderData(typeElement.getPackageName(), typeElement.getTypeElement().asType(),
-                typeElement.getSimpleName() + BUILDER_SUFFIX,
-                getExtendedBuilderName(typeElement), isExtendedAbstract(typeElement),
-                typeElement.getSmallestConstructorArgumentNames(),
-                typeElement.isAbstract(), builderConfiguration);
+        BuilderData builderData = BuilderData.builder()
+            .setAbstract(typeElement.isAbstract())
+            .setBuilderClassName(typeElement.getSimpleName() + BUILDER_SUFFIX)
+            .setBuilderConfiguration(builderConfiguration)
+            .setExtendedBuilderIsAbstract(isExtendedAbstract(typeElement))
+            .setExtendedBuilderName(getExtendedBuilderName(typeElement))
+            .setPackageName(typeElement.getPackageName())
+            .setSourceClassName(typeElement.getTypeElement().asType())
+            .build();
 
         updateBuilderDataWithHierarchicalInformation(typeElement, builderData, builderConfiguration);
         updateBuilderDataWithConstructorInformation(typeElement, builderData, builderConfiguration);
@@ -99,16 +104,42 @@ public class BuilderGenerator {
 
     private void updateBuilderDataWithConstructorInformation(Type typeElement, BuilderData builderData,
             BuilderConfiguration builderConfiguration) {
-        for (TypeMember parameter : typeElement.getSmallestConstructorArguments()) {
-            builderData.addMember(createMember(builderConfiguration, typeElement, typeElement, parameter));
+        List<TypeMember> constructorArguments = typeElement.getSmallestConstructorArguments();
+        if (constructorArguments.size() == 1) {
+            TypeMember parameter = constructorArguments.get(0);
+            if (isProbablyBuilderClass(typeElement, parameter)) {
+                builderData.setBuilderPassingConstructor(true);
+            }
+            else {
+                builderData.addConstructorArgumentName(parameter.getPropertyName());
+                builderData.addMember(createMember(builderConfiguration, typeElement, typeElement, parameter));
+            }
         }
+        else {
+            for (TypeMember parameter : constructorArguments) {
+                builderData.addConstructorArgumentName(parameter.getPropertyName());
+                builderData.addMember(createMember(builderConfiguration, typeElement, typeElement, parameter));
+            }
+        }
+    }
+
+    private boolean isProbablyBuilderClass(Type typeElement, TypeMember parameter) {
+        return determineClassName(parameter).equals(typeElement.getSimpleName() + BUILDER_SUFFIX)
+            || parameter.getElement().asType().getKind() == TypeKind.ERROR;
+    }
+
+    private String determineClassName(TypeMember parameter) {
+        return parameter.getPropertyType().toString();
     }
 
     private void updateBuilderDataWithHierarchicalInformation(Type typeElement, BuilderData builderData,
             BuilderConfiguration builderConfiguration) {
         for (Type currentElement : getTypeElementHierarchy(typeElement)) {
             for (TypeMember typeMember : currentElement.getEnclosedElements()) {
-                if (typeMember.isSetterMethod()) {
+                if (typeMember.isField()) {
+                    builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
+                }
+                else if (typeMember.isSetterMethod()) {
                     builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
                 }
                 else if (isListGetterMethod(typeMember)) {
@@ -130,7 +161,8 @@ public class BuilderGenerator {
             .name(enclosedEle.getPropertyName())
             .setBuilderMethod(
                 determineBuilderMethod(enclosedEle, builderConfiguration.getMethodPrefix()))
-            .hasGetter(typeElement.hasGetterFor(enclosedEle))
+            .hasGetter(hasGetter(typeElement, enclosedEle))
+            .hasSetter(hasSetter(typeElement, enclosedEle))
             .inherited(currentElement != typeElement && currentElement.hasBuilderAnnotation());
         if (typeUtils.isList(propertyType)) {
             TypeMirror subType = typeUtils.getSubType(propertyType);
@@ -147,6 +179,26 @@ public class BuilderGenerator {
                 .hasBuilder(typeHasBuilderAnnotation(propertyType));
         }
         return memberBuilder.build();
+    }
+
+    private boolean hasSetter(Type typeElement, TypeMember enclosedEle) {
+        return hasMethodInClassHierarchy(Type::hasSetterFor, typeElement, enclosedEle);
+    }
+
+    private boolean hasGetter(Type typeElement, TypeMember enclosedEle) {
+        return hasMethodInClassHierarchy(Type::hasGetterFor, typeElement, enclosedEle);
+    }
+
+    private boolean hasMethodInClassHierarchy(BiPredicate<Type, TypeMember> validationMethod, Type type, TypeMember member) {
+        Type currentType = type;
+        do {
+            if (validationMethod.test(currentType, member)) {
+                return true;
+            }
+            currentType = getParentType(currentType);
+        }
+        while (currentType.getSuperclass().getKind() != TypeKind.NONE);
+        return false;
     }
 
     private String determineBuilderMethod(TypeMember enclosedEle, String prefix) {

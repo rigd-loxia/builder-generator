@@ -34,6 +34,13 @@ public class TypeMember {
     }
 
     /**
+     * @return true if this element represents a field.
+     */
+    public boolean isField() {
+        return element.getKind() == ElementKind.FIELD;
+    }
+
+    /**
      * @return true if this element represents a method.
      */
     public boolean isMethod() {
@@ -154,6 +161,20 @@ public class TypeMember {
     public String determineGetterMethodName() {
         String propertyName = getPropertyName();
         return "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+    }
+
+    /**
+     * return the expected set method based on the {@link #getPropertyName()} result.
+     *
+     * @return the setter method name that would match this element.
+     */
+    public String determineSetterMethodName() {
+        String propertyName = getPropertyName();
+        return "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+    }
+
+    public Element getElement() {
+        return element;
     }
 
 }

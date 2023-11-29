@@ -13,6 +13,10 @@
 	    <@generateWithBuilderMethod cls member indent/>
 
 	    </#if>
+		<#if cls.isBuilderPassingConstructor()>
+	    <@generateGetMethod cls member indent/>
+
+		</#if>
 	</#list>
 	<#-- for only List<T> collection fields -->
 	<#list cls.collectionMembers as member>
@@ -38,6 +42,7 @@
     <@generateInnerClassBuilder cls indent/>
 </#macro>
 
+<#-- Inner class builder -->
 <#macro generateInnerClassBuilder cls indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
 	<#list cls.innerClasses as innerClass>
@@ -48,6 +53,7 @@ ${spc}}
 	</#list>
 </#macro>
 
+<#-- Generation of fields -->
 <#macro generateFields cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
 ${spc}private <@com.type member.type packageName/> ${member.name}<#if member.hasSubType()> = new java.util.ArrayList<>()</#if>;
@@ -89,6 +95,24 @@ ${spc}    ${member.name}Builder = null;
 ${spc}    ${member.name}Builders = new java.util.ArrayList<>();
     	</#if>
 ${spc}    return this;
+${spc}}
+</#macro>
+
+<#macro generateGetMethod cls member indent>
+    <#local spc>${""?left_pad(indent * 4)}</#local>
+    <@inherited member indent/>
+${spc}public <@com.type member.type packageName/> get${member.name?cap_first}() {
+    	<#if member.hasBuilder() && !member.hasSubType()>
+${spc}    if (${member.name}Builder != null){
+${spc}        return ${member.name}Builder.build();
+${spc}    }
+        <#elseif member.hasBuilder()>
+${spc}    if (!${member.name}Builders.isEmpty()){
+${spc}        return ${member.name}Builders.stream().map(builder -> builder.build()).collect(java.util.stream.Collectors.toList());
+${spc}    }
+${spc}    ${member.name}Builders = new java.util.ArrayList<>();
+    	</#if>
+${spc}    return this.${member.name};
 ${spc}}
 </#macro>
 
@@ -153,19 +177,23 @@ ${spc}@Override
     </#if>
 ${spc}public <#if cls.isAbstract()>abstract </#if><@com.type cls.sourceClassName packageName/> build()<#if cls.isAbstract()>;
     <#else> {
+        <#if cls.isBuilderPassingConstructor()>
+${spc}    return new <@com.type cls.sourceClassName packageName/>(this);
+        <#else>
 ${spc}    <@com.type cls.sourceClassName packageName/> result = new <@com.type cls.sourceClassName packageName/>(<#list getConstructorMembers() as member><@buildMember member indent/><#sep>, </#list>);
-        <#list cls.settableMembers as member>
+            <#list cls.settableMembers as member>
 ${spc}    result.set${member.name?cap_first}(<@buildMember member indent/>);
-        </#list>
-        <#list cls.collectionMembers as member>
+            </#list>
+            <#list cls.collectionMembers as member>
 ${spc}    result.get${member.name?cap_first}().addAll(${member.name});
-            <#if member.hasBuilder()>
+                <#if member.hasBuilder()>
 ${spc}    for (<@com.type member.subBuilderClassName packageName/><?> ${member.name}Builder : ${member.name}Builders) {
 ${spc}        result.get${member.name?cap_first}().add(${member.name}Builder.build());
 ${spc}    }
-            </#if>
-        </#list>
+                </#if>
+            </#list>
 ${spc}    return result;
+        </#if>
 ${spc}}
     </#if>
 </#macro>

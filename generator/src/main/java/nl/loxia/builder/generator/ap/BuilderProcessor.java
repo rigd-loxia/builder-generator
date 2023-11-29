@@ -49,8 +49,8 @@ public class BuilderProcessor extends AbstractProcessor {
                 if (testCompiling && typeElement.getSimpleName().toString().startsWith("Erroneous")) {
                     continue;
                 }
-                new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(), processingEnv.getMessager(),
-                    typeElement).generate(processingEnv.getFiler(), freeMarkerWriter);
+                new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(),
+                    processingEnv.getMessager(), typeElement).generate(processingEnv.getFiler(), freeMarkerWriter);
             }
         }
         return false;
