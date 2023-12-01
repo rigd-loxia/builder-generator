@@ -6,6 +6,14 @@ import org.mapstruct.ap.testutil.WithClasses;
 import org.mapstruct.ap.testutil.runner.GeneratedSource;
 
 import nl.loxia.builder.generator.ap.test.BuildableObject;
+import nl.loxia.builder.generator.ap.test.seealso.DuplicateField;
+import nl.loxia.builder.generator.ap.test.seealso.SeeAlso;
+import nl.loxia.builder.generator.ap.test.seealso.SeeAlsoAnnotated;
+import nl.loxia.builder.generator.ap.test.seealso.SeeAlsoAnnotated2;
+import nl.loxia.builder.generator.ap.test.seealso.SeeAlsoTarget;
+
+@WithClasses({ JavadocAnnotatedFields.class, BuildableObject.class, SeeAlso.class,
+    SeeAlsoAnnotated.class, SeeAlsoAnnotated2.class, SeeAlsoTarget.class, DuplicateField.class })
 
 public class JavadocTest {
 
@@ -13,7 +21,6 @@ public class JavadocTest {
     GeneratedSource generatedSource = new GeneratedSource();
 
     @ProcessorTest
-    @WithClasses({ JavadocAnnotatedFields.class, BuildableObject.class })
     void shouldGenerateJavadocAtConstructor() {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
@@ -24,7 +31,6 @@ public class JavadocTest {
     }
 
     @ProcessorTest
-    @WithClasses({ JavadocAnnotatedFields.class, BuildableObject.class })
     void shouldGenerateJavadocAtEndMethod() {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
@@ -35,7 +41,6 @@ public class JavadocTest {
     }
 
     @ProcessorTest
-    @WithClasses({ JavadocAnnotatedFields.class, BuildableObject.class })
     void shouldGenerateJavadocAtBuildMethod() {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
@@ -47,7 +52,6 @@ public class JavadocTest {
     }
 
     @ProcessorTest
-    @WithClasses({ JavadocAnnotatedFields.class, BuildableObject.class })
     void shouldGenerateJavadocAtChainingMethod() {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
@@ -57,11 +61,10 @@ public class JavadocTest {
                 "     * returns a builder for chaining. Use the end() method to return back to the current builder.",
                 System.lineSeparator(),
                 "     */", System.lineSeparator(),
-                "    public nl.loxia.builder.generator.ap.test.BuildableObjectBuilder");
+                "    public nl.loxia.builder.generator.ap.test.BuildableObjectBuilder<? extends JavadocAnnotatedFieldsBuilder<PARENT>> withObject() {");
     }
 
     @ProcessorTest
-    @WithClasses({ JavadocAnnotatedFields.class, BuildableObject.class })
     void shouldGenerateJavadocAtSetMethod() {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
@@ -69,5 +72,40 @@ public class JavadocTest {
                 "     * This field is used as an example for javadoc generation on with methods.", System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public JavadocAnnotatedFieldsBuilder<PARENT> withObject(nl.loxia.builder.generator.ap.test.BuildableObject object) {");
+    }
+
+    @ProcessorTest
+    void shouldGenerateJavadocAtAddListMethod() {
+        generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
+            .containsSequence(
+                "    /**", System.lineSeparator(),
+                "     * List field with javadoc.", System.lineSeparator(),
+                "     */", System.lineSeparator(),
+                "    public nl.loxia.builder.generator.ap.test.BuildableObjectBuilder<? extends JavadocAnnotatedFieldsBuilder<PARENT>> addList() {")
+            .containsSequence(
+                "    /**", System.lineSeparator(),
+                "     * List field with javadoc.", System.lineSeparator(),
+                "     */", System.lineSeparator(),
+                "    public JavadocAnnotatedFieldsBuilder<PARENT> addList(Iterable<? extends nl.loxia.builder.generator.ap.test.BuildableObject> list) {")
+            .containsSequence(
+                "    /**", System.lineSeparator(),
+                "     * List field with javadoc.", System.lineSeparator(),
+                "     */", System.lineSeparator(),
+                "    public JavadocAnnotatedFieldsBuilder<PARENT> addList(nl.loxia.builder.generator.ap.test.BuildableObject... list) {");
+    }
+
+    @ProcessorTest
+    void shouldGenerateJavadocAtSeeAlsoReferencedMethod() {
+        generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
+            .containsSequence(
+                "    /**", System.lineSeparator(),
+                "     * See also field with javadoc.", System.lineSeparator(),
+                "     */", System.lineSeparator(),
+                "    public nl.loxia.builder.generator.ap.test.seealso.SeeAlsoTargetBuilder")
+            .containsSequence(
+                "    /**", System.lineSeparator(),
+                "     * See also field with javadoc.", System.lineSeparator(),
+                "     */", System.lineSeparator(),
+                "    public nl.loxia.builder.generator.ap.test.seealso.DuplicateFieldBuilder");
     }
 }

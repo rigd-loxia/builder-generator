@@ -87,11 +87,7 @@ ${spc}}
 <#macro generateWithMethod cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
-    <#if member.javadoc??>
-${spc}/**
-${spc} * ${member.javadoc?trim}
-${spc} */
-    </#if>
+    <@javadoc member spc/>
 ${spc}public ${cls.builderClassName}<PARENT> ${member.methodName}(<@com.type member.type packageName/> ${member.name}) {
 ${spc}    this.${member.name} = ${member.name};
     	<#if member.hasBuilder() && !member.hasSubType()>
@@ -143,6 +139,7 @@ ${spc}}
 <#macro generateCollectionAddIterable cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
+    <@javadoc member spc/>
 ${spc}public ${cls.builderClassName}<PARENT> add${member.name?cap_first}(Iterable<? extends <@com.type member.subType packageName/>> ${member.name}) {
 ${spc}    for (<@com.type member.subType packageName/> v : ${member.name}) {
 ${spc}        this.${member.name}.add(v);
@@ -154,6 +151,7 @@ ${spc}}
 <#macro generateCollectionAddVarArgs cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
+    <@javadoc member spc/>
 ${spc}public ${cls.builderClassName}<PARENT> add${member.name?cap_first}(<@com.type member.subType packageName/>... ${member.name}) {
 ${spc}    for (<@com.type member.subType packageName/> v : ${member.name}) {
 ${spc}        this.${member.name}.add(v);
@@ -165,6 +163,7 @@ ${spc}}
 <#macro generateCollectionAddBuilder cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
+    <@javadoc member spc/>
 ${spc}public <@com.type member.subBuilderClassName packageName/><? extends ${cls.builderClassName}<PARENT>> add${member.name?cap_first}() {
 ${spc}    <@com.type member.subBuilderClassName packageName/><${cls.builderClassName}<PARENT>> child = new <@com.type member.subBuilderClassName packageName/><>(this);
 ${spc}    ${member.name}Builders.add(child);
@@ -175,6 +174,7 @@ ${spc}}
 <#macro generateCollectionAddAliasBuilder cls member alias indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
+    <@javadoc member spc/>
 ${spc}public <@com.type alias.type packageName/>Builder<? extends ${cls.builderClassName}<PARENT>> add${alias.name?cap_first}() {
 ${spc}    <@com.type alias.type packageName/>Builder<${cls.builderClassName}<PARENT>> child = new <@com.type alias.type packageName/>Builder<>(this);
 ${spc}    ${member.name}Builders.add(child);
@@ -295,4 +295,12 @@ ${spc}    builder.${member.name} = new java.util.ArrayList<>(bron.get${member.na
 ${spc}    builder.${member.name} = bron.get${member.name?cap_first}();
         </#if>
     </#list>
+</#macro>
+
+<#macro javadoc member spc>
+    <#if member.javadoc??>
+${spc}/**
+${spc} * ${member.javadoc?trim}
+${spc} */
+    </#if>
 </#macro>
