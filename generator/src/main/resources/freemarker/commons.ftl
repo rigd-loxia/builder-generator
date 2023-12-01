@@ -1,10 +1,20 @@
 <#macro type classType packageName>
 <@compress single_line=true>
-	<#if classType.getPackageName() == "java.lang">
-	    ${classType.getType()?remove_beginning("java.lang.")}
-	<#else>
+    <#if classType.getPackageName() == "java.lang">
+        ${classType.getType()?remove_beginning("java.lang.")}
+    <#else>
         ${classType.getType()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
-	</#if>
+    </#if>
+</@compress>
+</#macro>
+
+<#macro typeWithoutGenerics classType packageName>
+<@compress single_line=true>
+    <#if classType.getPackageName() == "java.lang">
+        ${classType.getTypeWithoutGenerics()?remove_beginning("java.lang.")}
+    <#else>
+        ${classType.getTypeWithoutGenerics()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+    </#if>
 </@compress>
 </#macro>
 

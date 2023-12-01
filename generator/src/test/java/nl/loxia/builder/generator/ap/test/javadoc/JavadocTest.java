@@ -56,9 +56,13 @@ public class JavadocTest {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
                 "    /**", System.lineSeparator(),
-                "     * This field is used as an example for javadoc generation on with methods.", System.lineSeparator(),
-                "     *", System.lineSeparator(),
-                "     * returns a builder for chaining. Use the end() method to return back to the current builder.",
+                "     * This field is used as an example for javadoc generation on with methods.<BR>", System.lineSeparator(),
+                "     * <BR>", System.lineSeparator(),
+                "     * returns a builder for chaining. Use the end() method to return back to the current builder.<BR>",
+                System.lineSeparator(),
+                "     * Multiple calls to this method will return the same builder.<BR>", System.lineSeparator(),
+                "     * If this is called after {@link #withObject(nl.loxia.builder.generator.ap.test.BuildableObject)} "
+                    + "then this will return a new Builder and the previously set object is lost.",
                 System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public nl.loxia.builder.generator.ap.test.BuildableObjectBuilder<? extends JavadocAnnotatedFieldsBuilder<PARENT>> withObject() {");
@@ -69,7 +73,9 @@ public class JavadocTest {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
                 "    /**", System.lineSeparator(),
-                "     * This field is used as an example for javadoc generation on with methods.", System.lineSeparator(),
+                "     * This field is used as an example for javadoc generation on with methods.<BR>", System.lineSeparator(),
+                "     * <BR>", System.lineSeparator(),
+                "     * If this is called after {@link #withObject()} then the Builder is lost.", System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public JavadocAnnotatedFieldsBuilder<PARENT> withObject(nl.loxia.builder.generator.ap.test.BuildableObject object) {");
     }
@@ -79,17 +85,28 @@ public class JavadocTest {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
                 "    /**", System.lineSeparator(),
-                "     * List field with javadoc.", System.lineSeparator(),
+                "     * List field with javadoc.<BR>", System.lineSeparator(),
+                "     * <BR>", System.lineSeparator(),
+                "     * Each call to this method creates a new Builder which will be stored in the list.",
+                System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public nl.loxia.builder.generator.ap.test.BuildableObjectBuilder<? extends JavadocAnnotatedFieldsBuilder<PARENT>> addList() {")
             .containsSequence(
                 "    /**", System.lineSeparator(),
-                "     * List field with javadoc.", System.lineSeparator(),
+                "     * List field with javadoc.<BR>", System.lineSeparator(),
+                "     * <BR>", System.lineSeparator(),
+                "     * this will add the supplied objects to the collection present. If an unmodifiable collection is set "
+                    + "using {@link #withList(java.util.List)} then an Exception can be thrown.",
+                System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public JavadocAnnotatedFieldsBuilder<PARENT> addList(Iterable<? extends nl.loxia.builder.generator.ap.test.BuildableObject> list) {")
             .containsSequence(
                 "    /**", System.lineSeparator(),
-                "     * List field with javadoc.", System.lineSeparator(),
+                "     * List field with javadoc.<BR>", System.lineSeparator(),
+                "     * <BR>", System.lineSeparator(),
+                "     * this will add the supplied objects to the collection present. If an unmodifiable collection is set "
+                    + "using {@link #withList(java.util.List)} then an Exception can be thrown.",
+                System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public JavadocAnnotatedFieldsBuilder<PARENT> addList(nl.loxia.builder.generator.ap.test.BuildableObject... list) {");
     }

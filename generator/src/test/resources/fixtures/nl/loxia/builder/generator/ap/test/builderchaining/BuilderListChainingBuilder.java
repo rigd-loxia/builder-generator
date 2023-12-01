@@ -16,12 +16,18 @@ public class BuilderListChainingBuilder<PARENT> {
         this.parent = parent;
     }
 
+    /**
+     * This replaces the collection currently present. Any previous calls to addValues are not saved.
+     */
     public BuilderListChainingBuilder<PARENT> withValues(java.util.List<BuilderChainingChild> values) {
         this.values = values;
         valuesBuilders = new java.util.ArrayList<>();
         return this;
     }
 
+    /**
+     * this will add the supplied objects to the collection present. If an unmodifiable collection is set using {@link #withValues(java.util.List)} then an Exception can be thrown.
+     */
     public BuilderListChainingBuilder<PARENT> addValues(Iterable<? extends BuilderChainingChild> values) {
         for (BuilderChainingChild v : values) {
             this.values.add(v);
@@ -29,6 +35,9 @@ public class BuilderListChainingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * this will add the supplied objects to the collection present. If an unmodifiable collection is set using {@link #withValues(java.util.List)} then an Exception can be thrown.
+     */
     public BuilderListChainingBuilder<PARENT> addValues(BuilderChainingChild... values) {
         for (BuilderChainingChild v : values) {
             this.values.add(v);
@@ -36,6 +45,9 @@ public class BuilderListChainingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * Each call to this method creates a new Builder which will be stored in the list.
+     */
     public BuilderChainingChildBuilder<? extends BuilderListChainingBuilder<PARENT>> addValues() {
         BuilderChainingChildBuilder<BuilderListChainingBuilder<PARENT>> child = new BuilderChainingChildBuilder<>(this);
         valuesBuilders.add(child);

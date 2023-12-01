@@ -15,11 +15,17 @@ public class ListHandlingBuilder<PARENT> {
         this.parent = parent;
     }
 
+    /**
+     * This replaces the collection currently present. Any previous calls to addValues are not saved.
+     */
     public ListHandlingBuilder<PARENT> withValues(java.util.List<java.lang.String> values) {
         this.values = values;
         return this;
     }
 
+    /**
+     * this will add the supplied objects to the collection present. If an unmodifiable collection is set using {@link #withValues(java.util.List)} then an Exception can be thrown.
+     */
     public ListHandlingBuilder<PARENT> addValues(Iterable<? extends String> values) {
         for (String v : values) {
             this.values.add(v);
@@ -27,6 +33,9 @@ public class ListHandlingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * this will add the supplied objects to the collection present. If an unmodifiable collection is set using {@link #withValues(java.util.List)} then an Exception can be thrown.
+     */
     public ListHandlingBuilder<PARENT> addValues(String... values) {
         for (String v : values) {
             this.values.add(v);

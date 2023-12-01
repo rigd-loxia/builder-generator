@@ -16,6 +16,9 @@ public class BuilderInnerClassBuilder<PARENT> {
         this.parent = parent;
     }
 
+    /**
+     * If this is called after {@link #withValue()} then the Builder is lost.
+     */
     public BuilderInnerClassBuilder<PARENT> withValue(BuilderInnerClass.InnerClass value) {
         this.value = value;
         valueBuilder = null;
@@ -23,7 +26,9 @@ public class BuilderInnerClassBuilder<PARENT> {
     }
 
     /**
-     * returns a builder for chaining. Use the end() method to return back to the current builder.
+     * returns a builder for chaining. Use the end() method to return back to the current builder.<BR>
+     * Multiple calls to this method will return the same builder.<BR>
+     * If this is called after {@link #withValue(BuilderInnerClass.InnerClass)} then this will return a new Builder and the previously set object is lost.
      */
     public BuilderInnerClassBuilder.InnerClassBuilder<? extends BuilderInnerClassBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
