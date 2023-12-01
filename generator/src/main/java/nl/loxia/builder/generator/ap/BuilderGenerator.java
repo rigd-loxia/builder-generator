@@ -141,12 +141,12 @@ public class BuilderGenerator {
                 if (typeMember.isField()) {
                     builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
                 }
-                // else if (typeMember.isSetterMethod()) {
-                // builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
-                // }
-                // else if (isListGetterMethod(typeMember)) {
-                // builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
-                // }
+                else if (typeMember.isSetterMethod()) {
+                    builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
+                }
+                else if (isListGetterMethod(typeMember)) {
+                    builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
+                }
                 else if (typeMember.isClass() && currentElement == typeElement) {
                     builderData.addInnerClass(createBuilderData(typeMember.asType()));
                 }
