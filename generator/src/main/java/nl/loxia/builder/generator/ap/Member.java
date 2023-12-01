@@ -22,6 +22,7 @@ public class Member {
     private final boolean hasSetter;
     private final GenerationType subBuilderClassName;
     private final String methodName;
+    private final String javadoc;
 
     private Member(Member.Builder builder) {
         type = builder.type;
@@ -36,6 +37,7 @@ public class Member {
         subBuilderClassName = builder.subBuilderClassName;
         aliases = Collections.unmodifiableList(builder.aliases);
         methodName = builder.methodName;
+        javadoc = builder.javadoc;
     }
 
     /**
@@ -177,6 +179,15 @@ public class Member {
     }
 
     /**
+     * If a field is annotated with javadoc, then this is transferred to the builder.
+     *
+     * @return the javadoc of this member.
+     */
+    public String getJavadoc() {
+        return javadoc;
+    }
+
+    /**
      * A new builder for creating a member.
      *
      * @return a new builder.
@@ -191,6 +202,7 @@ public class Member {
      * @author zegveb
      */
     public static class Builder {
+        private String javadoc;
         private GenerationType type;
         private String name;
         private GenerationType subType;
@@ -341,6 +353,19 @@ public class Member {
         }
 
         /**
+         * Sets the javadoc that should be inherited to this builder method
+         *
+         * @param javadoc - the javadoc that is on the field.
+         * @return itself for chaining
+         */
+        public Builder javadoc(String javadoc) {
+            this.javadoc = javadoc;
+            return this;
+        }
+
+        /**
+         * creates a new {@link Member} based on the information in this builder.
+         *
          * @return the build Member.
          */
         public Member build() {

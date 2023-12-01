@@ -28,6 +28,9 @@ public class BuilderInheritenceOfinnerClassBuilder<PARENT> extends BuilderInnerC
     }
 
     @Override
+    /**
+     * returns a builder for chaining. Use the end() method to return back to the current builder.
+     */
     public BuilderInnerClassBuilder.InnerClassBuilder<? extends BuilderInheritenceOfinnerClassBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
             valueBuilder = new BuilderInnerClassBuilder.InnerClassBuilder<>(this);
@@ -36,6 +39,9 @@ public class BuilderInheritenceOfinnerClassBuilder<PARENT> extends BuilderInnerC
         return valueBuilder;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     */
     @Override
     public BuilderInheritenceOfinnerClass build() {
         BuilderInheritenceOfinnerClass result = new BuilderInheritenceOfinnerClass();

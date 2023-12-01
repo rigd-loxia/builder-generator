@@ -21,6 +21,8 @@ public class TypeMember {
     private final Element element;
 
     /**
+     * creates the type member container.
+     *
      * @param element the model item to simplify
      */
     public TypeMember(Element element) {
@@ -28,6 +30,8 @@ public class TypeMember {
     }
 
     /**
+     * used when this is a class to return this wrapped as a {@link Type}. Use {@link #isClass()} first to check it.
+     *
      * @return this element as a {@link Type}
      */
     public Type asType() {
@@ -35,6 +39,8 @@ public class TypeMember {
     }
 
     /**
+     * checks if the element kind is of the type field.
+     *
      * @return true if this element represents a field.
      */
     public boolean isField() {
@@ -42,6 +48,8 @@ public class TypeMember {
     }
 
     /**
+     * checks if the element kind is of the type method.
+     *
      * @return true if this element represents a method.
      */
     public boolean isMethod() {
@@ -49,6 +57,8 @@ public class TypeMember {
     }
 
     /**
+     * checks if the element kind is of the type class.
+     *
      * @return true if this element represents a class. If true then you can use {@link #asType()} to get more information from it.
      */
     public boolean isClass() {
@@ -56,6 +66,8 @@ public class TypeMember {
     }
 
     /**
+     * checks if the element kind is of the type constructor.
+     *
      * @return true if this element represents a constructor.
      */
     public boolean isConstructor() {
@@ -63,6 +75,8 @@ public class TypeMember {
     }
 
     /**
+     * check if this elements is a setter.
+     *
      * @return true if this element represents a setter method.
      */
     public boolean isSetterMethod() {
@@ -78,6 +92,8 @@ public class TypeMember {
     }
 
     /**
+     * check if this elements is a getter.
+     *
      * @return true if this element represents a getter method.
      */
     public boolean isGetterMethod() {
@@ -102,6 +118,8 @@ public class TypeMember {
     }
 
     /**
+     * The {@link ExecutableElement#getParameters()} wrapped as {@link TypeMember}.
+     *
      * @return the parameters if this is a method or constructor otherwise an empty list.
      */
     public List<TypeMember> getParameters() {
@@ -112,6 +130,9 @@ public class TypeMember {
     }
 
     /**
+     * determines the type represented by this member. For get methods it is the return type, for set methods it is the first
+     * parameter, for fields it is the type itself.
+     *
      * @return the return type for a getter, the first parameter for another method, or the element itself.
      */
     public TypeMirror getPropertyType() {
@@ -183,4 +204,12 @@ public class TypeMember {
         return element.asType().getKind() == TypeKind.ERROR;
     }
 
+    /**
+     * For usage with {@link TypeUtils}.
+     *
+     * @return the element that is encapsulated by this TypeMember.
+     */
+    public Element getElement() {
+        return element;
+    }
 }

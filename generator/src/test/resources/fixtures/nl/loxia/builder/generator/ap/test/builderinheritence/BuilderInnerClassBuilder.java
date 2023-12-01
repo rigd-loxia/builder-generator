@@ -22,6 +22,9 @@ public class BuilderInnerClassBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * returns a builder for chaining. Use the end() method to return back to the current builder.
+     */
     public BuilderInnerClassBuilder.InnerClassBuilder<? extends BuilderInnerClassBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
             valueBuilder = new BuilderInnerClassBuilder.InnerClassBuilder<>(this);
@@ -30,12 +33,18 @@ public class BuilderInnerClassBuilder<PARENT> {
         return valueBuilder;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     */
     public BuilderInnerClass build() {
         BuilderInnerClass result = new BuilderInnerClass();
         result.setValue(valueBuilder != null ? valueBuilder.build() : value);
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }
@@ -75,12 +84,18 @@ public class BuilderInnerClassBuilder<PARENT> {
             return this;
         }
 
+        /**
+         * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+         */
         public BuilderInnerClass.InnerClass build() {
             BuilderInnerClass.InnerClass result = new BuilderInnerClass.InnerClass();
             result.setValue(value);
             return result;
         }
 
+        /**
+         * returns the parent builder if present, otherwise null is returned.
+         */
         public PARENT end() {
             return parent;
         }

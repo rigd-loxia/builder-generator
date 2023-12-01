@@ -87,6 +87,11 @@ ${spc}}
 <#macro generateWithMethod cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
+    <#if member.javadoc??>
+${spc}/**
+${spc} * ${member.javadoc?trim}
+${spc} */
+    </#if>
 ${spc}public ${cls.builderClassName}<PARENT> ${member.methodName}(<@com.type member.type packageName/> ${member.name}) {
 ${spc}    this.${member.name} = ${member.name};
     	<#if member.hasBuilder() && !member.hasSubType()>
@@ -119,6 +124,13 @@ ${spc}}
 <#macro generateWithBuilderMethod cls member indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <@inherited member indent/>
+${spc}/**
+    <#if member.javadoc??>
+${spc} * ${member.javadoc?trim}
+${spc} *
+    </#if>
+${spc} * returns a builder for chaining. Use the end() method to return back to the current builder.
+${spc} */
 ${spc}public <@com.builderType member packageName sourceClassName/><? extends ${cls.builderClassName}<PARENT>> ${member.methodName}() {
 ${spc}    if (${member.name}Builder == null) {
 ${spc}        ${member.name}Builder = new <@com.builderType member packageName sourceClassName/><>(this);
@@ -172,6 +184,9 @@ ${spc}}
 
 <#macro generateBuildMethod cls indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
+${spc}/**
+${spc} * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+${spc} */
     <#if cls.extendsBuilder()>
 ${spc}@Override
     </#if>
@@ -219,6 +234,9 @@ ${spc}@Override
     <#local spc>${""?left_pad(indent * 4)}</#local>
     <#if !cls.extendsBuilder()>
 
+${spc}/**
+${spc} * returns the parent builder if present, otherwise null is returned.
+${spc} */
 ${spc}public PARENT end() {
 ${spc}    return parent;
 ${spc}}

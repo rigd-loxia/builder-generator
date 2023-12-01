@@ -24,6 +24,8 @@ public class Type {
     private final TypeElement typeElement;
 
     /**
+     * creates the type container.
+     *
      * @param typeElement the model item to simplify
      */
     public Type(TypeElement typeElement) {
@@ -31,6 +33,8 @@ public class Type {
     }
 
     /**
+     * For usage with {@link TypeUtils}.
+     *
      * @return the typeElement represented by this Type.
      */
     public TypeElement getTypeElement() {
@@ -44,14 +48,6 @@ public class Type {
      */
     public String getQualifiedName() {
         return typeElement.getQualifiedName().toString();
-    }
-
-    /**
-     * @return the package of the type.
-     */
-    public String getPackageName() {
-        String qualifiedName = getQualifiedName();
-        return qualifiedName.substring(0, qualifiedName.lastIndexOf('.'));
     }
 
     /**
@@ -77,6 +73,8 @@ public class Type {
     }
 
     /**
+     * used to check if the abstract keyword is present
+     *
      * @return true if this type is marked as abstract.
      */
     public boolean isAbstract() {
@@ -95,6 +93,8 @@ public class Type {
     }
 
     /**
+     * used to check if the Builder annotation is present.
+     *
      * @return true if the Builder annotation is present.
      */
     public boolean hasBuilderAnnotation() {
@@ -137,6 +137,8 @@ public class Type {
     }
 
     /**
+     * returns true if there is a getter present for the TypeMember inside this class.
+     *
      * @param typeMember representing the field
      * @return true if a getter method is available to retrieve the field.
      */
@@ -147,6 +149,8 @@ public class Type {
     }
 
     /**
+     * returns true if there is a setter present for the TypeMember inside this class.
+     *
      * @param typeMember representing the field
      * @return true if a getter method is available to retrieve the field.
      */
@@ -157,6 +161,8 @@ public class Type {
     }
 
     /**
+     * returns the annotation method value if present, otherwise null.
+     *
      * @param annotationClass - the annotation class for which the needs to be looked up.
      * @param annotationMethod - the name of the method for which the value is wanted.
      * @return the value associated with the specified annotation and method of that annotation. returns null if not found or not

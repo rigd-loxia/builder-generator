@@ -20,6 +20,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic.Kind;
 import javax.tools.JavaFileObject;
@@ -46,13 +47,14 @@ public class BuilderGenerator {
      *
      * @param environmentConfiguration - contains the configuration supplied to the compiler
      * @param types - Utility class for working with Types.
+     * @param elements - Utility class for working with Elements.
      * @param messager - Feedback endpoint for communication errors/warnings to the java compiler
      * @param typeElement - The current element for which a builder needs to be generated.
      */
-    public BuilderGenerator(EnvironmentConfiguration environmentConfiguration, Types types, Messager messager,
-            TypeElement typeElement) {
+    public BuilderGenerator(EnvironmentConfiguration environmentConfiguration, Types types, Elements elements,
+            Messager messager, TypeElement typeElement) {
         this.environmentConfiguration = environmentConfiguration;
-        typeUtils = new TypeUtils(types);
+        typeUtils = new TypeUtils(types, elements);
         this.messager = messager;
         this.typeElement = new Type(typeElement);
     }
@@ -92,7 +94,6 @@ public class BuilderGenerator {
             .setAbstract(typeElement.isAbstract())
             .setBuilderClassName(typeElement.getSimpleName() + BUILDER_SUFFIX)
             .setBuilderConfiguration(builderConfiguration)
-            .setExtendedBuilderIsAbstract(isExtendedAbstract(typeElement))
             .setExtendedBuilderName(getExtendedBuilderName(typeElement))
             .setPackageName(typeUtils.getPackageName(typeElement.getTypeElement()))
             .setSourceClassName(asGenerationType(typeElement.getTypeElement().asType()))
@@ -140,12 +141,12 @@ public class BuilderGenerator {
                 if (typeMember.isField()) {
                     builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
                 }
-                else if (typeMember.isSetterMethod()) {
-                    builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
-                }
-                else if (isListGetterMethod(typeMember)) {
-                    builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
-                }
+                // else if (typeMember.isSetterMethod()) {
+                // builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
+                // }
+                // else if (isListGetterMethod(typeMember)) {
+                // builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
+                // }
                 else if (typeMember.isClass() && currentElement == typeElement) {
                     builderData.addInnerClass(createBuilderData(typeMember.asType()));
                 }
@@ -164,7 +165,8 @@ public class BuilderGenerator {
                 determineBuilderMethod(enclosedEle, builderConfiguration.getMethodPrefix()))
             .hasGetter(hasGetter(typeElement, enclosedEle))
             .hasSetter(hasSetter(typeElement, enclosedEle))
-            .inherited(currentElement != typeElement && currentElement.hasBuilderAnnotation());
+            .inherited(currentElement != typeElement && currentElement.hasBuilderAnnotation())
+            .javadoc(determineJavadoc(enclosedEle));
         if (typeUtils.isList(propertyType)) {
             TypeMirror subType = typeUtils.getSubType(propertyType);
             memberBuilder
@@ -180,6 +182,10 @@ public class BuilderGenerator {
                 .hasBuilder(typeHasBuilderAnnotation(propertyType));
         }
         return memberBuilder.build();
+    }
+
+    private String determineJavadoc(TypeMember enclosedEle) {
+        return typeUtils.getJavadoc(enclosedEle);
     }
 
     private List<GenerationType> getSurroundingClassesForGeneration(TypeMirror propertyType) {
@@ -312,11 +318,6 @@ public class BuilderGenerator {
                 type.getTypeElement());
         }
         return null;
-    }
-
-    private boolean isExtendedAbstract(Type type) {
-        Type parentType = getParentType(type);
-        return parentType != null && parentType.isAbstract();
     }
 
     private Type getParentType(Type type) {

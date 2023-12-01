@@ -34,12 +34,18 @@ public class ListHandlingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     */
     public ListHandling build() {
         ListHandling result = new ListHandling();
         result.getValues().addAll(values);
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }

@@ -22,6 +22,9 @@ public class BuilderChainingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * returns a builder for chaining. Use the end() method to return back to the current builder.
+     */
     public BuilderChainingChildBuilder<? extends BuilderChainingBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
             valueBuilder = new BuilderChainingChildBuilder<>(this);
@@ -30,12 +33,18 @@ public class BuilderChainingBuilder<PARENT> {
         return valueBuilder;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     */
     public BuilderChaining build() {
         BuilderChaining result = new BuilderChaining();
         result.setValue(valueBuilder != null ? valueBuilder.build() : value);
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }

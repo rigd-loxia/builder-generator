@@ -14,19 +14,22 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
 /**
- * Utility method for working with {@link Types}.
+ * Utility method for working with {@link Types} and {@link Elements}.
  *
  * @author Ben Zegveld
  */
 class TypeUtils {
 
     private final Types types;
+    private final Elements elements;
 
-    TypeUtils(Types types) {
+    TypeUtils(Types types, Elements elements) {
         this.types = types;
+        this.elements = elements;
     }
 
     /**
@@ -208,6 +211,10 @@ class TypeUtils {
             packageName = currentElement.toString().replace("package ", "");
         }
         return packageName;
+    }
+
+    public String getJavadoc(TypeMember enclosedEle) {
+        return elements.getDocComment(enclosedEle.getElement());
     }
 
 }

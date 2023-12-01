@@ -3,6 +3,7 @@ package nl.loxia.builder.generator.ap.test.constructor;
 import java.util.List;
 
 import nl.loxia.builder.generator.annotations.Builder;
+import nl.loxia.builder.generator.ap.test.BuildableObject;
 
 @Builder
 public class ConstructorPass {
