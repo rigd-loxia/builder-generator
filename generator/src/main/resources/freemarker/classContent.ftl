@@ -182,7 +182,7 @@ ${spc}}
     <@inherited member indent/>
 ${spc}/**
     <@javadoc member spc true/>
-${spc} * Each call to this method creates a new Builder which will be stored in the list.
+${spc} * Each call to this method creates a new Builder which will be stored in the list. Use the end() method to return back to the current builder.
 ${spc} */
 ${spc}public <@com.type member.subBuilderClassName packageName/><? extends ${cls.builderClassName}<PARENT>> add${member.name?cap_first}() {
 ${spc}    <@com.type member.subBuilderClassName packageName/><${cls.builderClassName}<PARENT>> child = new <@com.type member.subBuilderClassName packageName/><>(this);
@@ -205,7 +205,7 @@ ${spc}}
 <#macro generateBuildMethod cls indent>
     <#local spc>${""?left_pad(indent * 4)}</#local>
 ${spc}/**
-${spc} * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+${spc} * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
 ${spc} */
     <#if cls.extendsBuilder()>
 ${spc}@Override

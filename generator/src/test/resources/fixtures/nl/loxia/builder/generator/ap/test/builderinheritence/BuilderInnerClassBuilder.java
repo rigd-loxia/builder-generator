@@ -39,7 +39,7 @@ public class BuilderInnerClassBuilder<PARENT> {
     }
 
     /**
-     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     public BuilderInnerClass build() {
         BuilderInnerClass result = new BuilderInnerClass();
@@ -90,7 +90,7 @@ public class BuilderInnerClassBuilder<PARENT> {
         }
 
         /**
-         * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+         * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
          */
         public BuilderInnerClass.InnerClass build() {
             BuilderInnerClass.InnerClass result = new BuilderInnerClass.InnerClass();

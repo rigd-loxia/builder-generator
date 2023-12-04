@@ -45,7 +45,7 @@ public class JavadocTest {
         generatedSource.forBuilder(JavadocAnnotatedFields.class).content()
             .containsSequence(
                 "    /**", System.lineSeparator(),
-                "     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.",
+                "     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.",
                 System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public JavadocAnnotatedFields build() {");
@@ -87,7 +87,7 @@ public class JavadocTest {
                 "    /**", System.lineSeparator(),
                 "     * List field with javadoc.<BR>", System.lineSeparator(),
                 "     * <BR>", System.lineSeparator(),
-                "     * Each call to this method creates a new Builder which will be stored in the list.",
+                "     * Each call to this method creates a new Builder which will be stored in the list. Use the end() method to return back to the current builder.",
                 System.lineSeparator(),
                 "     */", System.lineSeparator(),
                 "    public nl.loxia.builder.generator.ap.test.BuildableObjectBuilder<? extends JavadocAnnotatedFieldsBuilder<PARENT>> addList() {")

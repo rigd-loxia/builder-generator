@@ -27,7 +27,7 @@ public class SimpleClassAllFieldsInSetterBuilder<PARENT> {
     }
 
     /**
-     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     public SimpleClassAllFieldsInSetter build() {
         SimpleClassAllFieldsInSetter result = new SimpleClassAllFieldsInSetter();

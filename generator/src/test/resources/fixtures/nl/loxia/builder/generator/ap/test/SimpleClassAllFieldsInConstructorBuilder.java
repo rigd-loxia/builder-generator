@@ -27,7 +27,7 @@ public class SimpleClassAllFieldsInConstructorBuilder<PARENT> {
     }
 
     /**
-     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     public SimpleClassAllFieldsInConstructor build() {
         SimpleClassAllFieldsInConstructor result = new SimpleClassAllFieldsInConstructor(stringField, booleanField);

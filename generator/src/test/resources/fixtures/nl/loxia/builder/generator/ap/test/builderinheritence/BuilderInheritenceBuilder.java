@@ -26,7 +26,7 @@ public class BuilderInheritenceBuilder<PARENT> extends BuilderInheritenceBaseBui
     }
 
     /**
-     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     @Override
     public BuilderInheritence build() {

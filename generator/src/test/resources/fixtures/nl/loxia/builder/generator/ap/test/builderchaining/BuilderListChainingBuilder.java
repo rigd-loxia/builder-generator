@@ -46,7 +46,7 @@ public class BuilderListChainingBuilder<PARENT> {
     }
 
     /**
-     * Each call to this method creates a new Builder which will be stored in the list.
+     * Each call to this method creates a new Builder which will be stored in the list. Use the end() method to return back to the current builder.
      */
     public BuilderChainingChildBuilder<? extends BuilderListChainingBuilder<PARENT>> addValues() {
         BuilderChainingChildBuilder<BuilderListChainingBuilder<PARENT>> child = new BuilderChainingChildBuilder<>(this);
@@ -55,7 +55,7 @@ public class BuilderListChainingBuilder<PARENT> {
     }
 
     /**
-     * returns the build object. For builder chaining use the {@link #end()} method to return the previous builder.
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     public BuilderListChaining build() {
         BuilderListChaining result = new BuilderListChaining();
