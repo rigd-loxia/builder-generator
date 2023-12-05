@@ -37,7 +37,7 @@ import nl.loxia.builder.generator.annotations.Builder;
 @SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration",
     "nl.loxia.BuilderGenerator.methodPrefix", "nl.loxia.BuilderGenerator.verbose" })
 public class BuilderProcessor extends AbstractProcessor {
-    public class StackTraceElementCollector
+    private class StackTraceElementCollector
             implements Collector<StackTraceElement[], List<StackTraceElement>, StackTraceElement[]> {
 
         private static final String STACK_TRACE_SEPARATOR = "stackTraceSeparator";
@@ -87,16 +87,10 @@ public class BuilderProcessor extends AbstractProcessor {
     @SuppressWarnings("serial")
     private class ExceptionCollection extends RuntimeException {
 
-        private List<? extends Throwable> exceptions;
+        private final List<? extends Throwable> exceptions;
 
         public ExceptionCollection(List<? extends Throwable> exceptions) {
             this.exceptions = exceptions;
-        }
-
-        @Override
-        public synchronized Throwable fillInStackTrace() {
-            exceptions = exceptions.stream().map(Throwable::fillInStackTrace).collect(Collectors.toList());
-            return this;
         }
 
         @Override
@@ -169,18 +163,21 @@ public class BuilderProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
         if (!roundEnvironment.processingOver()) {
-            List<Exception> exceptions = new ArrayList<>();
+            List<RuntimeException> exceptions = new ArrayList<>();
             // get and process any builders from this round
             Set<TypeElement> builders = getBuildersToGenerate(annotations, roundEnvironment);
             for (TypeElement typeElement : builders) {
                 try {
                     processBuilder(typeElement);
                 }
-                catch (Exception e) {
+                catch (RuntimeException e) {
                     exceptions.add(e);
                 }
             }
             if (!exceptions.isEmpty()) {
+                if (exceptions.size() == 1) {
+                    throw exceptions.get(0);
+                }
                 throw new ExceptionCollection(exceptions);
             }
         }

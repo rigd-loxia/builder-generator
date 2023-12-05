@@ -346,6 +346,11 @@ public class BuilderGenerator {
         return qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1, qualifiedName.length());
     }
 
+    /**
+     * Use for reporting how far the builder generator got before a crash occurred.
+     *
+     * @return the stack of locations it visited to reach the current point. Does not contain actions that have been finished.
+     */
     public String getActions() {
         return actions.stream().collect(Collectors.joining(", "));
 
