@@ -164,27 +164,8 @@ abstract class CompilingExtension implements BeforeEachCallback {
     }
 
     private void assertNotes(List<String> actualNotes, List<String> expectedNotes) {
-        List<String> expectedNotesRemaining = new ArrayList<>(expectedNotes);
-        Iterator<String> expectedNotesIterator = expectedNotesRemaining.iterator();
-        if (expectedNotesIterator.hasNext()) {
-            String expectedNoteRegexp = expectedNotesIterator.next();
-            for (String actualNote : actualNotes) {
-                if (actualNote.matches(expectedNoteRegexp)) {
-                    expectedNotesIterator.remove();
-                    if (expectedNotesIterator.hasNext()) {
-                        expectedNoteRegexp = expectedNotesIterator.next();
-                    }
-                    else {
-                        break;
-                    }
-                }
-            }
-        }
-
-        assertThat(expectedNotesRemaining)
-            .describedAs("There are unmatched notes: " +
-                String.join(LINE_SEPARATOR, expectedNotesRemaining))
-            .isEmpty();
+        assertThat(actualNotes)
+            .containsExactlyInAnyOrderElementsOf(expectedNotes);
     }
 
     private void assertDiagnostics(List<DiagnosticDescriptor> actualDiagnostics,
@@ -194,7 +175,6 @@ abstract class CompilingExtension implements BeforeEachCallback {
         expectedDiagnostics.sort(COMPARATOR);
         expectedDiagnostics = filterExpectedDiagnostics(expectedDiagnostics);
 
-        Iterator<DiagnosticDescriptor> actualIterator = actualDiagnostics.iterator();
         Iterator<DiagnosticDescriptor> expectedIterator = expectedDiagnostics.iterator();
 
         assertThat(actualDiagnostics).describedAs(
@@ -208,9 +188,8 @@ abstract class CompilingExtension implements BeforeEachCallback {
             .hasSize(
                 expectedDiagnostics.size());
 
-        while (actualIterator.hasNext()) {
+        for (DiagnosticDescriptor actual : actualDiagnostics) {
 
-            DiagnosticDescriptor actual = actualIterator.next();
             DiagnosticDescriptor expected = expectedIterator.next();
 
             if (expected.getSourceFileName() != null) {

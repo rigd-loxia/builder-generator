@@ -26,11 +26,12 @@ import nl.loxia.builder.generator.annotations.Builder;
  */
 @SupportedAnnotationTypes("nl.loxia.builder.generator.annotations.Builder")
 @SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration",
-    "nl.loxia.BuilderGenerator.methodPrefix" })
+    "nl.loxia.BuilderGenerator.methodPrefix", "nl.loxia.BuilderGenerator.verbose" })
 public class BuilderProcessor extends AbstractProcessor {
     private FreeMarkerWriter freeMarkerWriter;
     private boolean testCompiling;
     private EnvironmentConfiguration environmentConfiguration;
+    private boolean verbose;
 
     /**
      * Annotation Processor which handles the needed setup for the {@link BuilderGenerator} to do its work.
@@ -43,6 +44,7 @@ public class BuilderProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         freeMarkerWriter = new FreeMarkerWriter();
         testCompiling = processingEnv.getOptions().containsKey("testCompiling");
+        verbose = processingEnv.getOptions().containsKey("nl.loxia.BuilderGenerator.verbose");
         environmentConfiguration = new EnvironmentConfiguration(processingEnv);
         super.init(processingEnv);
     }
@@ -55,6 +57,10 @@ public class BuilderProcessor extends AbstractProcessor {
             for (TypeElement typeElement : builders) {
                 if (testCompiling && typeElement.getSimpleName().toString().startsWith("Erroneous")) {
                     continue;
+                }
+                if (verbose) {
+                    processingEnv.getMessager().printMessage(Kind.NOTE,
+                        "Generating builder for " + typeElement.getQualifiedName(), typeElement);
                 }
                 new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(), processingEnv.getElementUtils(),
                     processingEnv.getMessager(), typeElement).generate(processingEnv.getFiler(), freeMarkerWriter);

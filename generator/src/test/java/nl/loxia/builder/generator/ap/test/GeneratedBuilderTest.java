@@ -8,6 +8,8 @@ import org.mapstruct.ap.testutil.WithClasses;
 import org.mapstruct.ap.testutil.compilation.annotation.CompilationResult;
 import org.mapstruct.ap.testutil.compilation.annotation.Diagnostic;
 import org.mapstruct.ap.testutil.compilation.annotation.ExpectedCompilationOutcome;
+import org.mapstruct.ap.testutil.compilation.annotation.ExpectedNote;
+import org.mapstruct.ap.testutil.compilation.annotation.ProcessorOption;
 import org.mapstruct.ap.testutil.runner.Compiler;
 import org.mapstruct.ap.testutil.runner.GeneratedSource;
 
@@ -15,6 +17,14 @@ class GeneratedBuilderTest {
 
     @RegisterExtension
     private final GeneratedSource generatedSource = new GeneratedSource();
+
+    @ProcessorTest(Compiler.JDK) // Eclipse compiler does not support notes.
+    @ProcessorOption(name = "nl.loxia.BuilderGenerator.verbose", value = ".")
+    @WithClasses({ SimpleClassAllFieldsInConstructor.class, SimpleClassAllFieldsInSetter.class })
+    @ExpectedNote("Generating builder for nl.loxia.builder.generator.ap.test.SimpleClassAllFieldsInConstructor")
+    @ExpectedNote("Generating builder for nl.loxia.builder.generator.ap.test.SimpleClassAllFieldsInSetter")
+    void verbose() throws ClassNotFoundException {
+    }
 
     @ProcessorTest
     @WithClasses(SimpleClassAllFieldsInConstructor.class)
