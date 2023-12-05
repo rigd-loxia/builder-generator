@@ -10,6 +10,8 @@ public class GenerationType {
     private final String packageName;
 
     /**
+     * Creates a generation type which represents a class.
+     *
      * @param mirror - the typeMirror used to generate a class reference in code.
      * @param packageName - the package in which this type mirror lives.
      */
@@ -19,6 +21,8 @@ public class GenerationType {
     }
 
     /**
+     * Creates a generation type which represents a class.
+     *
      * @param type - the type used to generate a class reference in code.
      * @param packageName - the package in which this type mirror lives.
      */
@@ -28,13 +32,26 @@ public class GenerationType {
     }
 
     /**
-     * @return the typemirror for usage in code generation
+     * This is the fully qualified class name for this type.
+     *
+     * @return the type for usage in code generation
      */
     public String getType() {
         return type;
     }
 
     /**
+     * This is the fully qualified class name for this type.
+     *
+     * @return the type for usage in code generation
+     */
+    public String getTypeWithoutGenerics() {
+        return type.replaceAll("<.*>", "");
+    }
+
+    /**
+     * This is the package name for this type.
+     *
      * @return the package name of this type mirror as determined by the java compiler api instead of manually determining this.
      */
     public String getPackageName() {

@@ -26,12 +26,18 @@ public class SetPrefixBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
+     */
     public SetPrefix build() {
         SetPrefix result = new SetPrefix(stringField);
         result.setBooleanField(booleanField);
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }

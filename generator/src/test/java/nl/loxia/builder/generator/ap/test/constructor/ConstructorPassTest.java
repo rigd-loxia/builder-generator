@@ -7,6 +7,9 @@ import java.util.List;
 import org.mapstruct.ap.testutil.ProcessorTest;
 import org.mapstruct.ap.testutil.WithClasses;
 
+import nl.loxia.builder.generator.ap.test.BuildableObject;
+import nl.loxia.builder.generator.ap.test.BuildableObjectBuilder;
+
 public class ConstructorPassTest {
 
     @ProcessorTest

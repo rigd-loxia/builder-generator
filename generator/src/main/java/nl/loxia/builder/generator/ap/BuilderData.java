@@ -26,7 +26,6 @@ public class BuilderData {
     private final SortedSet<BuilderData> innerClasses =
         new TreeSet<>((o1, o2) -> o1.getBuilderClassName().compareTo(o2.getBuilderClassName()));
     private final boolean isAbstract;
-    private final boolean extendedBuilderIsAbstract;
     private final BuilderConfiguration builderConfiguration;
     private boolean builderPassingConstructor;
 
@@ -35,7 +34,6 @@ public class BuilderData {
         sourceClassName = builder.sourceClassName;
         builderClassName = builder.builderClassName;
         extendedBuilderName = builder.extendedBuilderName;
-        extendedBuilderIsAbstract = builder.extendedBuilderIsAbstract;
         isAbstract = builder.isAbstract;
         builderConfiguration = builder.builderConfiguration;
     }
@@ -60,6 +58,9 @@ public class BuilderData {
     }
 
     /**
+     * Sometimes you have a hierarchy of classes, and a similar hierarchy with builders. In this case for subclass builders this
+     * will return the name of the superclass builder. This method will return true if this is the case.
+     *
      * @return true if this builder extends another builder.
      */
     public boolean extendsBuilder() {
@@ -67,13 +68,11 @@ public class BuilderData {
     }
 
     /**
-     * @return true if this builder would be of an abstract class. The builder will then not generate a build method.
-     */
-    public boolean extendsAbstractBuilder() {
-        return extendedBuilderIsAbstract;
-    }
-
-    /**
+     * The package name for this builder cannot always be logically determined. The package name returned here is what according to
+     * the java compiler is the package. <BR>
+     * <BR>
+     * For example it can handle package names like: I.Do.Not.Follow.Java.Conventions
+     *
      * @return the package name for this builder
      */
     public String getPackageName() {
@@ -108,6 +107,8 @@ public class BuilderData {
     }
 
     /**
+     * used to check if the class for this builder is abstract, in that case the generated builder will also be abstract.
+     *
      * @return true if this builder is based on an abstract class.
      */
     public boolean isAbstract() {
@@ -115,6 +116,8 @@ public class BuilderData {
     }
 
     /**
+     * Sometimes you want to disable the copy of method, because your class does not expose all of it's fields.
+     *
      * @return true if the copy of method should be generated
      */
     public boolean isCopyOfGenerationEnabled() {
@@ -122,6 +125,8 @@ public class BuilderData {
     }
 
     /**
+     * You can use a constructor that accepts the builder as an argument. If this is set to true then that is the case.
+     *
      * @param builderPassingConstructor whether or not the constructor accepts the builder
      */
     public void setBuilderPassingConstructor(boolean builderPassingConstructor) {
@@ -129,6 +134,10 @@ public class BuilderData {
     }
 
     /**
+     * You can use a constructor that accepts the builder as an argument.<BR>
+     * <BR>
+     * For example: class MyClass { ... MyClass(MyClassBuilder builder) { ... } ... }
+     *
      * @return true if the only argument for the constructor is the builder itself.
      */
     public boolean isBuilderPassingConstructor() {
@@ -233,6 +242,8 @@ public class BuilderData {
     }
 
     /**
+     * If this builder data object is not valid, then this method will return information for the user as to why it is not valid.
+     *
      * @return the validation error tekst for the compilation error when {@link #isValid()} returns false.
      */
     public String getValidationError() {
@@ -245,6 +256,8 @@ public class BuilderData {
     }
 
     /**
+     * creates a new builder for creating a BuilderData object.
+     *
      * @return a new builder for creating a BuilderData object.
      */
     public static BuilderDataBuilder builder() {
@@ -257,7 +270,6 @@ public class BuilderData {
     public static class BuilderDataBuilder {
         private BuilderConfiguration builderConfiguration;
         private boolean isAbstract;
-        private boolean extendedBuilderIsAbstract;
         private String extendedBuilderName;
         private String builderClassName;
         private GenerationType sourceClassName;
@@ -267,6 +279,8 @@ public class BuilderData {
         }
 
         /**
+         * Used to set the package name.
+         *
          * @param packageName - the package name of this builder annotated class
          * @return itself for builder chaining
          */
@@ -276,6 +290,8 @@ public class BuilderData {
         }
 
         /**
+         * Used to set the generated type for the builder annotated class
+         *
          * @param sourceClassName - the builder annotated class
          * @return itself for builder chaining
          */
@@ -285,6 +301,8 @@ public class BuilderData {
         }
 
         /**
+         * Used to set how the resulting builder class should be called
+         *
          * @param builderClassName - the resulting builder class name
          * @return itself for builder chaining
          */
@@ -294,6 +312,8 @@ public class BuilderData {
         }
 
         /**
+         * Used to set the builder configuration
+         *
          * @param builderConfiguration - the builderConfiguration containing generation settings
          * @return itself for builder chaining
          */
@@ -303,6 +323,8 @@ public class BuilderData {
         }
 
         /**
+         * Used to set whether or not the source class is abstract.
+         *
          * @param isAbstract - whether the source class is abstract or not.
          * @return itself for builder chaining
          */
@@ -312,15 +334,8 @@ public class BuilderData {
         }
 
         /**
-         * @param extendedBuilderIsAbstract - whether the source class extends a class that is abstract or not.
-         * @return itself for builder chaining
-         */
-        public BuilderDataBuilder setExtendedBuilderIsAbstract(boolean extendedBuilderIsAbstract) {
-            this.extendedBuilderIsAbstract = extendedBuilderIsAbstract;
-            return this;
-        }
-
-        /**
+         * Used to set the builder to extend, if there is no builder then this method should not be used.
+         *
          * @param extendedBuilderName - the name of the builder that this builder should extend if any.
          * @return itself for builder chaining
          */
@@ -330,6 +345,8 @@ public class BuilderData {
         }
 
         /**
+         * Creates a new BuilderData object with information in this builder.
+         *
          * @return the BuilderData based on the builder
          */
         public BuilderData build() {

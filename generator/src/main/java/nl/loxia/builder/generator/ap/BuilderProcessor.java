@@ -32,6 +32,13 @@ public class BuilderProcessor extends AbstractProcessor {
     private boolean testCompiling;
     private EnvironmentConfiguration environmentConfiguration;
 
+    /**
+     * Annotation Processor which handles the needed setup for the {@link BuilderGenerator} to do its work.
+     */
+    public BuilderProcessor() {
+        // needed for javadoc
+    }
+
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
         freeMarkerWriter = new FreeMarkerWriter();
@@ -49,7 +56,7 @@ public class BuilderProcessor extends AbstractProcessor {
                 if (testCompiling && typeElement.getSimpleName().toString().startsWith("Erroneous")) {
                     continue;
                 }
-                new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(),
+                new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(), processingEnv.getElementUtils(),
                     processingEnv.getMessager(), typeElement).generate(processingEnv.getFiler(), freeMarkerWriter);
             }
         }

@@ -16,12 +16,18 @@ public class BuilderListChainingBuilder<PARENT> {
         this.parent = parent;
     }
 
+    /**
+     * This replaces the collection currently present. Any previous calls to addValues are not saved.
+     */
     public BuilderListChainingBuilder<PARENT> withValues(java.util.List<BuilderChainingChild> values) {
         this.values = values;
         valuesBuilders = new java.util.ArrayList<>();
         return this;
     }
 
+    /**
+     * this will add the supplied objects to the collection present. If an unmodifiable collection is set using {@link #withValues(java.util.List)} then an Exception can be thrown.
+     */
     public BuilderListChainingBuilder<PARENT> addValues(Iterable<? extends BuilderChainingChild> values) {
         for (BuilderChainingChild v : values) {
             this.values.add(v);
@@ -29,6 +35,9 @@ public class BuilderListChainingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * this will add the supplied objects to the collection present. If an unmodifiable collection is set using {@link #withValues(java.util.List)} then an Exception can be thrown.
+     */
     public BuilderListChainingBuilder<PARENT> addValues(BuilderChainingChild... values) {
         for (BuilderChainingChild v : values) {
             this.values.add(v);
@@ -36,12 +45,18 @@ public class BuilderListChainingBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * Each call to this method creates a new Builder which will be stored in the list. Use the end() method to return back to the current builder.
+     */
     public BuilderChainingChildBuilder<? extends BuilderListChainingBuilder<PARENT>> addValues() {
         BuilderChainingChildBuilder<BuilderListChainingBuilder<PARENT>> child = new BuilderChainingChildBuilder<>(this);
         valuesBuilders.add(child);
         return child;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
+     */
     public BuilderListChaining build() {
         BuilderListChaining result = new BuilderListChaining();
         result.getValues().addAll(values);
@@ -51,6 +66,9 @@ public class BuilderListChainingBuilder<PARENT> {
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }

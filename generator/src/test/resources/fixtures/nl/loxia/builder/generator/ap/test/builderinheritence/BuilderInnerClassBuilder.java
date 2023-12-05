@@ -16,12 +16,20 @@ public class BuilderInnerClassBuilder<PARENT> {
         this.parent = parent;
     }
 
+    /**
+     * If this is called after {@link #withValue()} then the Builder is lost.
+     */
     public BuilderInnerClassBuilder<PARENT> withValue(BuilderInnerClass.InnerClass value) {
         this.value = value;
         valueBuilder = null;
         return this;
     }
 
+    /**
+     * returns a builder for chaining. Use the end() method to return back to the current builder.<BR>
+     * Multiple calls to this method will return the same builder.<BR>
+     * If this is called after {@link #withValue(BuilderInnerClass.InnerClass)} then this will return a new Builder and the previously set object is lost.
+     */
     public BuilderInnerClassBuilder.InnerClassBuilder<? extends BuilderInnerClassBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
             valueBuilder = new BuilderInnerClassBuilder.InnerClassBuilder<>(this);
@@ -30,12 +38,18 @@ public class BuilderInnerClassBuilder<PARENT> {
         return valueBuilder;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
+     */
     public BuilderInnerClass build() {
         BuilderInnerClass result = new BuilderInnerClass();
         result.setValue(valueBuilder != null ? valueBuilder.build() : value);
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }
@@ -75,12 +89,18 @@ public class BuilderInnerClassBuilder<PARENT> {
             return this;
         }
 
+        /**
+         * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
+         */
         public BuilderInnerClass.InnerClass build() {
             BuilderInnerClass.InnerClass result = new BuilderInnerClass.InnerClass();
             result.setValue(value);
             return result;
         }
 
+        /**
+         * returns the parent builder if present, otherwise null is returned.
+         */
         public PARENT end() {
             return parent;
         }

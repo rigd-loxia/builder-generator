@@ -21,6 +21,9 @@ public class BuilderInheritenceOfinnerClassBuilder<PARENT> extends BuilderInnerC
     }
 
     @Override
+    /**
+     * If this is called after {@link #withValue()} then the Builder is lost.
+     */
     public BuilderInheritenceOfinnerClassBuilder<PARENT> withValue(BuilderInnerClass.InnerClass value) {
         this.value = value;
         valueBuilder = null;
@@ -28,6 +31,11 @@ public class BuilderInheritenceOfinnerClassBuilder<PARENT> extends BuilderInnerC
     }
 
     @Override
+    /**
+     * returns a builder for chaining. Use the end() method to return back to the current builder.<BR>
+     * Multiple calls to this method will return the same builder.<BR>
+     * If this is called after {@link #withValue(BuilderInnerClass.InnerClass)} then this will return a new Builder and the previously set object is lost.
+     */
     public BuilderInnerClassBuilder.InnerClassBuilder<? extends BuilderInheritenceOfinnerClassBuilder<PARENT>> withValue() {
         if (valueBuilder == null) {
             valueBuilder = new BuilderInnerClassBuilder.InnerClassBuilder<>(this);
@@ -36,6 +44,9 @@ public class BuilderInheritenceOfinnerClassBuilder<PARENT> extends BuilderInnerC
         return valueBuilder;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
+     */
     @Override
     public BuilderInheritenceOfinnerClass build() {
         BuilderInheritenceOfinnerClass result = new BuilderInheritenceOfinnerClass();

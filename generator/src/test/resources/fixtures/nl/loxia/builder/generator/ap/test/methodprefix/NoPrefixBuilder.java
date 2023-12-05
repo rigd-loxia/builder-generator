@@ -26,12 +26,18 @@ public class NoPrefixBuilder<PARENT> {
         return this;
     }
 
+    /**
+     * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
+     */
     public NoPrefix build() {
         NoPrefix result = new NoPrefix(stringField);
         result.setBooleanField(booleanField);
         return result;
     }
 
+    /**
+     * returns the parent builder if present, otherwise null is returned.
+     */
     public PARENT end() {
         return parent;
     }
