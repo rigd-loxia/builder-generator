@@ -99,14 +99,22 @@ private Car createCar() {
 ```
 
 ## Overview compiler arguments
-| Compiler argument                                | default value  | behaviour                                                     |
-| :----------------------------------------------: | :------------: | :-----------------------------------------------------------: |
-| nl.loxia.BuilderGenerator.copyOfMethodGeneration |  true          | determines whether or not copyOf methods should be generated  |
+| Compiler argument                                | default value  | behaviour                                                         | Since |
+| :----------------------------------------------: | :------------: | :---------------------------------------------------------------: | :---: |
+| nl.loxia.BuilderGenerator.copyOfMethodGeneration |  true          | determines whether or not copyOf methods should be generated      | 0.2.0 |
+| nl.loxia.BuilderGenerator.methodPrefix           |  with          | the prefix to be used for the chaining of methods, can be empty   | 0.2.0 |
+| nl.loxia.BuilderGenerator.verbose                |  false         | outputs which file is currently handled by the builder generator  | 1.0.0 |
 
 ## Contributing
 if you want to contribute to the development of this module, then please see the documentation here: [Contribution documentation](CONTRIBUTING.md)
 
 ## Release Notes
+### 1.0.0 (12-12-2023)
+* introduced the verbose option for output on which classes get builders generated for them. ([#43](https://github.com/rigd-loxia/builder-generator/issues/43))
+* generate javadoc for the builder. ([#41](https://github.com/rigd-loxia/builder-generator/issues/41))
+* support subpackages of java.lang. ([#34](https://github.com/rigd-loxia/builder-generator/issues/34))
+* allow a constructor which accepts the builder as input. ([#31](https://github.com/rigd-loxia/builder-generator/issues/31))
+
 ### 0.2.0 (27-11-2023)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))
 * support InnerClassBuilder when InnerClass is in a List ([#16](https://github.com/rigd-loxia/builder-generator/issues/16))
