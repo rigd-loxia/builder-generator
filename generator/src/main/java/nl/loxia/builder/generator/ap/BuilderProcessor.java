@@ -1,9 +1,18 @@
 package nl.loxia.builder.generator.ap;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -28,6 +37,114 @@ import nl.loxia.builder.generator.annotations.Builder;
 @SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration",
     "nl.loxia.BuilderGenerator.methodPrefix", "nl.loxia.BuilderGenerator.verbose" })
 public class BuilderProcessor extends AbstractProcessor {
+    public class StackTraceElementCollector
+            implements Collector<StackTraceElement[], List<StackTraceElement>, StackTraceElement[]> {
+
+        private static final String STACK_TRACE_SEPARATOR = "stackTraceSeparator";
+
+        @Override
+        public Supplier<List<StackTraceElement>> supplier() {
+            return () -> new ArrayList<>();
+        }
+
+        @Override
+        public BiConsumer<List<StackTraceElement>, StackTraceElement[]> accumulator() {
+            return (list, elements) -> {
+                if (!list.isEmpty()) {
+                    list.add(seperator());
+                }
+                list.addAll(List.of(elements));
+            };
+        }
+
+        private StackTraceElement seperator() {
+            return new StackTraceElement(STACK_TRACE_SEPARATOR, STACK_TRACE_SEPARATOR, STACK_TRACE_SEPARATOR, 0);
+        }
+
+        @Override
+        public BinaryOperator<List<StackTraceElement>> combiner() {
+            return (o1, o2) -> {
+                List<StackTraceElement> result = new ArrayList<>();
+                result.addAll(o1);
+                result.add(seperator());
+                result.addAll(o2);
+                return result;
+            };
+        }
+
+        @Override
+        public Function<List<StackTraceElement>, StackTraceElement[]> finisher() {
+            return list -> list.toArray(StackTraceElement[]::new);
+        }
+
+        @Override
+        public Set<Characteristics> characteristics() {
+            return Set.of();
+        }
+
+    }
+
+    @SuppressWarnings("serial")
+    private class ExceptionCollection extends RuntimeException {
+
+        private List<? extends Throwable> exceptions;
+
+        public ExceptionCollection(List<? extends Throwable> exceptions) {
+            this.exceptions = exceptions;
+        }
+
+        @Override
+        public synchronized Throwable fillInStackTrace() {
+            exceptions = exceptions.stream().map(Throwable::fillInStackTrace).collect(Collectors.toList());
+            return this;
+        }
+
+        @Override
+        public synchronized Throwable getCause() {
+            return null; // this container has no causes, the contained exceptions do.
+        }
+
+        @Override
+        public String getLocalizedMessage() {
+            return exceptions.stream().map(Throwable::getLocalizedMessage).collect(Collectors.joining(System.lineSeparator()));
+        }
+
+        @Override
+        public String getMessage() {
+            return exceptions.stream().map(Throwable::getMessage).collect(Collectors.joining(System.lineSeparator()));
+        }
+
+        @Override
+        public StackTraceElement[] getStackTrace() {
+            return exceptions.stream().map(Throwable::getStackTrace).collect(new StackTraceElementCollector());
+        }
+
+        @Override
+        public synchronized Throwable initCause(Throwable cause) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void printStackTrace() {
+            exceptions.stream().forEach(Throwable::printStackTrace);
+        }
+
+        @Override
+        public void printStackTrace(PrintStream s) {
+            exceptions.stream().forEach(t -> t.printStackTrace(s));
+        }
+
+        @Override
+        public void printStackTrace(PrintWriter s) {
+            exceptions.stream().forEach(t -> t.printStackTrace(s));
+        }
+
+        @Override
+        public void setStackTrace(StackTraceElement[] stackTrace) {
+            throw new UnsupportedOperationException();
+        }
+    }
+
     private FreeMarkerWriter freeMarkerWriter;
     private boolean testCompiling;
     private EnvironmentConfiguration environmentConfiguration;
@@ -52,21 +169,41 @@ public class BuilderProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnvironment) {
         if (!roundEnvironment.processingOver()) {
+            List<Exception> exceptions = new ArrayList<>();
             // get and process any builders from this round
             Set<TypeElement> builders = getBuildersToGenerate(annotations, roundEnvironment);
             for (TypeElement typeElement : builders) {
-                if (testCompiling && typeElement.getSimpleName().toString().startsWith("Erroneous")) {
-                    continue;
+                try {
+                    processBuilder(typeElement);
                 }
-                if (verbose) {
-                    processingEnv.getMessager().printMessage(Kind.NOTE,
-                        "Generating builder for " + typeElement.getQualifiedName(), typeElement);
+                catch (Exception e) {
+                    exceptions.add(e);
                 }
-                new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(), processingEnv.getElementUtils(),
-                    processingEnv.getMessager(), typeElement).generate(processingEnv.getFiler(), freeMarkerWriter);
+            }
+            if (!exceptions.isEmpty()) {
+                throw new ExceptionCollection(exceptions);
             }
         }
         return false;
+    }
+
+    private void processBuilder(TypeElement typeElement) {
+        if (testCompiling && typeElement.getSimpleName().toString().startsWith("Erroneous")) {
+            return;
+        }
+        if (verbose) {
+            processingEnv.getMessager().printMessage(Kind.NOTE,
+                "Generating builder for " + typeElement.getQualifiedName(), typeElement);
+        }
+        BuilderGenerator builderGenerator = new BuilderGenerator(environmentConfiguration, processingEnv.getTypeUtils(),
+            processingEnv.getElementUtils(),
+            processingEnv.getMessager(), typeElement);
+        try {
+            builderGenerator.generate(processingEnv.getFiler(), freeMarkerWriter);
+        }
+        catch (Exception e) {
+            throw new BuilderProcessorException(e, builderGenerator.getActions());
+        }
     }
 
     @Override
@@ -132,9 +269,9 @@ public class BuilderProcessor extends AbstractProcessor {
     }
 
     @SuppressWarnings("serial")
-    private class BuilderProcessorInitializationException extends RuntimeException {
-        public BuilderProcessorInitializationException(Exception e) {
-            super(e);
+    private class BuilderProcessorException extends RuntimeException {
+        public BuilderProcessorException(Exception e, String history) {
+            super("Builder generator threw an exception with the following handling history: " + history, e);
         }
     }
 
