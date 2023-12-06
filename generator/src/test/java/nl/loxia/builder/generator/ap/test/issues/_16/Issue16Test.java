@@ -3,6 +3,7 @@ package nl.loxia.builder.generator.ap.test.issues._16;
 import org.mapstruct.ap.testutil.ProcessorTest;
 import org.mapstruct.ap.testutil.WithClasses;
 
+import nl.loxia.builder.generator.ap.test.issues._16.differentpackage.DifferentClass;
 import nl.loxia.builder.generator.ap.test.issues._16.differentpackage.ReferencingInnerClasses;
 
 /**
@@ -11,7 +12,7 @@ import nl.loxia.builder.generator.ap.test.issues._16.differentpackage.Referencin
 public class Issue16Test {
 
     @ProcessorTest
-    @WithClasses(OuterClass.class)
+    @WithClasses({ OuterClass.class, DifferentClass.class })
     void situationShouldNotResultInUnexpectedCompilationError() {
 
     }

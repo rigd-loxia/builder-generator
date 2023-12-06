@@ -2,8 +2,10 @@
 <@compress single_line=true>
     <#if classType.getPackageName() == "java.lang">
         ${classType.getType()?remove_beginning("java.lang.")}
+    <#elseif classType.getPackageName() == packageName>
+       ${classType.getType()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
     <#else>
-        ${classType.getType()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+        ${classType.getType()}
     </#if>
 </@compress>
 </#macro>
@@ -12,15 +14,21 @@
 <@compress single_line=true>
     <#if classType.getPackageName() == "java.lang">
         ${classType.getTypeWithoutGenerics()?remove_beginning("java.lang.")}
-    <#else>
+    <#elseif classType.getPackageName() == packageName>
         ${classType.getTypeWithoutGenerics()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+    <#else>
+        ${classType.getTypeWithoutGenerics()}
     </#if>
 </@compress>
 </#macro>
 
 <#macro internalBuilderType classType packageName parent>
 <@compress single_line=true>
-    ${classType.getType()?remove_beginning(parent.getType()+".")?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+    <#if classType.getPackageName() == packageName>
+        ${classType.getType()?remove_beginning(parent.getType()+".")?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+    <#else>
+        ${classType.getType()?remove_beginning(parent.getType()+".")}
+    </#if>
 </@compress>
 </#macro>
 
