@@ -114,6 +114,7 @@ if you want to contribute to the development of this module, then please see the
 * generate javadoc for the builder. ([#41](https://github.com/rigd-loxia/builder-generator/issues/41))
 * support subpackages of java.lang. ([#34](https://github.com/rigd-loxia/builder-generator/issues/34))
 * allow a constructor which accepts the builder as input. ([#31](https://github.com/rigd-loxia/builder-generator/issues/31))
+* The builder generator now tries to generate as many builders as possible, even if builder generation would result in a runtime exception of the generator itself. ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 
 ### 0.2.0 (27-11-2023)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))
