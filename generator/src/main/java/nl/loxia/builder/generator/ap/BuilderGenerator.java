@@ -5,6 +5,7 @@ import static javax.tools.Diagnostic.Kind.ERROR;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.BiPredicate;
@@ -42,6 +43,8 @@ public class BuilderGenerator {
     private final TypeUtils typeUtils;
     private final EnvironmentConfiguration environmentConfiguration;
 
+    private final Collection<String> actions = new ArrayList<>();
+
     /**
      * the constructor.
      *
@@ -66,6 +69,7 @@ public class BuilderGenerator {
      * @param freeMarkerWriter - the writer used to write the builder java file.
      */
     public void generate(Filer filer, FreeMarkerWriter freeMarkerWriter) {
+        actions.add("generating builder for " + typeElement.getQualifiedName());
         BuilderData builderData = createBuilderData(typeElement);
 
         if (!builderData.isValid()) {
@@ -75,6 +79,7 @@ public class BuilderGenerator {
         }
 
         try {
+            actions.add("writing builder class");
             String fileName = typeElement.getQualifiedName() + BUILDER_SUFFIX;
             JavaFileObject sourceFile = filer.createSourceFile(fileName, typeElement.getTypeElement());
             freeMarkerWriter.write(sourceFile, builderData);
@@ -106,6 +111,8 @@ public class BuilderGenerator {
 
     private void updateBuilderDataWithConstructorInformation(Type typeElement, BuilderData builderData,
             BuilderConfiguration builderConfiguration) {
+        String constructorInformationAction = "updating builder information with constructor details";
+        actions.add(constructorInformationAction);
         List<TypeMember> constructorArguments = typeElement.getSmallestConstructorArguments();
         if (constructorArguments.size() == 1) {
             TypeMember parameter = constructorArguments.get(0);
@@ -123,6 +130,7 @@ public class BuilderGenerator {
                 builderData.addMember(createMember(builderConfiguration, typeElement, typeElement, parameter));
             }
         }
+        actions.remove(constructorInformationAction);
     }
 
     private boolean isProbablyBuilderClass(Type typeElement, TypeMember parameter) {
@@ -136,8 +144,12 @@ public class BuilderGenerator {
 
     private void updateBuilderDataWithHierarchicalInformation(Type typeElement, BuilderData builderData,
             BuilderConfiguration builderConfiguration) {
+        String memberInformationActions = "updating builder information with members";
+        actions.add(memberInformationActions);
         for (Type currentElement : getTypeElementHierarchy(typeElement)) {
             for (TypeMember typeMember : currentElement.getEnclosedElements()) {
+                String memberInformationAction = "updating builder information with " + typeMember.getSimpleName();
+                actions.add(memberInformationAction);
                 if (typeMember.isField()) {
                     builderData.addMember(createMember(builderConfiguration, typeElement, currentElement, typeMember));
                 }
@@ -150,8 +162,10 @@ public class BuilderGenerator {
                 else if (typeMember.isClass() && currentElement == typeElement) {
                     builderData.addInnerClass(createBuilderData(typeMember.asType()));
                 }
+                actions.remove(memberInformationAction);
             }
         }
+        actions.remove(memberInformationActions);
     }
 
     private Member createMember(BuilderConfiguration builderConfiguration, Type typeElement, Type currentElement,
@@ -330,6 +344,16 @@ public class BuilderGenerator {
 
     private String getClassName(String qualifiedName) {
         return qualifiedName.substring(qualifiedName.lastIndexOf('.') + 1, qualifiedName.length());
+    }
+
+    /**
+     * Use for reporting how far the builder generator got before a crash occurred.
+     *
+     * @return the stack of locations it visited to reach the current point. Does not contain actions that have been finished.
+     */
+    public String getActions() {
+        return actions.stream().collect(Collectors.joining(", "));
+
     }
 
 }
