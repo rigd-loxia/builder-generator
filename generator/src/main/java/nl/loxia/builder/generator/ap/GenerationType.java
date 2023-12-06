@@ -8,6 +8,7 @@ import javax.lang.model.type.TypeMirror;
 public class GenerationType {
     private final String type;
     private final String packageName;
+    private final GenerationType subType;
 
     /**
      * Creates a generation type which represents a class.
@@ -16,8 +17,13 @@ public class GenerationType {
      * @param packageName - the package in which this type mirror lives.
      */
     public GenerationType(TypeMirror mirror, String packageName) {
+        this(mirror, packageName, null);
+    }
+
+    public GenerationType(TypeMirror mirror, String packageName, GenerationType subType) {
         type = mirror.toString();
         this.packageName = packageName;
+        this.subType = subType;
     }
 
     /**
@@ -29,6 +35,7 @@ public class GenerationType {
     public GenerationType(String type, String packageName) {
         this.type = type;
         this.packageName = packageName;
+        subType = null;
     }
 
     /**
@@ -56,5 +63,14 @@ public class GenerationType {
      */
     public String getPackageName() {
         return packageName;
+    }
+
+    /**
+     * This returns the subtype if present.
+     *
+     * @return the subtype as a generationType or otherwise null
+     */
+    public GenerationType getSubType() {
+        return subType;
     }
 }

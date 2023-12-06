@@ -3,7 +3,9 @@
     <#if classType.getPackageName() == "java.lang">
         ${classType.getType()?remove_beginning("java.lang.")}
     <#elseif classType.getPackageName() == packageName>
-       ${classType.getType()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+       ${classType.getType()?remove_beginning(packageName+".")}
+    <#elseif classType.getSubType()?? && classType.getSubType().getPackageName() == packageName>
+        ${classType.getType()?replace("<"+packageName+".", "<")}
     <#else>
         ${classType.getType()}
     </#if>
@@ -15,7 +17,7 @@
     <#if classType.getPackageName() == "java.lang">
         ${classType.getTypeWithoutGenerics()?remove_beginning("java.lang.")}
     <#elseif classType.getPackageName() == packageName>
-        ${classType.getTypeWithoutGenerics()?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+        ${classType.getTypeWithoutGenerics()?remove_beginning(packageName+".")}
     <#else>
         ${classType.getTypeWithoutGenerics()}
     </#if>
