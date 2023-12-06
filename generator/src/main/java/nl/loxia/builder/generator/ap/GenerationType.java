@@ -20,6 +20,13 @@ public class GenerationType {
         this(mirror, packageName, null);
     }
 
+    /**
+     * Creates a generation type which represents a class.
+     *
+     * @param mirror - the typeMirror used to generate a class reference in code.
+     * @param packageName - the package in which this type mirror lives.
+     * @param subType - the generationType for the subType, if present.
+     */
     public GenerationType(TypeMirror mirror, String packageName, GenerationType subType) {
         type = mirror.toString();
         this.packageName = packageName;
