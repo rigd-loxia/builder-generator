@@ -1,33 +1,19 @@
 <#macro type classType packageName>
 <@compress single_line=true>
-    <#if classType.getPackageName() == "java.lang">
-        ${classType.getType()?remove_beginning("java.lang.")}
-    <#elseif classType.getPackageName() == packageName>
-       ${classType.getType()?remove_beginning(packageName+".")}
-    <#elseif classType.getSubType()?? && classType.getSubType().getPackageName() == packageName>
-        ${classType.getType()?replace("<"+packageName+".", "<")}
-    <#else>
-        ${classType.getType()}
-    </#if>
+	${classType.getType(packageName)}
 </@compress>
 </#macro>
 
 <#macro typeWithoutGenerics classType packageName>
 <@compress single_line=true>
-    <#if classType.getPackageName() == "java.lang">
-        ${classType.getTypeWithoutGenerics()?remove_beginning("java.lang.")}
-    <#elseif classType.getPackageName() == packageName>
-        ${classType.getTypeWithoutGenerics()?remove_beginning(packageName+".")}
-    <#else>
-        ${classType.getTypeWithoutGenerics()}
-    </#if>
+    ${classType.getTypeWithoutGenerics(packageName)}
 </@compress>
 </#macro>
 
 <#macro internalBuilderType classType packageName parent>
 <@compress single_line=true>
     <#if classType.getPackageName() == packageName>
-        ${classType.getType()?remove_beginning(parent.getType()+".")?remove_beginning(packageName+".")?replace("<"+packageName+".", "<")}
+        ${classType.getType()?remove_beginning(parent.getType()+".")?remove_beginning(packageName+".")}
     <#else>
         ${classType.getType()?remove_beginning(parent.getType()+".")}
     </#if>
