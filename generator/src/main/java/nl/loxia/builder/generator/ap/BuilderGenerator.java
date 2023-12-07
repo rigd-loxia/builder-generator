@@ -207,7 +207,11 @@ public class BuilderGenerator {
     }
 
     private GenerationType asGenerationType(TypeMirror propertyType) {
-        return new GenerationType(propertyType, typeUtils.getPackageName(propertyType));
+        GenerationType subType = null;
+        if (typeUtils.isList(propertyType)) {
+            subType = asGenerationType(typeUtils.getSubType(propertyType));
+        }
+        return new GenerationType(propertyType, typeUtils.getPackageName(propertyType), subType);
     }
 
     private boolean hasSetter(Type typeElement, TypeMember enclosedEle) {

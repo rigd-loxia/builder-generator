@@ -113,7 +113,9 @@ if you want to contribute to the development of this module, then please see the
 * introduced the verbose option for output on which classes get builders generated for them. ([#43](https://github.com/rigd-loxia/builder-generator/issues/43))
 * generate javadoc for the builder. ([#41](https://github.com/rigd-loxia/builder-generator/issues/41))
 * support subpackages of java.lang. ([#34](https://github.com/rigd-loxia/builder-generator/issues/34))
+  * support subpackages of the current builder. ([#47]https://github.com/rigd-loxia/builder-generator/issues/47))
 * allow a constructor which accepts the builder as input. ([#31](https://github.com/rigd-loxia/builder-generator/issues/31))
+* if for an unexpected reason the builder generator crashes it now adds information about during which class and general location in the process it crashes ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 * The builder generator now tries to generate as many builders as possible, even if builder generation would result in a runtime exception of the generator itself. ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 
 ### 0.2.0 (27-11-2023)

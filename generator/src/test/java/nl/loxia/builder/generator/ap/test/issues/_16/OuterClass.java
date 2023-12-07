@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.loxia.builder.generator.annotations.Builder;
+import nl.loxia.builder.generator.ap.test.issues._16.differentpackage.DifferentClass;
 
 @Builder
 public class OuterClass {
@@ -13,7 +14,15 @@ public class OuterClass {
     }
 
     protected List<InnerClass> innerClasses = new ArrayList<>();
+    private DifferentClass differentClass;
 
+    public DifferentClass getDifferentClass() {
+        return differentClass;
+    }
+
+    public void setDifferentClass(DifferentClass differentClass) {
+        this.differentClass = differentClass;
+    }
 
     public List<InnerClass> getInnerClasses() {
         return innerClasses;
