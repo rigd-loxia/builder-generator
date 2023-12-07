@@ -172,7 +172,7 @@ public class BuilderGenerator {
             TypeMember enclosedEle) {
         TypeMirror propertyType = enclosedEle.getPropertyType();
         Member.Builder memberBuilder = Member.builder()
-            .type(asGenerationType(propertyType, typeUtils.isList(propertyType) ? typeUtils.getSubType(propertyType) : null))
+            .type(asGenerationType(propertyType))
             .outerTypes(getSurroundingClassesForGeneration(propertyType))
             .name(enclosedEle.getPropertyName())
             .setBuilderMethod(
@@ -207,14 +207,11 @@ public class BuilderGenerator {
     }
 
     private GenerationType asGenerationType(TypeMirror propertyType) {
-        if (propertyType == null) {
-            return null;
+        GenerationType subType = null;
+        if (typeUtils.isList(propertyType)) {
+            subType = asGenerationType(typeUtils.getSubType(propertyType));
         }
-        return new GenerationType(propertyType, typeUtils.getPackageName(propertyType));
-    }
-
-    private GenerationType asGenerationType(TypeMirror propertyType, TypeMirror subType) {
-        return new GenerationType(propertyType, typeUtils.getPackageName(propertyType), asGenerationType(subType));
+        return new GenerationType(propertyType, typeUtils.getPackageName(propertyType), subType);
     }
 
     private boolean hasSetter(Type typeElement, TypeMember enclosedEle) {
