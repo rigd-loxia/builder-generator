@@ -1,6 +1,7 @@
 package nl.loxia.builder.generator.ap;
 
 import static java.util.stream.Collectors.toList;
+import static javax.lang.model.element.Modifier.PRIVATE;
 
 import java.util.List;
 
@@ -45,6 +46,15 @@ public class TypeMember {
      */
     public boolean isField() {
         return element.getKind() == ElementKind.FIELD;
+    }
+
+    /**
+     * checks if the element kind has the private modifier.
+     *
+     * @return true if this element is private.
+     */
+    public boolean isPrivate() {
+        return element.getModifiers().contains(PRIVATE);
     }
 
     /**

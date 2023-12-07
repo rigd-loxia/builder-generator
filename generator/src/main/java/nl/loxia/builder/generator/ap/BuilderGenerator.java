@@ -180,7 +180,8 @@ public class BuilderGenerator {
             .hasGetter(hasGetter(typeElement, enclosedEle))
             .hasSetter(hasSetter(typeElement, enclosedEle))
             .inherited(currentElement != typeElement && currentElement.hasBuilderAnnotation())
-            .javadoc(determineJavadoc(enclosedEle));
+            .javadoc(determineJavadoc(enclosedEle))
+            .isPrivate(enclosedEle.isPrivate());
         if (typeUtils.isList(propertyType)) {
             TypeMirror subType = typeUtils.getSubType(propertyType);
             memberBuilder

@@ -23,6 +23,7 @@ public class Member {
     private final GenerationType subBuilderClassName;
     private final String methodName;
     private final String javadoc;
+    private final boolean isPrivate;
 
     private Member(Member.Builder builder) {
         type = builder.type;
@@ -38,6 +39,7 @@ public class Member {
         aliases = Collections.unmodifiableList(builder.aliases);
         methodName = builder.methodName;
         javadoc = builder.javadoc;
+        isPrivate = builder.isPrivate;
     }
 
     /**
@@ -188,6 +190,15 @@ public class Member {
     }
 
     /**
+     * checks if the field is private and without setter, then it cannot be used except by being filled in the constructor.
+     *
+     * @return true if this member is ussable for builder generation.
+     */
+    public boolean isUsableForSetAction() {
+        return hasSetter || !isPrivate;
+    }
+
+    /**
      * A new builder for creating a member.
      *
      * @return a new builder.
@@ -202,6 +213,7 @@ public class Member {
      * @author zegveb
      */
     public static class Builder {
+        private boolean isPrivate;
         private String javadoc;
         private GenerationType type;
         private String name;
@@ -360,6 +372,17 @@ public class Member {
          */
         public Builder javadoc(String javadoc) {
             this.javadoc = javadoc;
+            return this;
+        }
+
+        /**
+         * Configures if the member is a private member.
+         *
+         * @param isPrivate - if the member is a private member.
+         * @return itself for chaining
+         */
+        public Builder isPrivate(boolean isPrivate) {
+            this.isPrivate = isPrivate;
             return this;
         }
 

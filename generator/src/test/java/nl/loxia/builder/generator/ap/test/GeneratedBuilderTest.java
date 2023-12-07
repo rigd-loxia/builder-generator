@@ -1,5 +1,7 @@
 package nl.loxia.builder.generator.ap.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.tools.Diagnostic.Kind;
 
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -80,5 +82,13 @@ class GeneratedBuilderTest {
             })
     void errorEclipse() {
 
+    }
+
+    @ProcessorTest
+    @WithClasses(PackageScopeField.class)
+    void packageScopeField() {
+        PackageScopeField field = new PackageScopeFieldBuilder<>().withSomethingElse("test").build();
+
+        assertThat(field.somethingElse).isEqualTo("test");
     }
 }
