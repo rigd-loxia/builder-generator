@@ -117,6 +117,7 @@ if you want to contribute to the development of this module, then please see the
 * allow a constructor which accepts the builder as input. ([#31](https://github.com/rigd-loxia/builder-generator/issues/31))
 * if for an unexpected reason the builder generator crashes it now adds information about during which class and general location in the process it crashes ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 * The builder generator now tries to generate as many builders as possible, even if builder generation would result in a runtime exception of the generator itself. ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
+* Added support for package scope fields. ([#50](https://github.com/rigd-loxia/builder-generator/issues/50))
 
 ### 0.2.0 (27-11-2023)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))

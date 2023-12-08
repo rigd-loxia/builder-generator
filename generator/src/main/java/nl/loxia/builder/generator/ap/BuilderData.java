@@ -174,7 +174,7 @@ public class BuilderData {
         return members.stream()
             .filter(member -> !constructorMembers.contains(member.getName()))
             .filter(member -> !getCollectionMembers().contains(member))
-            .filter(Member::hasSetter)
+            .filter(member -> member.isUsableForSetAction())
             .collect(Collectors.toList());
     }
 

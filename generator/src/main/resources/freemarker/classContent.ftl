@@ -217,7 +217,11 @@ ${spc}    return new <@com.type cls.sourceClassName packageName/>(this);
         <#else>
 ${spc}    <@com.type cls.sourceClassName packageName/> result = new <@com.type cls.sourceClassName packageName/>(<#list getConstructorMembers() as member><@buildMember member indent/><#sep>, </#list>);
             <#list cls.settableMembers as member>
+                <#if member.hasSetter()>
 ${spc}    result.set${member.name?cap_first}(<@buildMember member indent/>);
+                <#else>
+${spc}    result.${member.name} = <@buildMember member indent/>;
+                </#if>
             </#list>
             <#list cls.collectionMembers as member>
 ${spc}    result.get${member.name?cap_first}().addAll(${member.name});
@@ -310,11 +314,21 @@ ${spc}        }
             </#if>
 ${spc}    }
         <#elseif member.isList()>
-${spc}    builder.${member.name} = new java.util.ArrayList<>(bron.get${member.name?cap_first}());
+${spc}    builder.${member.name} = new java.util.ArrayList<>(bron.<@getter member/>);
         <#else>
-${spc}    builder.${member.name} = bron.get${member.name?cap_first}();
+${spc}    builder.${member.name} = bron.<@getter member/>;
         </#if>
     </#list>
+</#macro>
+
+<#macro getter member>
+<@compress single_line=true>
+    <#if member.hasGetter()>
+        get${member.name?cap_first}()
+    <#else>
+        ${member.name}
+    </#if>
+</@compress>
 </#macro>
 
 <#macro javadoc member spc inline>

@@ -213,6 +213,10 @@ class TypeUtils {
         return packageName;
     }
 
+    /**
+     * @param enclosedEle - the element for which the javadoc needs to be located.
+     * @return the javadoc notated at the element.
+     */
     public String getJavadoc(TypeMember enclosedEle) {
         return elements.getDocComment(enclosedEle.getElement());
     }

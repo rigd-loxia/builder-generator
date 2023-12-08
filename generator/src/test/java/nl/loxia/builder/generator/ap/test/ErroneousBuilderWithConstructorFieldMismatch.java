@@ -9,7 +9,7 @@ public class ErroneousBuilderWithConstructorFieldMismatch extends ParentWithoutB
 
     public ErroneousBuilderWithConstructorFieldMismatch(String field2, String somethingElse) {
         this.somethingElse = somethingElse;
-        setField(field2);
+        setField(field2);// mismatched property
     }
 
     public String getSomethingElse() {
