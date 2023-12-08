@@ -30,6 +30,14 @@ public class SimpleClassMixedBuilder<PARENT> {
      * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     public SimpleClassMixed build() {
+        java.util.List<String> missingRequiredFields = new java.util.ArrayList<>();
+        if (stringField == null) {
+            missingRequiredFields.add("stringField");
+        }
+        if (!missingRequiredFields.isEmpty()) {
+            throw new nl.loxia.builder.generator.annotations.BuilderValidationException("The following required fields are not set: "
+                      + missingRequiredFields.stream().collect(java.util.stream.Collectors.joining(",")));
+        }
         SimpleClassMixed result = new SimpleClassMixed(stringField);
         result.setBooleanField(booleanField);
         return result;
