@@ -125,6 +125,15 @@ public class BuilderData {
     }
 
     /**
+     * Sometimes you want to allow passing null values into a constructor, in that case you want to disable builder validation.
+     *
+     * @return true if the validation code should be generated.
+     */
+    public boolean isBuilderValidationEnabled() {
+        return builderConfiguration.isBuilderValidationEnabled();
+    }
+
+    /**
      * You can use a constructor that accepts the builder as an argument. If this is set to true then that is the case.
      *
      * @param builderPassingConstructor whether or not the constructor accepts the builder

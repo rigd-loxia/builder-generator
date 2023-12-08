@@ -215,12 +215,13 @@ ${spc}public <#if cls.isAbstract()>abstract </#if><@com.type cls.sourceClassName
         <#if cls.isBuilderPassingConstructor()>
 ${spc}    return new <@com.type cls.sourceClassName packageName/>(this);
         <#else>
-${spc}    <@com.type cls.sourceClassName packageName/> result = new <@com.type cls.sourceClassName packageName/>(<#list getConstructorMembers() as member><@buildMember member indent/><#sep>, </#list>);
+          <@generateBuilderValidation cls spc/>
+${spc}    <@com.type cls.sourceClassName packageName/> result = new <@com.type cls.sourceClassName packageName/>(<#list getConstructorMembers() as member><@buildMember member/><#sep>, </#list>);
             <#list cls.settableMembers as member>
                 <#if member.hasSetter()>
-${spc}    result.set${member.name?cap_first}(<@buildMember member indent/>);
+${spc}    result.set${member.name?cap_first}(<@buildMember member/>);
                 <#else>
-${spc}    result.${member.name} = <@buildMember member indent/>;
+${spc}    result.${member.name} = <@buildMember member/>;
                 </#if>
             </#list>
             <#list cls.collectionMembers as member>
@@ -237,7 +238,22 @@ ${spc}}
     </#if>
 </#macro>
 
-<#macro buildMember member indent>
+<#macro generateBuilderValidation cls spc>
+  <#if cls.getConstructorMembers()?size gt 0 && cls.isBuilderValidationEnabled()>
+${spc}    java.util.List<String> missingRequiredFields = new java.util.ArrayList<>();
+    <#list cls.getConstructorMembers() as member>
+${spc}    if (<@buildMember member/> == null) {
+${spc}        missingRequiredFields.add("${member.name}");
+${spc}    }
+    </#list>
+${spc}    if (!missingRequiredFields.isEmpty()) {
+${spc}        throw new nl.loxia.builder.generator.annotations.BuilderValidationException("The following required fields are not set: "
+${spc}                  + missingRequiredFields.stream().collect(java.util.stream.Collectors.joining(",")));
+${spc}    }
+  </#if>
+</#macro>
+
+<#macro buildMember member>
 <#compress>
     <#if member.hasBuilder()>
         ${member.name}Builder != null ? ${member.name}Builder.build() : ${member.name}

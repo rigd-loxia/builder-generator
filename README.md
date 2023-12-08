@@ -101,6 +101,7 @@ private Car createCar() {
 ## Overview compiler arguments
 | Compiler argument                                | default value  | behaviour                                                         | Since |
 | :----------------------------------------------: | :------------: | :---------------------------------------------------------------: | :---: |
+| nl.loxia.BuilderGenerator.builderValidation      |  true          | determines whether or not validation code should be generated     | 1.0.0 |
 | nl.loxia.BuilderGenerator.copyOfMethodGeneration |  true          | determines whether or not copyOf methods should be generated      | 0.2.0 |
 | nl.loxia.BuilderGenerator.methodPrefix           |  with          | the prefix to be used for the chaining of methods, can be empty   | 0.2.0 |
 | nl.loxia.BuilderGenerator.verbose                |  false         | outputs which file is currently handled by the builder generator  | 1.0.0 |
@@ -118,6 +119,7 @@ if you want to contribute to the development of this module, then please see the
 * if for an unexpected reason the builder generator crashes it now adds information about during which class and general location in the process it crashes ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 * The builder generator now tries to generate as many builders as possible, even if builder generation would result in a runtime exception of the generator itself. ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 * Added support for package scope fields. ([#50](https://github.com/rigd-loxia/builder-generator/issues/50))
+* Constructor arguments are now validated as required arguments when calling the build method. ([#39](https://github.com/rigd-loxia/builder-generator/issues/39))
 
 ### 0.2.0 (27-11-2023)
 * copyOf method can now be disabled, this allows for generation of builders without matching get methods for each field. ([#15](https://github.com/rigd-loxia/builder-generator/issues/15))

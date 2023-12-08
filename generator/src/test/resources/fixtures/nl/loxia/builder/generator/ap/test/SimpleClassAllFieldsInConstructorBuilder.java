@@ -30,6 +30,17 @@ public class SimpleClassAllFieldsInConstructorBuilder<PARENT> {
      * returns the build object. For builder chaining use the {@link #end()} method to return the parent builder.
      */
     public SimpleClassAllFieldsInConstructor build() {
+        java.util.List<String> missingRequiredFields = new java.util.ArrayList<>();
+        if (stringField == null) {
+            missingRequiredFields.add("stringField");
+        }
+        if (booleanField == null) {
+            missingRequiredFields.add("booleanField");
+        }
+        if (!missingRequiredFields.isEmpty()) {
+            throw new nl.loxia.builder.generator.annotations.BuilderValidationException("The following required fields are not set: "
+                      + missingRequiredFields.stream().collect(java.util.stream.Collectors.joining(",")));
+        }
         SimpleClassAllFieldsInConstructor result = new SimpleClassAllFieldsInConstructor(stringField, booleanField);
         return result;
     }
