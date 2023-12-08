@@ -40,4 +40,11 @@ public @interface Builder {
      */
     String methodPrefix() default "with";
 
+    /**
+     * By disabling validation, the builder does not validate if all the fields of a constructor are present.
+     *
+     * @return whether or not the check for the presence of constructor arguments should take place.
+     */
+    boolean validation() default true;
+
 }

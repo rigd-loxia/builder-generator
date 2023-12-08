@@ -35,7 +35,8 @@ import nl.loxia.builder.generator.annotations.Builder;
  */
 @SupportedAnnotationTypes("nl.loxia.builder.generator.annotations.Builder")
 @SupportedOptions({ "testCompiling", "nl.loxia.BuilderGenerator.copyOfMethodGeneration",
-    "nl.loxia.BuilderGenerator.methodPrefix", "nl.loxia.BuilderGenerator.verbose" })
+    "nl.loxia.BuilderGenerator.methodPrefix", "nl.loxia.BuilderGenerator.verbose",
+    "nl.loxia.BuilderGenerator.builderValidation" })
 public class BuilderProcessor extends AbstractProcessor {
     private class StackTraceElementCollector
             implements Collector<StackTraceElement[], List<StackTraceElement>, StackTraceElement[]> {

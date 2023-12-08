@@ -10,6 +10,7 @@ import javax.annotation.processing.ProcessingEnvironment;
 public class EnvironmentConfiguration {
     private final boolean copyOfMethodGeneration;
     private final Optional<String> methodPrefix;
+    private final boolean builderValidationGeneration;
 
     /**
      * Instantiates the environment configuration. Upon construction the processing environment information is read.
@@ -20,6 +21,8 @@ public class EnvironmentConfiguration {
         copyOfMethodGeneration =
             !"false".equalsIgnoreCase(processingEnv.getOptions().get("nl.loxia.BuilderGenerator.copyOfMethodGeneration"));
         methodPrefix = Optional.ofNullable(processingEnv.getOptions().get("nl.loxia.BuilderGenerator.methodPrefix"));
+        builderValidationGeneration =
+            !"false".equalsIgnoreCase(processingEnv.getOptions().get("nl.loxia.BuilderGenerator.builderValidation"));
     }
 
     /**
@@ -41,4 +44,12 @@ public class EnvironmentConfiguration {
         return methodPrefix;
     }
 
+    /**
+     * Use to return the global configuration of the Builder Validation.
+     *
+     * @return false if the builderValidation option is set to false, returns true otherwise
+     */
+    public boolean isBuilderValidationGenerationEnabled() {
+        return builderValidationGeneration;
+    }
 }

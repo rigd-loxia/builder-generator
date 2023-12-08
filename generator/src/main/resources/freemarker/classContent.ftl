@@ -239,9 +239,9 @@ ${spc}}
 </#macro>
 
 <#macro generateBuilderValidation cls spc>
-  <#if getConstructorMembers()?size gt 0>
+  <#if cls.getConstructorMembers()?size gt 0 && cls.isBuilderValidationEnabled()>
 ${spc}    java.util.List<String> missingRequiredFields = new java.util.ArrayList<>();
-    <#list getConstructorMembers() as member>
+    <#list cls.getConstructorMembers() as member>
 ${spc}    if (<@buildMember member/> == null) {
 ${spc}        missingRequiredFields.add("${member.name}");
 ${spc}    }
