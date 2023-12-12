@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>nl.loxia.builder.generator</groupId>
 		<artifactId>aggregator</artifactId>
-		<version>0.2.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 </project>
