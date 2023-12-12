@@ -12,16 +12,16 @@ Below is a table with different builders and what support they have in compariso
 | lombok SuperBuilder| :heavy_check_mark:   |                    | :heavy_check_mark:  | With the way lombok works implementing nested builders will not be supported |
 | Jilt               |                      |                    |                     | Does not follow javabean spec |
 | Pojobuilder        | :heavy_check_mark:   |                    |                     |         |
-| Freebuilder        |                      | :heavy_check_mark: |                     | Requires interfaces instead of classes as the source for the builder. |
-| Immutables         |                      |                    | :heavy_check_mark:  | Requires interfaces instead of classes as the source for the builder. |
+| Freebuilder        |                      | :heavy_check_mark: |                     | Requires interfaces instead of classes as the source for the builder |
+| Immutables         |                      |                    | :heavy_check_mark:  | Requires interfaces instead of classes as the source for the builder |
 | RIGD-Loxia builder | :heavy_check_mark:   | :heavy_check_mark: | :heavy_check_mark:  |         |
 
 Need a support for other styles, feel free to make an issue for this. If you want you can even make a PR for it.
 
 ## Description
 Generates `Builder` classes based on the `@Builder` annotation.
-The following are by default generated
-* fluent api met `with` prefix.
+The following are by default generated:
+* fluent api with `with` prefix
 * builder chaining
 * builder inheritence
 * builder copyOf method
@@ -83,19 +83,19 @@ private Car createCar() {
 ```
 ### Configuring APT for generating classes
 ```
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <annotationProcessorPath>
-                            <groupId>nl.loxia.builder.generator</groupId>
-                            <artifactId>builderGenerator</artifactId>
-                            <version>${buildergenerator.version}</version>
-                        </annotationProcessorPath>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+        <annotationProcessorPaths>
+            <annotationProcessorPath>
+                <groupId>nl.loxia.builder.generator</groupId>
+                <artifactId>builderGenerator</artifactId>
+                <version>${buildergenerator.version}</version>
+            </annotationProcessorPath>
+        </annotationProcessorPaths>
+    </configuration>
+</plugin>
 ```
 
 ## Overview compiler arguments
@@ -114,7 +114,7 @@ if you want to contribute to the development of this module, then please see the
 * introduced the verbose option for output on which classes get builders generated for them. ([#43](https://github.com/rigd-loxia/builder-generator/issues/43))
 * generate javadoc for the builder. ([#41](https://github.com/rigd-loxia/builder-generator/issues/41))
 * support subpackages of java.lang. ([#34](https://github.com/rigd-loxia/builder-generator/issues/34))
-  * support subpackages of the current builder. ([#47]https://github.com/rigd-loxia/builder-generator/issues/47))
+  * support subpackages of the current builder. ([#47](https://github.com/rigd-loxia/builder-generator/issues/47))
 * allow a constructor which accepts the builder as input. ([#31](https://github.com/rigd-loxia/builder-generator/issues/31))
 * if for an unexpected reason the builder generator crashes it now adds information about during which class and general location in the process it crashes ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
 * The builder generator now tries to generate as many builders as possible, even if builder generation would result in a runtime exception of the generator itself. ([#44](https://github.com/rigd-loxia/builder-generator/issues/44))
