@@ -83,19 +83,19 @@ private Car createCar() {
 ```
 ### Configuring APT for generating classes
 ```
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <annotationProcessorPath>
-                            <groupId>nl.loxia.builder.generator</groupId>
-                            <artifactId>builderGenerator</artifactId>
-                            <version>${buildergenerator.version}</version>
-                        </annotationProcessorPath>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <configuration>
+        <annotationProcessorPaths>
+            <annotationProcessorPath>
+                <groupId>nl.loxia.builder.generator</groupId>
+                <artifactId>builderGenerator</artifactId>
+                <version>${buildergenerator.version}</version>
+            </annotationProcessorPath>
+        </annotationProcessorPaths>
+    </configuration>
+</plugin>
 ```
 
 ## Overview compiler arguments
