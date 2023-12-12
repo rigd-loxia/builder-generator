@@ -21,7 +21,7 @@ Need a support for other styles, feel free to make an issue for this. If you wan
 ## Description
 Generates `Builder` classes based on the `@Builder` annotation.
 The following are by default generated:
-* fluent api met `with` prefix
+* fluent api with `with` prefix
 * builder chaining
 * builder inheritence
 * builder copyOf method
