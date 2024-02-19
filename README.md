@@ -32,7 +32,7 @@ The following are by default generated:
 Take for example the following structure of classes:
 ```java
 class Car {
-    private String brand;
+        private String brand;
 	private int numberOfDoors;
 	private Engine engine;
 	private List<Seat> seats;
@@ -40,7 +40,7 @@ class Car {
 
 class Engine {
 	private String name;
-	private int topSpeed;
+	private int maxRPM;
 }
 
 class Seat {
@@ -57,7 +57,7 @@ private Car createCar() {
 		.withNumberOfDoors(4)
 		.withEngine()
 			.withName("V7 refurbished")
-			.withTopSpeed(250)
+			.withMaxRPM(7000)
 		.end()
 		.addSeats()
 			withType("driver seat")
