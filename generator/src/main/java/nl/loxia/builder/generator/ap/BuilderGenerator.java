@@ -330,7 +330,7 @@ public class BuilderGenerator {
         Type parentType = getParentType(type);
         if (parentType != null && !parentType.getQualifiedName().equals("java.lang.Object")) {
             if (parentType.getAnnotation(Builder.class) != null) {
-                return getClassName(parentType.getQualifiedName()) + BUILDER_SUFFIX;
+                return parentType.getQualifiedName() + BUILDER_SUFFIX;
             }
             messager.printMessage(Kind.WARNING,
                 String.format("Parent class '%s' is not annotated with '@Builder'.", parentType.getQualifiedName()),
@@ -358,7 +358,5 @@ public class BuilderGenerator {
      */
     public String getActions() {
         return actions.stream().collect(Collectors.joining(", "));
-
     }
-
 }
