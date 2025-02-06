@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  *
  * @author Ben Zegveld
  */
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
 public @interface Builder {
 
