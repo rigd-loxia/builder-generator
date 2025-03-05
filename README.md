@@ -110,6 +110,10 @@ private Car createCar() {
 if you want to contribute to the development of this module, then please see the documentation here: [Contribution documentation](CONTRIBUTING.md)
 
 ## Release Notes
+### 1.0.1 (05-03-2025)
+* Bugfix: Improved support for partial compilation builds.
+* Bugfix: Support inheritence from other package. ([#58](https://github.com/rigd-loxia/builder-generator/issues/58))
+
 ### 1.0.0 (12-12-2023)
 * introduced the verbose option for output on which classes get builders generated for them. ([#43](https://github.com/rigd-loxia/builder-generator/issues/43))
 * generate javadoc for the builder. ([#41](https://github.com/rigd-loxia/builder-generator/issues/41))
