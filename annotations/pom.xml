@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>annotations</artifactId>
+	<artifactId>builder.generator.annotations</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Loxia builder generator annotations</name>
 	<description>The Loxia builder generator annotations. These are used to configure which classes are in need of a builder.</description>
 
 	<parent>
-		<groupId>nl.loxia.builder.generator</groupId>
-		<artifactId>aggregator</artifactId>
+		<groupId>nl.loxia</groupId>
+		<artifactId>builder.generator.aggregator</artifactId>
 		<version>1.0.1</version>
 	</parent>
 
