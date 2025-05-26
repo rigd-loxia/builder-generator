@@ -110,6 +110,9 @@ private Car createCar() {
 if you want to contribute to the development of this module, then please see the documentation here: [Contribution documentation](CONTRIBUTING.md)
 
 ## Release Notes
+### 1.0.2 (26-05-2025)
+* Bugfix: Lists with builder-route passed into constructors generated invalid code. ([#59](https://github.com/rigd-loxia/builder-generator/issues/59))
+
 ### 1.0.1 (05-03-2025)
 * Bugfix: Improved support for partial compilation builds.
 * Bugfix: Support inheritence from other package. ([#58](https://github.com/rigd-loxia/builder-generator/issues/58))
