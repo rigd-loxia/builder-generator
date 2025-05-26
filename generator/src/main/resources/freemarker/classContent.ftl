@@ -255,7 +255,7 @@ ${spc}    }
 
 <#macro buildMember member>
 <#compress>
-    <#if member.hasBuilder()>
+    <#if member.hasBuilder() && !member.isList()>
         ${member.name}Builder != null ? ${member.name}Builder.build() : ${member.name}
     <#else>
         ${member.name}
