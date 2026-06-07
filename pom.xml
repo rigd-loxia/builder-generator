@@ -37,9 +37,9 @@
 	</modules>
 
 	<properties>
-		<maven.compiler.release>11</maven.compiler.release>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
+		<maven.compiler.release>17</maven.compiler.release>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -59,7 +59,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>3.15.0</version>
 			</plugin>
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -121,7 +121,7 @@
 									<version>3.6.0</version>
 								</requireMavenVersion>
 								<enforceBytecodeVersion>
-									<maxJdkVersion>11</maxJdkVersion>
+									<maxJdkVersion>17</maxJdkVersion>
 								</enforceBytecodeVersion>
 							</rules>
 						</configuration>
